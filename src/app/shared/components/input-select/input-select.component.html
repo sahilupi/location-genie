@@ -1,0 +1,112 @@
+<div
+  class="hp-activities-v2-js autocomplete-root"
+  [ngClass]="showEventList ? 'autocomplete-root__open' : ''"
+>
+  <form *ngIf="searchForm" [formGroup]="searchForm">
+    <div class="hp-search--dropdown-btn">
+      <input
+        id="hp-search--activity"
+        class="hp-search--dropdown hp-search--dropdown-activities autocomplete-input-js"
+        placeholder="Start typing to pick an activity"
+        (focus)="onFocusEvent()"
+        (blur)="onBlurEvent()"
+        autocomplete="off"
+        formControlName="name"
+      />
+    </div>
+  </form>
+  <span
+    ><span class="autocomplete-arrow-js autocomplete-arrow"
+      ><i class="fas fa-angle-down"></i
+    ></span>
+    <div
+      *ngIf="showEventList"
+      class="autocomplete-content autocomplete-content-js"
+    >
+      <ul class="autocomplete-content-default">
+        <li class="autocomplete-content-popular-wrapper-js">
+          <ul class="autocomplete-content-items">
+            <li
+              class="autocomplete-content-item"
+              [ngClass]="
+                eventData && event.name === eventData.name ? 'active-list' : ''
+              "
+              *ngFor="
+                let event of eventsList | filter : searchForm.value.name;
+                let i = index
+              "
+              data-index="25"
+              (mousedown)="onSelectEvent(event)"
+            >
+              {{ event.name }}
+              <i
+                class="fas fa-check"
+                *ngIf="eventData && event.name === eventData.name"
+              ></i>
+            </li>
+            <li
+              class="autocomplete-content-item"
+              *ngIf="
+                (eventsList | filter : searchForm.value.name.trim())?.length ===
+                0
+              "
+            >
+              No results
+              <!-- for
+              <span class="autocomplete-content-empty--query"
+                >“{{ searchForm.value.name }}“</span
+              > -->
+            </li>
+          </ul>
+        </li>
+        <li class="autocomplete-content-start-typing-wrapper-js hidden">
+          <ul class="autocomplete-content-items">
+            <li
+              class="autocomplete-content-item-search search-more-activities-js"
+            >
+              <div
+                class="autocomplete-content-item-search__back search-more-activities-back-js"
+              ></div>
+              <div class="autocomplete-content-item-search__typing">
+                Start typing
+                <svg
+                  class="autocomplete-content-item-search__emoji"
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M0.5 24.68H24.5V0.68H0.5V24.68Z"
+                    fill="url(#pattern0)"
+                  ></path>
+                  <defs>
+                    <pattern
+                      id="pattern0"
+                      patternContentUnits="objectBoundingBox"
+                      width="1"
+                      height="1"
+                    >
+                      <use
+                        xlink:href="#image0_1261_33394"
+                        transform="scale(0.00625)"
+                      ></use>
+                    </pattern>
+                    <image
+                      id="image0_1261_33394"
+                      width="160"
+                      height="160"
+                      xlink:href="assets/images/download.png"
+                    ></image>
+                  </defs>
+                </svg>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </span>
+</div>

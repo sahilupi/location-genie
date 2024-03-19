@@ -1,0 +1,62 @@
+<div
+  class="backdrop"
+  [ngClass]="isMenuOpen ? 'show' : ''"
+  (click)="onToggleSideMenu(false)"
+></div>
+<div class="container custom-container-width">
+  <div class="row">
+    <div class="col-4 tab-hide" [ngClass]="isMenuOpen ? 'tab-open' : ''">
+      <div class="close-parent" (click)="onToggleSideMenu(false)">
+        <mat-icon class="close">close</mat-icon>
+      </div>
+      <ul class="list-group">
+        <div class="card">
+          <h2 class="settings">Settings</h2>
+          <div class="customize">Customize view and extra actions</div>
+          <div class="image text-center">
+            <img
+              #userImg
+              width="100"
+              [src]="userImageUrl"
+              (error)="userImg.src = defaultUserImageUrl"
+            />
+          </div>
+          <div class="text-center mt-2 mb-2">
+            <button
+              mat-raised-button
+              color="primary"
+              class="text-white w-100"
+              (click)="editProfileImage(); onToggleSideMenu(false)"
+            >
+              UPLOAD NEW
+            </button>
+          </div>
+          <div class="text-center mt-2 mb-2">
+            <a color="primary" class="w-100" (click)="updateUserImage()">
+              or use Facebook userpic
+            </a>
+          </div>
+          <ul class="p-0" style="margin: 1.5rem -20px 0 -20px">
+            <li
+              *ngFor="let menu of accountMenuList"
+              class="list-group-item"
+              role="button"
+              routerLinkActive="active"
+              [routerLink]="menu.route"
+              (click)="onToggleSideMenu(false)"
+            >
+              <a> {{ menu.name }}</a>
+            </li>
+          </ul>
+          <div></div>
+        </div>
+      </ul>
+    </div>
+    <div class="col-8 tab-full-width">
+      <div class="mobile-only" (click)="onToggleSideMenu(true)">
+        <mat-icon>menu</mat-icon>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

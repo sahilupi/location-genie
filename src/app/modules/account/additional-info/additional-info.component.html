@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="card personal-card">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-bold"><h1 class="heading">Additional Info</h1></div>
+        <div class="description">
+          Providing more information about yourself will increase the number of
+          inquiries and responses from other Location genie users.
+        </div>
+        <form
+          *ngIf="additionInfoForm"
+          [formGroup]="additionInfoForm"
+          (ngSubmit)="onSubmitForm()"
+        >
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="exampleInputFirstName">Company</label>
+              <input
+                type="text"
+                formControlName="companyName"
+                class="form-control"
+                id="exampleInputFirstName"
+                placeholder="Company Name"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label for="exampleInputLastName">About</label>
+              <textarea
+                formControlName="about"
+                class="form-control"
+                id="exampleInputLastName"
+                placeholder="Write a few words about yourself."
+              >
+              </textarea>
+            </div>
+          </div>
+          <div class="text-right">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              class="text-white"
+              [disabled]="!additionInfoForm.valid || !additionInfoForm.dirty"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,299 @@
+<div class="host">
+  <section class="container">
+    <div class="row justify-content-end host--text">
+      <div class="host--text__button col-sm-12 d-flex">
+        <div class="host--text__button--text">
+          <div
+            class="d-flex"
+            mat-button
+            [matMenuTriggerFor]="menu"
+            role="button"
+            (click)="$event.stopPropagation()"
+          >
+            <p>
+              {{ selectedStatus }}
+            </p>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button
+                *ngFor="let btn of listingStatusBtns"
+                mat-menu-item
+                (click)="onStatusChange(btn.value, btn.name)"
+              >
+                {{ btn.name }}
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="host--text__button__submit-button btn btn-success"
+          routerLink="/become-a-host/list-new"
+        >
+          <i class="fas fa-plus mr-1 host--plus-btn"></i> {{ addListingBtn }}
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="listing">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <section
+            class="container"
+            *ngIf="(!allListings || allListings.length <= 0) && !isLoading"
+          >
+            <div class="row">
+              <div class="col-12 text-center mt-4">
+                <img
+                  class="mb-4 host--img-logo"
+                  src="assets/images/location-logo.png"
+                  alt="logo"
+                />
+                <h4 class="mt-4">
+                  You have no
+                  {{
+                    selectedStatus === "All listings"
+                      ? "Active"
+                      : selectedStatus
+                  }}
+                  Listings
+                </h4>
+                <div class="col-sm-12 mt-4">
+                  <button
+                    type="button"
+                    class="ml-3 mb-4 text-white"
+                    color="primary"
+                    mat-stroked-button
+                    routerLink="/become-a-host/list-new"
+                  >
+                    <i class="fas fa-plus mr-2"></i>Add New Listing
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div
+            class="host--content p-3 animate__animated animate__fadeIn"
+            *ngFor="let listing of allListings"
+          >
+            <div class="host--content__image-left">
+              <img
+                #listingCoverImg
+                width="200"
+                style="max-height: 150px"
+                class="img-fluid"
+                [src]="listing.coverImage"
+                (error)="
+                  listingCoverImg.src = 'assets/images/dummy/default_image.png'
+                "
+              />
+            </div>
+            <div class="host--content__second-side">
+              <div class="status d-flex">
+                <h6 class="host--content__second-side--questions">
+                  {{ listing.locationTitle }}
+                </h6>
+                <div class="host--content__second-side--status ml-lg-3">
+                  <span
+                    *ngIf="
+                      listing.status &&
+                      listing.isActive &&
+                      !listing.activateDeactivateHistory
+                        ?.isDeactivateRequestByHost
+                    "
+                    [style]="
+                      'background-color:' + getColorOfStatus(listing.status)
+                    "
+                    class="status"
+                  >
+                    {{ listing.status ? getStatus(listing.status) : "" }}
+                  </span>
+                  <span
+                    *ngIf="
+                      listing.activateDeactivateHistory
+                        ?.isDeactivateRequestByHost
+                    "
+                    style="background-color: red"
+                    class="status"
+                  >
+                    Requested to deactivate
+                  </span>
+                  <ng-container *ngIf="!listing.isActive">
+                    <span
+                      class="status"
+                      [ngStyle]="{ 'background-color': 'red' }"
+                    >
+                      Deactivated
+                    </span>
+                    <span
+                      class="text-dark ml-2"
+                      [matTooltip]="
+                        listing.activateDeactivateHistory
+                          .deActivateReasonByAdmin
+                          ? listing.activateDeactivateHistory.deActivateReasonByAdmin.toString()
+                          : ''
+                      "
+                      *ngIf="
+                        listing.activateDeactivateHistory
+                          .deActivateReasonByAdmin
+                      "
+                      >Reason:
+                      <b>{{
+                        listing.activateDeactivateHistory.deActivateReasonByAdmin.slice(
+                          0,
+                          25
+                        )
+                      }}</b
+                      ><span
+                        *ngIf="
+                          listing.deActivateReasonByAdmin &&
+                          listing.deActivateReasonByAdmin.length > 25
+                        "
+                        >...</span
+                      ></span
+                    >
+                    <!-- request by host to deactivate -->
+                  </ng-container>
+                  <span
+                    *ngIf="
+                      listing.activateDeactivateHistory
+                        ?.isDeactivateRequestByHost
+                    "
+                    class="text-dark ml-2"
+                    [matTooltip]="
+                      listing.activateDeactivateHistory?.deActivateReasonByHost
+                        ? listing.activateDeactivateHistory?.deActivateReasonByHost.toString()
+                        : ''
+                    "
+                    >Reason to deactivate:
+                    <b>{{
+                      listing.activateDeactivateHistory?.deActivateReasonByHost?.slice(
+                        0,
+                        25
+                      )
+                    }}</b
+                    ><span
+                      *ngIf="
+                        listing.activateDeactivateHistory
+                          ?.deActivateReasonByHost &&
+                        listing.activateDeactivateHistory
+                          ?.deActivateReasonByHost.length > 25
+                      "
+                      >...</span
+                    ></span
+                  >
+                </div>
+              </div>
+              <div class="host--content__second-side--country">
+                {{ listing.country }}
+              </div>
+              <div class="host--content__second-side--text">
+                <button
+                  *ngIf="
+                    !listing.isStepOneCompleted ||
+                    !listing.isStepTwoCompleted ||
+                    !listing.isStepThreeCompleted
+                  "
+                  type="button"
+                  class="host--content__second-side--text__submit-button btn btn-success"
+                  routerLink="/become-a-host/{{ listing.id }}"
+                >
+                  Continue
+                </button>
+                <button
+                  *ngIf="
+                    listing.isStepOneCompleted &&
+                    listing.isStepTwoCompleted &&
+                    listing.isStepThreeCompleted
+                  "
+                  type="button"
+                  class="host--content__second-side--text__submit-button btn btn-edit"
+                  routerLink="/become-a-host/{{ listing.id }}"
+                >
+                  Edit Listing
+                </button>
+
+                <div class="host--content__second-side--text__updated">
+                  Last updated on
+                  {{ listing.lastModifiedDate | date }}
+                </div>
+              </div>
+            </div>
+            <div class="some">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu"
+              >
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button
+                  mat-menu-item
+                  routerLink="/listing/preview/{{
+                    encryptListingId(listing.id)
+                  }}"
+                  target="_blank"
+                >
+                  <span>Preview</span>
+                </button>
+                <button
+                  mat-menu-item
+                  routerLink="/become-a-host/{{ listing.id }}/step-3/calendar"
+                >
+                  <span>Calender</span>
+                </button>
+                <button
+                  mat-menu-item
+                  routerLink="/become-a-host/{{ listing.id }}/step-3/pricing"
+                >
+                  <span>Price</span>
+                </button>
+                <button
+                  mat-menu-item
+                  routerLink="/become-a-host/{{ listing.id }}"
+                >
+                  <span>Edit listing</span>
+                </button>
+                <button mat-menu-item (click)="onDeleteListing(listing.id)">
+                  <span>Delete</span>
+                </button>
+
+                <button
+                  *ngIf="
+                    getStatus(listing.status)?.toLowerCase() === 'published' &&
+                    listing.isActive &&
+                    !listing.activateDeactivateHistory
+                      ?.isDeactivateRequestByHost
+                  "
+                  mat-menu-item
+                  (click)="onActivateDeactiavteListing(listing.id, false)"
+                >
+                  <span>Deactivate</span>
+                </button>
+                <button
+                  *ngIf="!listing.isActive"
+                  mat-menu-item
+                  (click)="onActivateDeactiavteListing(listing.id, true)"
+                >
+                  <span>Activate</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+      <mat-paginator
+        *ngIf="totalCount > 10"
+        [length]="totalCount"
+        [pageIndex]="pagination.pageNumber - 1"
+        [pageSize]="pagination.pageSize"
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        showFirstLastButtons
+        (page)="onPageChange($event)"
+        class="custom-paginator"
+      ></mat-paginator>
+    </div>
+  </section>
+</div>

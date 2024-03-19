@@ -1,0 +1,112 @@
+@mixin icomoon($icon, $type: "before") {
+    &:#{$type} {
+        content: $icon;
+        @extend %icomoon-base;
+        @content;
+    }
+}
+
+%icomoon-base {
+    /* Use !important to prevent issues with browser extensions that change fonts */
+    font-family: "icomoon" !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    /* Better Font Rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$icon-ic-chevrone-down-fat: "\e900";
+$icon-ic-chevrone-right-fat: "\e901";
+$icon-ic-chevrone-up-fat: "\e902";
+$icon-ic-life-false: "\e903";
+$icon-ic-like-true: "\e904";
+$icon-ic_USD: "\e905";
+$icon-ic_add: "\e907";
+$icon-ic_add-solid: "\e906";
+$icon-ic_addproject: "\e908";
+$icon-ic_agreement: "\e909";
+$icon-ic_apple_logo2: "\e90a";
+$icon-ic_arrowBack: "\e90b";
+$icon-ic_arrowNext: "\e90c";
+$icon-ic_attachment: "\e90d";
+$icon-ic_calendar: "\e90e";
+$icon-ic_california: "\e90f";
+$icon-ic_changes: "\e910";
+$icon-ic_check-in-circle: "\e912";
+$icon-ic_check-in-circle-solid: "\e911";
+$icon-ic_checkboxMark: "\e913";
+$icon-ic_checkmark: "\e914";
+$icon-ic_chevroneDown: "\e915";
+$icon-ic_chevroneLeft: "\e916";
+$icon-ic_chevroneMediumRight: "\e917";
+$icon-ic_chevroneRight: "\e918";
+$icon-ic_clock: "\e919";
+$icon-ic_close: "\e91a";
+$icon-ic_closeDropdown: "\e91b";
+$icon-ic_comments: "\e91c";
+$icon-ic_conferenceRoom: "\e91d";
+$icon-ic_coverage: "\e91e";
+$icon-ic_details: "\e91f";
+$icon-ic_dropDown: "\e920";
+$icon-ic_edit: "\e921";
+$icon-ic_exclamation: "\e922";
+$icon-ic_exclamationSolid: "\e923";
+$icon-ic_eye-closed: "\e924";
+$icon-ic_facebook: "\e925";
+$icon-ic_facebook_new2: "\e926";
+$icon-ic_facebook_rounded: "\e927";
+$icon-ic_filmStudio: "\e928";
+$icon-ic_filter: "\e929";
+$icon-ic_free: "\e92a";
+$icon-ic_gift: "\e92b";
+$icon-ic_giggsterLogo: "\e92c";
+$icon-ic_google: "\e92d";
+$icon-ic_grid: "\e92e";
+$icon-ic_hint: "\e92f";
+$icon-ic_inbox: "\e930";
+$icon-ic_instagram: "\e931";
+$icon-ic_language: "\e932";
+$icon-ic_leave: "\e933";
+$icon-ic_likeF: "\e934";
+$icon-ic_listings-2: "\e935";
+$icon-ic_location: "\e936";
+$icon-ic_lock: "\e937";
+$icon-ic_logo: "\e938";
+$icon-ic_mail: "\e939";
+$icon-ic_myLocations: "\e93a";
+$icon-ic_notPossible: "\e93b";
+$icon-ic_notification: "\e93c";
+$icon-ic_payment: "\e93d";
+$icon-ic_payout: "\e93e";
+$icon-ic_pdf: "\e93f";
+$icon-ic_plusAdd: "\e940";
+$icon-ic_print: "\e941";
+$icon-ic_profile: "\e942";
+$icon-ic_qustion: "\e943";
+$icon-ic_rotate: "\e944";
+$icon-ic_search: "\e945";
+$icon-ic_send: "\e946";
+$icon-ic_settingsCogwheelCopy: "\e947";
+$icon-ic_share: "\e948";
+$icon-ic_star-e: "\e949";
+$icon-ic_starE10: "\e94a";
+$icon-ic_starF: "\e94b";
+$icon-ic_starH: "\e94c";
+$icon-ic_starH10: "\e94d";
+$icon-ic_starT: "\e94e";
+$icon-ic_studio: "\e94f";
+$icon-ic_support: "\e950";
+$icon-ic_threeEllipsis: "\e951";
+$icon-ic_threeEllipsisVertical: "\e952";
+$icon-ic_twitter: "\e953";
+$icon-ic_user: "\e954";
+$icon-ic_v: "\e955";
+$icon-ic_verified: "\e956";
+$icon-ic_view: "\e957";
+$icon-ic_x: "\e958";
+$icon-ic_youtube_new2: "\e959";
+$icon-ic_zip: "\e95a";
+$icon-icf_search: "\e95b";

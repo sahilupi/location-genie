@@ -1,0 +1,151 @@
+<div id="sign-up-js" class="sign-in-start-form sign-up relative">
+  <div class="sign-up--cont">
+    <div id="sign-up-header-js" class="sign-up--header">
+      <div class="sign-up--header__left sign-up--sub-title">
+        Join Location Genie
+      </div>
+    </div>
+    <div>
+      <div class="sign-up-social-error error-js hidden"></div>
+      <div class="form-group facebook-login-form full-width">
+        <button
+          class="btn total-width btn-lg_size_48 btn-fb facebook-btn-js"
+          (click)="facebookAuthenticate()"
+        >
+          Sign up with Facebook
+        </button>
+      </div>
+      <div class="form-group full-width">
+        <button
+          (click)="googleAuthenticate()"
+          class="btn total-width btn-lg_size_48 btn-google google-btn-js"
+        >
+          Sign up with Google
+        </button>
+      </div>
+      <div class="form-group full-width">
+        <button class="btn total-width btn-lg_size_48 btn-apple apple-btn-js">
+          Sign up with Apple
+        </button>
+      </div>
+    </div>
+    <div class="sign-up--note">
+      <span>Already have an account? </span>
+      <button (click)="onLogin()" class="link">Log in</button>
+    </div>
+    <div class="sign-up--separate"></div>
+    <form
+      class="login-form-js"
+      *ngIf="signupForm"
+      [formGroup]="signupForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form-group">
+        <div class="relative">
+          <input
+            formControlName="email"
+            class="sign-up-email form-control"
+            type="email"
+            placeholder="Email"
+            [ngClass]="{
+              'has-error':
+                (c['email'].invalid && c['email'].touched) ||
+                (c['email'].invalid && isSubmitted)
+            }"
+          />
+
+          <div class="sign-up-input-icon">
+            <i class="sign-up-input-icon fas fa-envelope"></i>
+          </div>
+        </div>
+        <small
+          class="has-error--text"
+          *ngIf="
+            (c['email'].hasError('required') && c['email'].touched) ||
+            (c['email'].hasError('required') && isSubmitted)
+          "
+          >Email is required</small
+        >
+        <small
+          class="has-error--text"
+          *ngIf="
+            (c['email'].hasError('pattern') && c['email'].touched) ||
+            (c['email'].hasError('pattern') && isSubmitted)
+          "
+          >Enter a valid email</small
+        >
+      </div>
+      <div class="form-group relative">
+        <div class="relative">
+          <input
+            formControlName="password"
+            class="sign-up-password form-control sign-in-password-js"
+            [type]="isPasswordType ? 'text' : 'password'"
+            maxlength="255"
+            placeholder="Password"
+            [ngClass]="{
+              'has-error':
+                (c['password'].invalid && c['password'].touched) ||
+                (c['password'].invalid && isSubmitted) ||
+                (c['password'].hasError('pattern') && isSubmitted)
+            }"
+          />
+          <div class="sign-up-input-icon show-pass-js">
+            <i
+              class="sign-up-input-icon show-pass-js fas"
+              [ngClass]="isPasswordType ? 'fa-eye' : 'fa-eye-slash'"
+              (click)="isPasswordType = !isPasswordType"
+            ></i>
+          </div>
+        </div>
+        <small
+          class="has-error--text"
+          *ngIf="
+            (c['password'].hasError('required') && c['password'].touched) ||
+            (c['password'].hasError('required') && isSubmitted)
+          "
+          >Password is required</small
+        >
+        <small
+          class="has-error--text"
+          *ngIf="
+            (c['password'].hasError('pattern') && c['password'].touched) ||
+            (c['password'].hasError('pattern') && isSubmitted)
+          "
+          >Password must of 8 characters with atleast one uppercase alphabet and
+          a numeric value</small
+        >
+        <small class="has-error--text">{{ errMsg }}</small>
+      </div>
+      <div
+        class="sign-up--error has-error--text has-error--text__align_left error-js hidden"
+      ></div>
+      <div class="sign-up--captcha captcha-js"></div>
+      <div class="sign-up--agree-text">
+        By signing up you agree to Location Genie's
+        <a
+          class="link"
+          target="_blank"
+          routerLink="/terms"
+          rel="noopener noreferrer"
+          >Terms of Service</a
+        >
+        and
+        <a
+          class="link"
+          target="_blank"
+          routerLink="/privacy"
+          rel="noopener noreferrer"
+          >Privacy Policy</a
+        >.
+      </div>
+      <button
+        type="submit"
+        class="btn__bold btn-font-size-16 btn-lg_size_48 btn btn-success total-width sign-up-btn sign-up-btn-js"
+      >
+        <app-spinner *ngIf="isLoading"></app-spinner>
+        <span *ngIf="!isLoading">Sign up</span>
+      </button>
+    </form>
+  </div>
+</div>

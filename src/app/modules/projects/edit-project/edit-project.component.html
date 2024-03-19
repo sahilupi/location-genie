@@ -1,0 +1,130 @@
+<div class="container edit_project blurry_remove">
+  <div
+    class="dialog-header create-appoitment-header d-flex justify-content-between"
+  >
+    <h3 class="heading">{{ heading }}</h3>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+
+  <div class="dialog add-Staff create-appointment" *ngIf="editProjectForm">
+    <form [formGroup]="editProjectForm" (ngSubmit)="onSubmitForm()">
+      <div mat-dialog-content class="dialog-content">
+        <div class="row mx-0 pt-1">
+          <div class="col-md-12 custom mb-1 px-0 custom-inputs">
+            <mat-form-field appearance="outline" class="project_form">
+              <mat-label>Project Name</mat-label>
+              <input matInput type="text" formControlName="title" />
+
+              <mat-error
+                *ngIf="
+                  (c['title'].hasError('required') && c['title'].touched) ||
+                  (c['title'].hasError('required') && isSubmitted)
+                "
+                ><small>Title is required</small></mat-error
+              >
+              <mat-error
+                *ngIf="
+                  (c['title'].hasError('maxlength') && c['title'].touched) ||
+                  (c['title'].hasError('maxlength') &&
+                    isSubmitted &&
+                    !isPastDate)
+                "
+                ><small>Maximum length should be 20</small></mat-error
+              >
+              <!-- <mat-error *ngIf="isPastDate"
+                ><small
+                  >Your can't edit this project as dates are expired</small
+                ></mat-error
+              > -->
+            </mat-form-field>
+          </div>
+          <div class="col-md-12 custom mb-1 px-0 custom-inputs">
+            <mat-form-field appearance="outline" class="project">
+              <mat-label>When will you need a location?</mat-label>
+              <mat-date-range-input [rangePicker]="picker" [min]="today">
+                <input
+                  matStartDate
+                  matInput
+                  placeholder="Start Date"
+                  (click)="picker.open()"
+                  formControlName="startDate"
+                  [min]="today"
+                />
+                <input
+                  matEndDate
+                  matInput
+                  (click)="picker.open()"
+                  formControlName="endDate"
+                  placeholder="End Date"
+                />
+              </mat-date-range-input>
+              <mat-error
+                *ngIf="
+                  (c['startDate'].hasError('required') &&
+                    c['startDate'].touched) ||
+                    (c['startDate'].hasError('required') && isSubmitted);
+                  else endDate
+                "
+                ><small>Start and end dates are required</small></mat-error
+              >
+              <ng-template #endDate>
+                <mat-error
+                  *ngIf="
+                    (c['endDate'].hasError('required') &&
+                      c['endDate'].touched) ||
+                    (c['endDate'].hasError('required') && isSubmitted)
+                  "
+                  ><small>End date is required</small></mat-error
+                >
+              </ng-template>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-12 custom textarea mb-1 px-0 custom-inputs">
+            <mat-form-field appearance="outline" class="project_form">
+              <mat-label>Description</mat-label>
+              <!-- <input matInput type="textarea" formControlName="description" /> -->
+              <textarea
+                matInput
+                formControlName="description"
+                class="form-control"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+              >
+                  Description
+              </textarea>
+              <mat-error><small>Maximum length should be 500</small></mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 px-0">
+        <div mat-dialog-actions align="end" class="px-0">
+          <!-- <button
+            mat-stroked-button
+            (click)="dialogRef.close(null)"
+            color="warn"
+            class="text-dark outlined"
+            type="button"
+          >
+            Cancel
+          </button> -->
+          <button
+            type="submit"
+            color="primary"
+            class="text-light"
+            mat-raised-button
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,198 @@
+<div class="container blurry_remove">
+  <div class="dialog-header">
+    <h3 class="heading" mat-dialog-title>
+      {{ data.phoneNumber ? "Update Phone" : "Add Phone" }}
+    </h3>
+  </div>
+  <div class="close-dlg">
+    <mat-icon
+      class="close modal-dialog--close mat-dlg-close-icon"
+      (click)="dialogRef.close(null)"
+      >close</mat-icon
+    >
+  </div>
+  <form
+    *ngIf="phoneInfoForm"
+    [formGroup]="phoneInfoForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="form-group create-profile" mat-dialog-content>
+      <p>
+        We'll use your mobile number to text you about your bookings and
+        messages. We never share your number publicly
+      </p>
+      <div class="mb-3">
+        <div class="enter-phone-div mb-4">
+          <mat-label>Phone Number</mat-label>
+          <div class="enter-phone form-control d-flex pl-1 py-0">
+            <div class="country-image">
+              <img
+                src="{{
+                  'http://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                    selectedCountry +
+                    '.svg'
+                }}"
+                width="24px"
+                height="24px"
+              />
+
+              <mat-form-field appearance="fill">
+                <input
+                  type="text"
+                  matInput
+                  maxlength="7"
+                  [formControl]="dialCodeControl"
+                  (blur)="changeCountry($event)"
+                  [matAutocomplete]="auto"
+                  (paste)="$event.preventDefault()"
+                />
+                <i class="fa fa-caret-down input-icon" aria-hidden="true"></i>
+
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  [displayWith]="displayFn"
+                  class="flag-dropdown"
+                >
+                  <mat-option
+                    *ngFor="let item of filteredCountryCodes | async"
+                    [value]="item"
+                    (click)="onChangeCountry(item)"
+                  >
+                    <img
+                      src="{{
+                        'http://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                          item.code +
+                          '.svg'
+                      }}"
+                      width="20px"
+                      height="20px"
+                    />&nbsp; <span>{{ item.dialCode }}</span> &nbsp;
+                    <span>{{ item.code }}</span>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="!isDialCodeError">
+                  <small>Country code is required</small>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <input
+              formControlName="phoneNumber"
+              class="is-invalid phoneNo"
+              id="exampleInputMobile"
+              (paste)="$event.preventDefault()"
+              (keypress)="commonService.numberOnly($event)"
+              maxlength="10"
+            />
+          </div>
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['phoneNumber'].hasError('required') &&
+                c['phoneNumber'].touched) ||
+              (c['phoneNumber'].hasError('required') && isSubmitted)
+            "
+            >Phone number is required</small
+          >
+          <small class="has-error--text" *ngIf="isDialCodeError"
+            >Enter a valid country code</small
+          >
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['phoneNumber'].hasError('minlength') &&
+                c['phoneNumber'].touched) ||
+              (c['phoneNumber'].hasError('minlength') && isSubmitted)
+            "
+            >Phone number should be minimum of 9 characters</small
+          >
+        </div>
+      </div>
+      <div class="mb-3 password_wrap">
+        <mat-form-field
+          appearance="outline"
+          class="w-100"
+          [class.d-none]="data.isExternalLogin"
+        >
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" />
+          <mat-error>
+            <small>Password is required</small>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="otp-box animate__animated animate__fadeInUp animate__faster"
+        *ngIf="isOTPsent && data.isExternalLogin"
+      >
+        <p class="animate__animated animate__fadeInUp">
+          We sent a code to <span class="text-bold">{{ data.email }}</span>
+        </p>
+        <p class="animate__animated animate__fadeInUp">
+          OTP is valid only for 2 minutes
+        </p>
+        <mat-form-field
+          appearance="outline"
+          class="w-100"
+          [class.d-none]="!data.isExternalLogin"
+          [class.disabledcheckbox]="!isOTPsent"
+        >
+          <mat-label>Enter the code sent to your email</mat-label>
+          <input
+            [readonly]="!isOTPsent"
+            matInput
+            formControlName="otp"
+            type="text"
+          />
+          <mat-error>
+            <small
+              class="animate__animated animate__fadeInUp"
+              *ngIf="isOTPsent && isSubmitted && data.isExternalLogin"
+              >Otp is required</small
+            >
+          </mat-error>
+        </mat-form-field>
+        <p
+          *ngIf="display && isOTPsent && data.isExternalLogin"
+          class="animate__animated animate__fadeInUp"
+        >
+          You can send a code once again in
+          <span class="text-bold">{{ display }}</span>
+        </p>
+        <p
+          *ngIf="!display && isOTPsent && data.isExternalLogin"
+          class="animate__animated animate__fadeInUp"
+        >
+          Didn't get a code?
+          <button
+            type="button"
+            (click)="onResendOtp()"
+            class="link send-otp-again"
+          >
+            Resend
+          </button>
+        </p>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button
+        mat-stroked-button
+        (click)="dialogRef.close(null)"
+        type="button"
+        color="accent"
+        class="outlined"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        color="primary"
+        class="text-white"
+        mat-raised-button
+        cdkFocusInitial
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

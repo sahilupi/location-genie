@@ -1,0 +1,181 @@
+<div class="container update_address blurry_remove">
+  <div class="dialog-header">
+    <h3 class="heading" mat-dialog-title>Update email address</h3>
+  </div>
+  <div class="close-dlg">
+    <mat-icon
+      class="close modal-dialog--close mat-dlg-close-icon"
+      (click)="dialogRef.close(null)"
+      >close</mat-icon
+    >
+  </div>
+  <form
+    *ngIf="emailInfoForm"
+    [formGroup]="emailInfoForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div mat-dialog-content>
+      <div class="mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Email</mat-label>
+          <input
+            [readonly]="isUpdateEmailOTPsent"
+            matInput
+            formControlName="email"
+            [class.disabledcheckbox]="isUpdateEmailOTPsent"
+          />
+          <mat-error><small>Enter a valid email.</small></mat-error>
+        </mat-form-field>
+      </div>
+      <div class="mb-3">
+        <mat-form-field
+          [class.d-none]="data.isExternalLogin"
+          appearance="outline"
+          class="w-100 w-th"
+        >
+          <mat-label>Password</mat-label>
+          <input
+            [readonly]="isUpdateEmailOTPsent"
+            [class.disabledcheckbox]="isUpdateEmailOTPsent"
+            matInput
+            formControlName="password"
+            type="password"
+          />
+          <mat-error><small>Password is required.</small></mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="otp-box animate__animated animate__fadeInUp animate__faster"
+        *ngIf="isOTPsent && data.isExternalLogin"
+      >
+        <p *ngIf="isOTPsent" class="animate__animated animate__fadeInUp">
+          We sent a code to <span class="text-bold">{{ data.email }}</span>
+        </p>
+        <p *ngIf="isOTPsent" class="animate__animated animate__fadeInUp">
+          OTP is valid only for 2 minutes
+        </p>
+        <mat-form-field
+          appearance="outline"
+          class="w-100"
+          [class.d-none]="!data.isExternalLogin"
+          [class.disabledcheckbox]="!isOTPsent"
+        >
+          <mat-label>Enter the code sent to your email</mat-label>
+          <input
+            [readonly]="!isOTPsent"
+            matInput
+            formControlName="otp"
+            type="text"
+          />
+          <mat-error>
+            <small
+              class="animate__animated animate__fadeInUp"
+              *ngIf="isOTPsent && isSubmitted"
+              >Otp is required</small
+            >
+          </mat-error>
+        </mat-form-field>
+        <p
+          *ngIf="display && isOTPsent"
+          class="animate__animated animate__fadeInUp"
+        >
+          You can send a code once again in
+          <span class="text-bold">{{ display }}</span>
+        </p>
+        <p
+          *ngIf="!display && isOTPsent"
+          class="animate__animated animate__fadeInUp"
+        >
+          Didn't get a code?
+          <button
+            type="button"
+            (click)="onResendOtp()"
+            class="link send-otp-again"
+          >
+            Resend
+          </button>
+        </p>
+      </div>
+
+      <!-- otp to update email -->
+      <div
+        class="otp-box animate__animated animate__fadeInUp animate__faster"
+        *ngIf="isUpdateEmailOTPsent"
+      >
+        <p
+          *ngIf="isUpdateEmailOTPsent"
+          class="animate__animated animate__fadeInUp"
+        >
+          We sent a code to
+          <span class="text-bold">{{ emailInfoForm.value.email }}</span>
+        </p>
+        <p
+          *ngIf="isUpdateEmailOTPsent"
+          class="animate__animated animate__fadeInUp"
+        >
+          OTP is valid only for 2 minutes
+        </p>
+        <mat-form-field
+          appearance="outline"
+          class="w-100"
+          [class.disabledcheckbox]="!isUpdateEmailOTPsent"
+        >
+          <mat-label>Enter the code sent to your email</mat-label>
+          <input
+            [readonly]="!isUpdateEmailOTPsent"
+            matInput
+            formControlName="otp"
+            type="text"
+          />
+          <mat-error>
+            <small
+              class="animate__animated animate__fadeInUp"
+              *ngIf="isUpdateEmailOTPsent && isSubmitted"
+              >Otp is required</small
+            >
+          </mat-error>
+        </mat-form-field>
+        <p
+          *ngIf="display && isUpdateEmailOTPsent"
+          class="animate__animated animate__fadeInUp"
+        >
+          You can send a code once again in
+          <span class="text-bold">{{ display }}</span>
+        </p>
+        <p
+          *ngIf="!display && isUpdateEmailOTPsent"
+          class="animate__animated animate__fadeInUp"
+        >
+          Didn't get a code?
+          <button
+            type="button"
+            (click)="onSubmit()"
+            class="link send-otp-again"
+          >
+            Resend
+          </button>
+        </p>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button
+        class="outlined"
+        mat-stroked-button
+        (click)="dialogRef.close(null)"
+        type="button"
+        color="accent"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        color="primary"
+        class="text-white"
+        mat-raised-button
+        cdkFocusInitial
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>

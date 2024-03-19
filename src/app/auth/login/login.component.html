@@ -1,0 +1,211 @@
+<div class="text-center">
+  <div
+    class="micromodal-slide is-open"
+    id="MicromodalSignInJS"
+    aria-hidden="false"
+  >
+    <div class="">
+      <div class="modal-dialog sign-up-modal-dialog">
+        <div class="modal__container">
+          <i class="fa-solid fa-xmark"></i>
+          <div class="modal-content sing-up-holder">
+            <!-- <mat-icon (click)="closeLoginDlg(false)">close</mat-icon> -->
+
+            <!-- sign up -->
+            <app-signup
+              *ngIf="!isLoggingIn && !isResetingPass"
+              (login)="onLogin()"
+            ></app-signup>
+
+            <!-- login -->
+            <div
+              id="email-sign-in-js"
+              class="email-sign-in sign-up relative"
+              *ngIf="isLoggingIn && !isResetingPass"
+            >
+              <div class="sign-up--cont">
+                <div class="sign-up--header">
+                  <div class="sign-up--header__left sign-up--sub-title">
+                    Welcome back
+                  </div>
+                </div>
+                <!-- <div class="sign-up--exists-header auth-exists-header">
+                <h2 class="auth-exists-header--title">
+                  Account with this email already exists
+                </h2>
+                <p class="auth-exists-header--description">
+                  To proceed with this account, please enter your password or
+                  log in with social account.
+                </p>
+              </div> -->
+                <div class="sign-up--soc">
+                  <div class="sign-up-social-error error-js hidden"></div>
+                  <div class="form-group facebook-login-form full-width">
+                    <button
+                      (click)="facebookAuthenticate()"
+                      class="btn btn-lg_size_48 total-width btn-fb facebook-btn-js"
+                    >
+                      Log in with Facebook
+                    </button>
+                  </div>
+                  <div class="form-group full-width">
+                    <button
+                      id="google-login-button"
+                      (click)="googleAuthenticate()"
+                      class="btn btn-lg_size_48 total-width btn-google google-btn-js"
+                    >
+                      Log in with Google
+                    </button>
+                  </div>
+                  <div class="form-group full-width">
+                    <button
+                      class="btn btn-lg_size_48 total-width btn-apple apple-btn-js"
+                    >
+                      Log in with Apple
+                    </button>
+                  </div>
+                </div>
+                <div class="sign-up--note">
+                  <span>Don’t have an account? </span>
+                  <button type="button" (click)="onSignUp()" class="link">
+                    Sign up
+                  </button>
+                </div>
+                <div class="sign-up--separate"></div>
+                <div class="sign-in-form-container">
+                  <form
+                    class="sign-up--form"
+                    [formGroup]="loginForm"
+                    *ngIf="loginForm"
+                    (ngSubmit)="onSubmitLoginForm()"
+                  >
+                    <div class="form-group">
+                      <div class="relative">
+                        <input
+                          [ngClass]="{
+                            'has-error':
+                              (c['email'].invalid && c['email'].touched) ||
+                              (c['email'].invalid && isSubmitted)
+                          }"
+                          formControlName="email"
+                          class="sign-in-email form-control"
+                          type="email"
+                          placeholder="Email"
+                          autocomplete="on"
+                        />
+                        <i class="sign-up-input-icon fas fa-envelope"></i>
+                      </div>
+                      <small
+                        class="has-error--text"
+                        *ngIf="
+                          (c['email'].hasError('required') &&
+                            c['email'].touched) ||
+                          (c['email'].hasError('required') && isSubmitted)
+                        "
+                        >Email is required</small
+                      >
+                      <small
+                        class="has-error--text"
+                        *ngIf="
+                          (c['email'].hasError('pattern') &&
+                            c['email'].touched) ||
+                          (c['email'].hasError('pattern') && isSubmitted)
+                        "
+                        >Enter a valid email</small
+                      >
+                    </div>
+                    <div class="form-group relative form-group--password">
+                      <div class="relative">
+                        <input
+                          formControlName="password"
+                          class="sign-in-password sign-in-password-js form-control"
+                          placeholder="Password"
+                          [type]="isPasswordType ? 'text' : 'password'"
+                          [ngClass]="{
+                            'has-error':
+                              (c['password'].invalid &&
+                                c['password'].touched) ||
+                              (c['password'].invalid && isSubmitted) ||
+                              (c['password'].hasError('pattern') && isSubmitted)
+                          }"
+                        />
+                        <i
+                          class="sign-up-input-icon show-pass-js fas"
+                          [ngClass]="isPasswordType ? 'fa-eye' : 'fa-eye-slash'"
+                          (click)="isPasswordType = !isPasswordType"
+                        ></i>
+                      </div>
+
+                      <small
+                        class="has-error--text"
+                        *ngIf="
+                          (c['password'].hasError('required') &&
+                            c['password'].touched) ||
+                          (c['password'].hasError('required') && isSubmitted)
+                        "
+                        >Password is required</small
+                      >
+                      <small
+                        class="has-error--text"
+                        *ngIf="
+                          (c['password'].hasError('pattern') &&
+                            c['password'].touched) ||
+                          (c['password'].hasError('pattern') && isSubmitted)
+                        "
+                        >Password must of 8 characters with atleast one
+                        uppercase alphabet and a numeric value</small
+                      >
+                      <small class="has-error--text">{{ errMsg }}</small>
+                    </div>
+                    <div
+                      class="sign-up--error has-error--text has-error--text__align_left error-js hidden"
+                    ></div>
+                    <div class="sign-up--agree-text">
+                      By logging in you agree to Location Genie’s
+                      <a
+                        class="link"
+                        routerLink="/terms"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Terms of Service</a
+                      >
+                      and
+                      <a
+                        class="link"
+                        routerLink="/privacy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Privacy Policy.</a
+                      >
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn__bold btn-lg_size_48 btn-font-size-16 btn-success total-width sign-in-btn-js"
+                    >
+                      <app-spinner *ngIf="isLoading"></app-spinner>
+                      <span *ngIf="!isLoading">Log in</span>
+                    </button>
+                  </form>
+                </div>
+                <div class="sign-up-forgot">
+                  <button
+                    class="sign-up-link link"
+                    (click)="onToggleResetPassword()"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- reset -->
+            <app-reset
+              *ngIf="!isLoggingIn && isResetingPass"
+              (reset)="onToggleResetPassword()"
+            ></app-reset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

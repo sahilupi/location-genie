@@ -1,0 +1,263 @@
+.all-collection {
+  margin-top: 71px;
+}
+@media (max-width: 767px){
+  .text-2xl {
+    font-size: 20px;
+  }
+  .trust_bulid {
+    padding: 0px 15px !important;
+  }
+  .text-body-primary-color{
+    padding: 0px 0px 14px !important;
+  }
+  .trust_safety.text-body-primary-color {
+    margin-bottom: 5px !important;
+    font-size: 22px !important;
+  }
+  ::ng-deep.accordin-wrap mat-expansion-panel {
+    .mat-expansion-panel-header {
+      padding: 0 8px !important;
+    }
+    .mat-expansion-panel-body {
+      padding: 0 8px 16px !important;
+    }
+    p, .mat-content{
+      font-size: 12px !important;
+      line-height: 14px;
+    }
+    article .intercom-interblocks-subheading h2, article h3 {
+      font-size: 15px !important;
+      margin: 0px 0 5px !important;
+     line-height: 15px !important;
+    }
+  }
+}
+@media (min-width: 640px) {
+  .sm\:px-10 {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+.px-5 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.justify-center {
+  justify-content: center;
+}
+.basis-auto {
+  flex-basis: auto;
+}
+.grow {
+  flex-grow: 1;
+}
+.shrink-0 {
+  flex-shrink: 0;
+}
+.flex {
+  display: flex;
+}
+.z-1 {
+  z-index: 1;
+}
+.max-w-full {
+  max-width: 100%;
+}
+.w-240 {
+  width: 960px;
+}
+.text-base {
+  font-size: 14px;
+}
+.pb-4 {
+  padding-bottom: 16px;
+}
+.items-baseline {
+  align-items: baseline;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.no-underline {
+  text-decoration-line: none;
+}
+.text-body-primary-color {
+  color: #1a1a1a;
+}
+.pr-2 {
+  padding-right: 8px;
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+.fill-body-secondary-color {
+  fill: #737373;
+}
+.w-2 {
+  width: 8px;
+}
+.h-2 {
+  height: 8px;
+}
+.block {
+  display: block;
+}
+img,
+svg,
+video {
+  max-width: 100%;
+}
+.text-body-secondary-color {
+  color: #737373;
+}
+
+.pt-4 {
+  padding-top: 16px;
+}
+.gap-10 {
+  gap: 40px;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+.mb-5 {
+  margin-bottom: 20px;
+}
+.text-collection-card-color {
+  color: hsl(0, 0%, 0%);
+}
+.stroke-collection-card-color {
+  stroke: hsl(0, 0%, 0%);
+}
+.bg-cover {
+  background-size: cover;
+}
+.rounded-card {
+  border-radius: 4px !important;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.items-center {
+  align-items: center;
+}
+@media (min-width: 640px) {
+  .sm\:w-10 {
+    width: 40px;
+  }
+}
+@media (min-width: 640px) {
+  .sm\:h-10 {
+    height: 40px;
+  }
+}
+.leading-10 {
+  line-height: 2.5rem;
+}
+.font-bold {
+  font-weight: 700;
+}
+.text-2xl {
+  font-size: 32px;
+}
+.font-primary {
+  font-family: system-ui, "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.mb-1 {
+  margin-bottom: 4px;
+}
+.mt-5 {
+  margin-top: 20px;
+}
+.gap-2 {
+  gap: 8px;
+}
+.flex-row {
+  flex-direction: row;
+}
+@media (min-width: 640px) {
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+}
+.leading-normal {
+  line-height: 1.5;
+}
+.shadow-body-bg {
+  --tw-shadow-color: rgb(255, 255, 255);
+  --tw-shadow: 0 0 0 2px rgb(255, 255, 255);
+}
+.shadow-solid-2 {
+  --tw-shadow: 0 0 0 2px;
+  --tw-shadow-colored: 0 0 0 2px rgb(255, 255, 255);
+}
+.shadow-search-bar,
+.shadow-sm,
+.shadow-solid-2 {
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 0 2px rgb(255, 255, 255);
+}
+.text-primary-text {
+  color: #ffffff;
+}
+
+.leading-6 {
+  line-height: 1.5rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-lg {
+  font-size: 18px;
+}
+.bg-primary {
+  background-color: hsl(0, 0%, 0%);
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+.w-6 {
+  width: 24px;
+}
+.h-6 {
+  height: 24px;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.z-4 {
+  z-index: 4;
+}
+// @media (min-width: 640px) {
+//   .sm\:inline {
+//     display: inline;
+//   }
+// }
+// @media (min-width: 640px) {
+//   .sm\:hidden {
+//     display: inline;
+//   }
+// }
+.m-2 {
+  margin: 8px;
+}
+
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+  box-shadow: 0 0 1px 1px #d6d6d6;
+}
+::ng-deep .mat-content {
+  font-weight: 600;
+}
+article .intercom-interblocks-subheading h2,
+article h3 {
+  font-size: 20px;
+  margin: 0 0 15px;
+  font-weight: 600;
+  line-height: 26px;
+}

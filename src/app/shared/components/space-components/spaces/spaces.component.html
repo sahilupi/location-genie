@@ -1,0 +1,50 @@
+<div class="hp-popular-activities--group">
+  <div class="hp-content-section--info hp-popular-activities--header">
+    <h2
+      class="hp-content-section--title hp-popular-activities--title editable-title"
+      id="section--popular-activities"
+    >
+      {{ title.typeName }}
+    </h2>
+    <div class="edit-delete-action">
+      <i
+        *ngIf="isEditingData"
+        class="fas fa-pen fa-xs title-edit"
+        (click)="onEditSpaceTitle(title)"
+      ></i>
+      <i
+        *ngIf="isEditingData && getOccupiedPositions() < 10"
+        class="fas fa-plus fa-md fa-add"
+        (click)="onAddLocation()"
+      ></i>
+      <!-- <button class="filled delete-all-button" *ngIf="isEditingData">
+        Delete All
+      </button> -->
+    </div>
+  </div>
+  <div
+    class="pa-slider glide popular-activities-slider-js pa-slider__ready glide--ltr glide--carousel glide--swipeable"
+  >
+    <div class="pa-slider--track glide__track">
+      <owl-carousel-o
+        [options]="customOptions"
+        class="pa-slider--slides glide__slides space-slider"
+      >
+        <ng-container
+          class="pa-slider--slide pa-slide glide__slide glide__slide--clone"
+          style="width: 179.6px; margin-right: 8px"
+          *ngFor="let space of spaces"
+        >
+          <ng-template carouselSlide>
+            <app-space
+              [data]="space"
+              [isEditingData]="isEditingData"
+              (deleteSpaceEmiiter)="onDeleteSpace($event)"
+              (editSpaceEmiiter)="onEditSpace(space)"
+            ></app-space>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="main-box">
+  <div
+    class="circle per-20 animate__animated animate__fadeIn"
+    [style]="
+      isMobileScreen
+        ? 'background-image: conic-gradient(#016670 ' +
+          percentage +
+          '%, #e2e1e1fc 0)'
+        : 'unset'
+    "
+  >
+    <div
+      class="step inner"
+      [class.complete]=""
+      [ngClass]="idx + 1 === activeIdx || activeIdx > idx + 1 ? 'active' : ''"
+    >
+      <span *ngIf="activeIdx <= idx + 1">{{ idx + 1 }}</span>
+      <mat-icon *ngIf="activeIdx > idx + 1">check</mat-icon>
+      <span>of {{ totalSteppers }}</span>
+    </div>
+  </div>
+  <div class="heading-box">
+    <h3 class="title">
+      {{ stepperData.title }}
+    </h3>
+    <mat-icon [matTooltip]="stepperData.des">info</mat-icon>
+    <!-- <h5 class="description">
+      {{ stepperData.des }}
+    </h5> -->
+  </div>
+</div>

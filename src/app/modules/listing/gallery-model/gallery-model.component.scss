@@ -1,0 +1,50 @@
+.gallery {
+  z-index: 1000;
+  position: fixed;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+
+  .container-fluid {
+    .header {
+      height: 71px;
+      background-color: transparent;
+      color: #333;
+
+      .icon {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        height: 85%;
+      }
+    }
+
+    .images {
+      max-height: 500px;
+
+      .image-wrapper {
+        max-width: 100%;
+        max-height: 100%;
+        margin: 0 0 15px;
+
+        .image {
+          height: 200px;
+          max-width: 100%;
+          object-fit: cover;
+          transition: all 0.2s ease-in-out;
+          &:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 8px 8px #333333;
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep.g-backdrop {
+  background-color: #fff !important;
+}

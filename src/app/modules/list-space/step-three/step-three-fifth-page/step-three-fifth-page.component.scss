@@ -1,0 +1,455 @@
+.step-three-main {
+  height: calc(100vh - 60px);
+  overflow: auto;
+}
+
+.about {
+  margin: 0 0 80px 0;
+  margin-bottom: 200px;
+  h2.heading {
+    font-weight: 600;
+  }
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+p.info {
+  color: #a7a4a4;
+  font-size: 13px;
+  margin: 0 auto 30px auto;
+  width: 60%;
+  text-align: center;
+}
+
+label {
+  font-weight: 500;
+  font-size: 12px;
+}
+p.note {
+  font-size: 11px;
+  color: #736f6f;
+  line-height: 14px;
+  margin: 6px 0 00;
+}
+
+.buttons {
+  margin: 50px 0;
+  a.ml-2 {
+    font-size: 16px;
+    color: #000;
+  }
+  a.ml-2:hover {
+    text-decoration: none !important;
+  }
+  .second {
+    a {
+      background: #016670;
+      color: #fff;
+      padding: 15px 50px;
+      border-radius: 5px;
+    }
+    a:hover {
+      text-decoration: none !important;
+    }
+  }
+}
+
+.profile {
+  margin: 50px 0;
+  .main-group {
+    gap: 30px;
+    .social-group {
+      width: 50%;
+      .upload {
+        a {
+          background: #016670;
+          padding: 10px 40px;
+          color: #fff;
+          border-radius: 5px;
+        }
+      }
+      .connect {
+        border: 1px solid #c8c5c5;
+        padding: 10px 30px;
+        border-radius: 5px;
+        gap: 10px;
+        i.fab.fa-facebook-f {
+          color: #5894ef;
+          font-weight: 500;
+        }
+        a {
+          color: #5894ef;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+.close-dlg {
+  margin: 0 10px;
+}
+
+.mat-dlg-close-icon {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+.mat-mdc-form-field.password {
+  margin: 15px 0 0;
+}
+
+.heading {
+  align-items: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  border-bottom: 1px solid #e2e2e2;
+}
+// .mdc-dialog__title::before {
+//   display: none;
+// }
+
+.container {
+  margin-top: 20px;
+}
+
+.content {
+  margin-right: 25px;
+  width: 100px;
+}
+
+::ng-deep {
+  label {
+    margin-bottom: 0 !important;
+  }
+
+  .enter-phone {
+    margin-bottom: 0px;
+    height: 49px;
+  }
+  .custom {
+    .mat-mdc-text-field-wrapper {
+      height: 45px !important;
+      font-size: 12px;
+    }
+    .mat-mdc-form-field-flex {
+      height: 45px;
+    }
+    .mat-mdc-text-field-wrapper
+      .mat-mdc-form-field-flex
+      .mat-mdc-floating-label {
+      top: 22px;
+    }
+    .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+      top: 26px !important;
+    }
+    .small,
+    small {
+      font-size: 10px;
+    }
+    .mat-mdc-form-field-error-wrapper {
+      padding: 0;
+      margin-top: -4px;
+    }
+    input {
+      box-shadow: none;
+    }
+    .mat-mdc-text-field-wrapper.mdc-text-field--outlined
+      .mat-mdc-form-field-infix {
+      padding-top: 12px;
+      padding-bottom: 10px;
+      min-height: 45px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+
+  .mdc-label {
+    cursor: pointer;
+  }
+}
+
+::ng-deep {
+  .create-profile {
+    .country-image {
+      position: relative;
+      width: 120px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .mat-mdc-text-field-wrapper {
+        align-items: center;
+        flex: auto;
+        outline: none;
+        background-color: transparent !important;
+        padding: 0 10px 0 0;
+      }
+      input.mat-input-element {
+        margin-top: 0;
+        padding: 10px 0;
+        height: 10px;
+      }
+
+      .mat-mdc-form-field-infix {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-around;
+        top: 6px;
+        padding: 0px !important;
+        background-color: transparent;
+        min-height: 42px !important;
+      }
+      .mat-mdc-form-field-input-control.mat-mdc-form-field-input-control {
+        position: absolute;
+        top: 4px;
+      }
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+        height: 46px !important;
+      }
+      .mat-form-field-appearance-fill .mat-form-field-flex {
+        background: #fff;
+        padding: 0;
+        top: 8px;
+      }
+      /*7-9-2023 */
+      .country-image {
+        mat-form-field.mat-mdc-form-field {
+          width: 62px;
+        }
+      }
+      .mat-form-field-underline {
+        display: none;
+      }
+      input-icon.ng-tns-c59-4 {
+        position: absolute !important;
+        top: 8px !important;
+      }
+      .fa-caret-down {
+        position: absolute;
+        top: 7px;
+        right: -5px;
+      }
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+      mat-form-field.mat-mdc-form-field {
+        outline: none;
+        border: none !important;
+        width: calc(100% - 24px);
+      }
+    }
+    .mdc-text-field--filled:not(.mdc-text-field--disabled)
+      .mdc-line-ripple::before {
+      border-bottom: none;
+    }
+    .mat-tab-labels {
+      margin-top: 10px;
+    }
+    .mdc-text-field--filled .mdc-line-ripple::after {
+      border-bottom-style: none;
+    }
+  }
+}
+
+::ng-deep.custom-select-box {
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+  .mat-form-field {
+    width: 100% !important;
+    height: 43px;
+    padding: 5px 9px;
+    border-radius: 4px;
+  }
+  .mat-form-field-underline {
+    display: none;
+  }
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    padding: 0;
+    background: inherit;
+  }
+  .mat-form-field-appearance-fill .mat-form-field-infix {
+    padding: 6px 0;
+    border: 0;
+  }
+  .mat-select-arrow {
+    margin-top: 13px !important;
+  }
+}
+
+.phoneNo {
+  width: calc(100% - 120px);
+  position: relative;
+  border: none;
+  outline: none;
+  border-left: 1px solid #dedede;
+  padding-left: 10px;
+}
+
+p {
+  font-size: 14px;
+  color: #1c1b1b;
+}
+
+::ng-deep.cdk-overlay-pane {
+  min-width: 200px;
+}
+
+.otp-box {
+  box-shadow: 0 0 7px 1px;
+  margin-top: 24px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.booking-desc {
+  position: relative;
+  .booking-desc-instant,
+  .booking-desc-request {
+    position: absolute;
+    left: 200px;
+    top: -10px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .booking-desc-instant-wrapper:hover {
+    .booking-desc-instant {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .booking-desc-request-wrapper:hover {
+    .booking-desc-request {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &-instant:hover .booking-desc-instant {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &-request:hover .booking-desc-request {
+    visibility: visible;
+    opacity: 1;
+  }
+  .validationMsg {
+    font-size: 16px;
+  }
+}
+
+::ng-deep {
+  mat-form-field.password
+    .mat-mdc-text-field-wrapper
+    .mat-mdc-form-field-flex
+    .mat-mdc-floating-label {
+    top: 21px;
+  }
+}
+
+//Responsive
+@media screen and (max-width: 1200px) {
+  .step-one {
+    .single-step {
+      width: 18%;
+    }
+    .row {
+      justify-content: center;
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      .box {
+        min-height: auto;
+        padding: 6px 8px 1px 8px;
+        h5.description {
+          min-height: auto;
+        }
+      }
+      .step {
+        width: 80px;
+        height: 45px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .get_setps {
+    .container.stepper,
+    .container {
+      width: calc(100% - 30px);
+    }
+  }
+    
+  .about {
+    .container {
+      padding: 0 10px;
+      .row {
+        .col-md-12 {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .about {
+    h5 {
+      font-size: 18px;
+    }
+  }
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      .mat-mdc-form-field-flex {
+        .mat-mdc-floating-label {
+          font-weight: 400 !important;
+        }
+      }
+    }
+  }
+}

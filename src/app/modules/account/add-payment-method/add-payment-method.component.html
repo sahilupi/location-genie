@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="mb-4">Back to Payments</div>
+      <div class="mb-4 text-bold">Add payment method</div>
+      <form>
+        <div class="form-group">
+          <label for="exampleInputFirstName">Card Information </label>
+          <input type="text" class="form-control" id="exampleInputFirstName" />
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="form-group col-4">
+            <label for="exampleInputLastName"></label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputLastName"
+              placeholder="MM/YY"
+            />
+          </div>
+          <div class="form-group col-4">
+            <label for="exampleInputLastName"></label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputLastName"
+              placeholder="CVC"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputLastName">Name on card</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputLastName"
+            formControlName="name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Country and Region</label>
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            placeholder="Dubai"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Zip</label>
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            placeholder="ZIP"
+          />
+        </div>
+        <button mat-raised-button color="primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>

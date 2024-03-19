@@ -1,0 +1,44 @@
+<div class="container blurry_remove">
+  <div class="dialog-header d-flex justify-content-between">
+    <h1 mat-dialog-title class="heading">{{ header }}</h1>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+  <form
+    *ngIf="editSpaceForm"
+    [formGroup]="editSpaceForm"
+    (ngSubmit)="onSubmitForm()"
+  >
+    <div mat-dialog-content>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="typeName" />
+        <mat-error>
+          <small
+            >Maximum length should be {{ data.max ? data.max : 30 }}</small
+          ></mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+      <!-- <button
+        type="button"
+        mat-stroked-button
+        (click)="dialogRef.close(null)"
+        color="accent"
+      >
+        Cancel
+      </button> -->
+      <button
+        type="submit"
+        color="primary"
+        mat-raised-button
+        cdkFocusInitial
+        class="text-white"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,60 @@
+<div class="container blurry_remove">
+  <div class="dialog-header">
+    <h3 class="heading" mat-dialog-title>Verify your mobile number</h3>
+  </div>
+  <div class="close-dlg">
+    <mat-icon
+      class="close modal-dialog--close mat-dlg-close-icon"
+      (click)="dialogRef.close(null)"
+      >close</mat-icon
+    >
+  </div>
+  <div>
+    <div>
+      <p class="sub-title pb-0 pl-0">
+        We sent a confirmation code via text to {{ data.phoneNumber }}
+      </p>
+    </div>
+    <form *ngIf="otpForm" [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+      <div mat-dialog-content>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Enter the code from your text message </mat-label>
+          <input matInput formControlName="otp" />
+        </mat-form-field>
+        <p *ngIf="display" class="send-code">
+          You can send a code once again in
+          <span class="text-bold">{{ display }}</span>
+        </p>
+        <p *ngIf="!display" class="send-code">
+          Didn't get a code?
+          <button
+            type="button"
+            (click)="resendOTP()"
+            class="link send-otp-again"
+          >
+            Resend
+          </button>
+        </p>
+      </div>
+      <div mat-dialog-actions align="end">
+        <button
+          mat-stroked-button
+          (click)="dialogRef.close(null)"
+          type="button"
+          color="accent"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          color="primary"
+          class="text-white"
+          mat-raised-button
+          cdkFocusInitial
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="card notifcations-card">
+  <h1 class="text-bold">Notifications</h1>
+  <div class="description">
+    Response rate and speed have a significant effect on your profile rating and
+    chances to secure a booking. We highly recommend keeping text notifications
+    on.
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <form
+        *ngIf="notificationForm"
+        [formGroup]="notificationForm"
+        (ngSubmit)="onSubmitForm()"
+      >
+        <div class="mb-2">
+          <div class="custom-control custom-checkbox">
+            <mat-checkbox
+              formControlName="isSendChatResponsesToCellPhone"
+              class="custom-control-input"
+              color="primary"
+              id="customCheck"
+              class="text-white"
+            >
+              Send chat response to your cellphone
+              <span
+                *ngIf="
+                  personalInfoData &&
+                  personalInfoData.phoneNumber &&
+                  personalInfoData.phoneNumber != 'null'
+                "
+                >({{ personalInfoData.phoneNumber }})</span
+              >
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="mb-2">
+          <div class="custom-control custom-checkbox">
+            <mat-checkbox
+              formControlName="isDoNotWantToReceiveMarketingSMS"
+              class="custom-control-input"
+              color="primary"
+              id="customCheck1"
+              class="text-white"
+            >
+              I don’t want to receive marketing SMS from Location Genie
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="mb-2">
+          <div class="custom-control custom-checkbox">
+            <mat-checkbox
+              formControlName="isDoNotWantToReceiveMarketingEmail"
+              class="custom-control-input"
+              color="primary"
+              id="customCheck2"
+              class="text-white"
+            >
+              I don’t want to receive marketing emails from Location Genie
+            </mat-checkbox>
+          </div>
+        </div>
+        <button
+          class="text-light mt-4"
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="!notificationForm.valid || !notificationForm.dirty"
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

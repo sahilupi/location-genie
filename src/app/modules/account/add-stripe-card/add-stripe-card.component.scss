@@ -1,0 +1,207 @@
+.dialog-header {
+  border-bottom: 1px solid #e2e2e2;
+}
+.Request-Booking input::placeholder  {
+  font-size: 16px !important;
+  color: #000 !important;
+}
+// input{
+
+//   color: #736f6f !important;
+// }
+.heading {
+  align-items: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
+.container {
+  margin-top: 15px;
+}
+.col-12.custom.px-0 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #676767;
+  text-align: center;
+  width: 100%;
+}
+::ng-deep button.cancel span.mdc-button__label {
+  color: #016670;
+}
+.mat-mdc-dialog-actions.mdc-dialog__actions {
+  border-top: 1px solid #e2e2e2;
+  padding: 12px 0;
+}
+
+.dialog-header {
+  h3.heading {
+    width: 95%;
+    padding: 0 0 7px;
+  }
+}
+
+.describe-field {
+  height: 70px;
+  width: 100%;
+  padding: 10px;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  // background-color: #ffffff9e;
+  z-index: 10000;
+  padding: 200%;
+  border-radius: 38%;
+  backdrop-filter: blur(3px);
+}
+
+// ::ng-deep.mdc-dialog__container {
+//   min-width: 600px !important;
+//   display: flex !important;
+// }
+
+//Responsive
+@media only screen and (max-width: 575px) {
+  .w-75 {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .dialog-header {
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 0 7px;
+    h3.heading {
+      width: 92%;
+      font-size: 15px;
+      line-height: 24px;
+      &:before {
+        height: auto;
+      }
+    }
+  }
+  .container {
+    max-width: 100%;
+  }
+}
+
+.payment-card {
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 15px 2px rgba(187, 171, 171, 0.25);
+  border: 0;
+  padding: 20px;
+  h1 {
+    font-size: 20.92px;
+  }
+  .description {
+    color: #736f6f;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  form {
+    .form-control {
+      background: #f1f1f1;
+    }
+  }
+}
+
+.stripe-card {
+  margin: 30px 0 10px;
+  display: block;
+}
+
+.No-coupen {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  padding: 20px;
+  padding: 13px;
+  font-weight: 500;
+}
+.coupens-div {
+  border: 1px solid #dddddd;
+  padding: 15px 16px;
+  border-radius: 10px;
+}
+
+.autocomplete-content {
+  height: 0;
+}
+
+.show.autocomplete-content {
+  height: 200px;
+  visibility: visible;
+  opacity: 1;
+}
+
+.autocomplete-content-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.autocomplete-arrow {
+  right: 21px;
+  top: 75%;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  background-color: #ffffff9e;
+  z-index: 10000;
+  padding: 200%;
+  border-radius: 38%;
+}
+
+.active-list {
+  background-color: #736f6f58;
+}
+
+.card-add-text {
+  border-bottom: 1px solid #016670;
+}
+
+.stripe-card-control {
+  width: 100%;
+  // height: calc(1.5em + 0.75rem + 2px);
+  padding: 0 0.75rem;
+  font-size: 1rem !important;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+::ng-deep.payment-form__element_root {
+  align-items: center;
+  display: flex;
+  padding: 0 16px;
+}
+
+
+/* Responsivenss */
+@media only screen and (max-width: 992px) {
+  .payment-card {
+    margin: 0 0 20px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .payment-card {
+    margin: 0;
+  }
+}

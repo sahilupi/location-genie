@@ -1,0 +1,13 @@
+.fa-trash {
+  position: absolute;
+  z-index: 1000;
+  right: 1%;
+  top: 5%;
+  height: 30px;
+  width: 30px;
+  padding: 8px;
+  transform: translate(-10%, -20%);
+  cursor: pointer;
+  background-color: #ffffff96;
+  border-radius: 50%;
+}

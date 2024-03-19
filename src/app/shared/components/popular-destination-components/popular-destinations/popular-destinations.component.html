@@ -1,0 +1,36 @@
+<section
+  class="hp-content-section hp-content-section hp-container"
+  aria-labelledby="section--local-hosts"
+>
+<div class="position-relative custom-column">
+  <div class="edit-delete-action">
+    <i
+      class="fas fa-pen fa-md"
+      *ngIf="isEditingData && isShowingEditButton()"
+      (click)="onEditDestinations()"
+    ></i>
+    <i
+      class="fas fa-plus fa-md"
+      *ngIf="isEditingData && getOccupiedPositions() <= 3"
+      (click)="onAddDestinations()"
+    ></i>
+  </div>
+  <div class="hp-content-section--info">
+    <h2 class="hp-content-section--title" id="section--local-hosts">
+      {{ header }}
+    </h2>
+  </div>
+</div>
+  <ul class="hp-content-section--content-list">
+    <li
+      class="hp-content-section--content-item hp-content-section--content-item__local_hosts"
+      *ngFor="let destination of destinations"
+    >
+      <app-popular-destination
+        [destination]="destination"
+        (deleteLocationEmiiter)="onDeleteDestination($event)"
+        [isEditingData]="isEditingData"
+      ></app-popular-destination>
+    </li>
+  </ul>
+</section>

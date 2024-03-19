@@ -1,0 +1,172 @@
+<div class="step-three-main">
+  <app-list-space-header
+    [stepNumber]="3"
+    [stepName]="'Get ready to shoot'"
+    (onSaveAndExit)="onUpdateOpeningHours('save')"
+  ></app-list-space-header>
+
+  <div class="step-one">
+    <div class="container stepper animate__animated animate__fadeInDown">
+      <div class="row" style="gap: 6px">
+        <div
+          class="single-step single-step-in-third"
+          [ngClass]="i === 0 ? 'active' : ''"
+          *ngFor="let stepper of stepperData; let i = index"
+        >
+          <app-listing-stepper
+            [stepperData]="stepper"
+            [activeIdx]="1"
+            [idx]="i"
+            [totalSteppers]="stepperData.length"
+          ></app-listing-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="location-crew">
+    <div class="container">
+      <h2 class="heading text-center">Set locations rules for crews</h2>
+      <div class="tickets row">
+        <div class="col-md-6" *ngFor="let rule of rules">
+          <div class="data animate__animated animate__fadeInLeft">
+            <h6>{{ rule.name }}</h6>
+            <div>
+              <label class="custom-checkbox">
+                <div (click)="onUpdateCheckedRules(rule.name, false)">
+                  <img
+                    [class]="
+                      rule.checked === false
+                        ? 'checked-cross animate__animated animate__fadeIn animate__faster'
+                        : ''
+                    "
+                    src="assets/images/cross.png"
+                    class="cross"
+                  /></div
+              ></label>
+            </div>
+            <div>
+              <label class="custom-checkbox">
+                <div (click)="onUpdateCheckedRules(rule.name, true)">
+                  <img
+                    [class]="
+                      rule.checked
+                        ? 'checked-tick animate__animated animate__fadeIn animate__faster'
+                        : ''
+                    "
+                    src="assets/images/tick.png"
+                    class="tick"
+                  /></div
+              ></label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" *ngFor="let rule of additionalRules">
+          <div
+            class="data d-flex justify-content-between animate__animated animate__fadeIn"
+          >
+            <h6>{{ rule.name }}</h6>
+            <i
+              class="fas fa-times remove-rule"
+              (click)="onRemoveRule(rule.name)"
+            ></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="search-box text-center animate__animated animate__fadeInDown">
+        <div class="search-box-inner">
+          <form
+            *ngIf="additionalRuleForm"
+            [formGroup]="additionalRuleForm"
+            (ngSubmit)="onAddNewRule()"
+          >
+            <input
+              type="text"
+              formControlName="name"
+              placeholder="Type here to add new rule..."
+              class="form-control"
+            />
+            <button type="submit">Add</button>
+          </form>
+        </div>
+      </div>
+
+      <h2 class="heading mb-2 text-center">Opening Hours</h2>
+      <p class="text-center info">
+        Set your opening hours to let guests know what times your location is
+        open to host bookings (i.e. your general availability). This will block
+        guests from booking times outside of these hours.
+      </p>
+      <form *ngIf="daysForm" [formGroup]="daysForm">
+        <div formArrayName="days" *ngIf="daysControls">
+          <div
+            *ngFor="let dayCtrl of daysControls; let i = index"
+            [formGroupName]="i"
+            class="opening-hours d-flex align-items-center"
+            [ngClass]="!dayCtrl.value.checked ? 'disabled' : ''"
+          >
+            <div class="divide">
+              <h3 class="mb-0 d-inline-block">{{ days[i].name }}</h3>
+              <div class="toggle d-inline-block">
+                <label class="switch">
+                  <mat-slide-toggle color="primary" formControlName="checked">
+                    <span [ngClass]="!dayCtrl.value.checked ? 'disabled' : ''">
+                      {{ dayCtrl.value.checked ? "Open" : "Closed" }}
+                    </span></mat-slide-toggle
+                  >
+                </label>
+              </div>
+            </div>
+            <div class="datepickers" *ngIf="dayCtrl.value.checked">
+              <mat-form-field appearance="outline">
+                <mat-label>Start time</mat-label>
+                <mat-select
+                  formControlName="startTime"
+                  (selectionChange)="onChangeEndTime(i, $event.value)"
+                >
+                  <mat-option
+                    *ngFor="let time of startTimeSlots"
+                    [value]="time.value"
+                    >{{ time.name.toUpperCase() }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <p class="mb-0">-</p>
+              <mat-form-field appearance="outline">
+                <mat-label>End time</mat-label>
+                <mat-select formControlName="endTime">
+                  <mat-option
+                    *ngFor="let time of dayCtrl.value.availableEndTimeSlots"
+                    [value]="time.value"
+                    >{{ time.name.toUpperCase() }}</mat-option
+                  >
+                  <mat-option [value]="null" disabled>Next day</mat-option>
+                  <mat-option
+                    *ngFor="let time of nextDayTimeSlots"
+                    [value]="time.value"
+                    >{{ time.name.toUpperCase() }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- <div class="container" style="margin: 0 auto 90px auto">
+  <div class="row">
+    <div class="col-12 text-center">
+      <img src="assets/images/Group 988.png" style="width: 240px" />
+    </div>
+  </div>
+</div> -->
+
+  <app-list-space-buttons
+    [backBtnRoute]="backBtnRoute"
+    [progressValue]="15"
+    [backBtnText]="'Cancel'"
+    (nextBtnClick)="onUpdateRules()"
+  ></app-list-space-buttons>
+</div>

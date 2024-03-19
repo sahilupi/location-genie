@@ -1,0 +1,103 @@
+.mat-mdc-form-field {
+  width: 100%;
+}
+.dialog-header {
+  border-bottom: 1px solid #e2e2e2;
+}
+.heading {
+  align-items: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
+.container {
+  margin-top: 15px;
+}
+.content {
+  margin-right: 25px;
+  width: 100px;
+}
+
+::ng-deep {
+  .custom {
+    .mat-mdc-text-field-wrapper {
+      height: 45px !important;
+      font-size: 12px;
+    }
+    .mat-mdc-form-field-flex {
+      height: 45px;
+    }
+    .mat-mdc-text-field-wrapper
+      .mat-mdc-form-field-flex
+      .mat-mdc-floating-label {
+      top: 22px;
+    }
+    .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+      top: 26px !important;
+    }
+    .small,
+    small {
+      font-size: 10px;
+    }
+    .mat-mdc-form-field-error-wrapper {
+      padding: 0;
+
+      margin-top: -4px;
+    }
+    input {
+      box-shadow: none;
+    }
+    .mat-mdc-text-field-wrapper.mdc-text-field--outlined
+      .mat-mdc-form-field-infix {
+      padding-top: 12px;
+      padding-bottom: 10px;
+      min-height: 45px;
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
+}
+
+.dialog-header {
+  .mat-icon {
+    // margin: 0 5px 0 0;
+    cursor: pointer;
+  }
+}
+
+::ng-deep.mdc-fab {
+  width: 38px !important;
+  height: 38px !important;
+}
+
+hr {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+::ng-deep .blurry_remove{
+  .mat-mdc-text-field-wrapper {
+    .mat-mdc-form-field-input-control {
+      font-size: 13px !important;
+      max-width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
+::ng-deep .blurry_remove {
+  label{
+    transform: skew(0deg, 0deg) !important;
+      -webkit-transform: skew(0eg, 0deg) !important;
+  }
+  .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+    top: 12px;
+    background: #fff !important;
+  }
+  .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+    --mat-mdc-form-field-label-transform: translateY( -34.75px) scale(var(--mat-mdc-form-field-floating-label-scale, 0.75));
+    transform: var(--mat-mdc-form-field-label-transform);
+    top: -10px !important;
+  }
+}

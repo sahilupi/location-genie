@@ -1,0 +1,108 @@
+.step-three-main {
+  height: calc(100vh - 100px);
+  overflow: auto;
+}
+
+::ng-deep.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      .box {
+        min-height: auto;
+        padding: 6px 8px 1px 8px;
+        h5.description {
+          min-height: auto;
+        }
+      }
+      .step {
+        width: 80px;
+        height: 45px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
+
+.activity-head {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+.hp-top-info {
+  position: relative;
+  padding: 26px 27px 13px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  width: 400px;
+  height: fit-content;
+}
+
+.activity-top-info {
+  position: relative;
+  padding: 26px 27px 13px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  width: 400px;
+}
+
+.hp-search--dropdown {
+  height: 46px;
+  width: 100%;
+  border: 1px solid #c7c7cd;
+  border-radius: 2px;
+  background-color: #ffffff;
+  text-indent: 16px;
+  color: #333333;
+  font-size: 16px;
+  line-height: 26px;
+  cursor: pointer;
+  outline: none;
+}
+li {
+  list-style: none;
+}
+.activity-category {
+  padding: 6px 24px;
+  border-bottom: 1px solid #cdcccc;
+}
+.activity-category .select-category.active {
+  color: black;
+  font-weight: 600;
+  border-bottom: 1px solid #016670;
+  padding-bottom: 8px;
+}
+
+.activity-category .select-category {
+  color: #333;
+  font-size: 13px;
+  text-decoration: none;
+}

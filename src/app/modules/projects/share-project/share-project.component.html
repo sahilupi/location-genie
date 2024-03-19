@@ -1,0 +1,177 @@
+<div class="container share_projcts">
+  <div
+    class="dialog-header create-appoitment-header d-flex justify-content-between"
+  >
+    <h3 class="heading">Share Project</h3>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(isPublic)"
+        >close</mat-icon
+      >
+    </div>
+  </div>
+
+  <div class="dialog add-Staff create-appointment">
+    <div class="spinner" *ngIf="isLoading">
+      <app-square-spinner></app-square-spinner>
+    </div>
+
+    <form class="form">
+      <div mat-dialog-content class="dialog-content share-p">
+        <div class="row mx-0">
+          <div class="col-md-12 px-0 mb-2 privacy">
+            <div
+              role="button"
+              tabindex="1"
+              [matMenuTriggerFor]="isOwner ? menuu : null"
+              (focus)="$event.stopPropagation(); isMenuFocused = true"
+              (blur)="$event.stopPropagation(); isMenuFocused = false"
+            >
+              <i
+                class="fas"
+                [ngClass]="!isPublic ? 'fa-lock' : 'fa-globe-europe'"
+              ></i>
+              {{ !isPublic ? "Private project" : "Public project"
+              }}<i
+                *ngIf="isOwner"
+                class="fas fa-chevron-down chevron ml-1"
+                [ngClass]="!isMenuFocused ? 'chevron-rotate' : ''"
+              ></i>
+            </div>
+            <mat-menu #menuu="matMenu">
+              <button
+                type="button"
+                (click)="onUpdatePrivacyStatus(data.projectData.id, false)"
+                mat-menu-item
+              >
+                <i class="fas fa-lock"></i> Private project
+              </button>
+              <button
+                type="button"
+                (click)="onUpdatePrivacyStatus(data.projectData.id, true)"
+                mat-menu-item
+              >
+                <i class="fas fa-globe-europe"></i> Public project
+              </button>
+            </mat-menu>
+          </div>
+          <small *ngIf="!isPublic" class="privacy-text mb-3"
+            >Only you and invited members can view and edit the project.</small
+          >
+          <small *ngIf="isPublic" class="privacy-text mb-3"
+            >Anyone with a link can view project. Invited members can view and
+            edit the project.</small
+          >
+          <div class="col-md-12 custom mb-1 px-0">
+            <div class="d-flex justify-content-between">
+              <h4 class="text-bold invite">
+                {{ isSharing ? "Share project" : "Invite to project" }}
+              </h4>
+              <div class="share-invite-group" *ngIf="isPublic">
+                <span
+                  (click)="isSharing = false"
+                  [ngClass]="isSharing ? '' : 'active'"
+                  >Invite</span
+                >
+                <span
+                  (click)="isSharing = true"
+                  [ngClass]="isSharing ? 'active' : ''"
+                  >Share</span
+                >
+              </div>
+            </div>
+            <h6 class="send-mail-text">
+              {{
+                isSharing
+                  ? "Send an email to share project with other people on your team. To share project with multiple people, add a comma between each email."
+                  : "Send an email invite to the other people on your team. To send invitations to multiple people, add a comma between each email."
+              }}
+            </h6>
+          </div>
+
+          <div class="col-md-10 custom mb-1 px-0 email_input">
+            <div
+              tabindex="0"
+              class="project-emails"
+              [ngClass]="
+                isInvalidEmails && emails.length <= 0 ? 'has-error' : ''
+              "
+            >
+              <mat-chip-grid #chipGrid aria-label="Enter fruits">
+                <mat-chip-row
+                  *ngFor="let email of emails"
+                  (removed)="removeEmail(email)"
+                  [editable]="true"
+                  (edited)="editEmail(email, $event)"
+                  [aria-description]="'press enter to edit ' + email"
+                >
+                  {{ email }}
+                  <button matChipRemove [attr.aria-label]="'remove ' + email">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip-row>
+                <input
+                  placeholder="Enter emails"
+                  class="email-input form-control"
+                  [ngClass]="{'mdc-text-field__input': !removeMdcClass}"
+                  #emailInput
+                  [matChipInputFor]="chipGrid"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="addEmail($event)"
+                />
+                <i class="far fa-envelope"></i>
+              </mat-chip-grid>
+            </div>
+          </div>
+          <div class="col-2">
+            <button
+              type="button"
+              color="primary"
+              class="text-light"
+              (click)="onSendInvitations()"
+              mat-raised-button
+            >
+              Send
+            </button>
+          </div>
+          <div
+            class="add-hint col-md-10"
+            *ngIf="commonService.validateEmail(emailInput.value)"
+            role="button"
+          >
+            <!-- -->
+            <p>
+              Add <b>{{ emailInput.value }}</b>
+            </p>
+          </div>
+
+          <div class="col-md-10 custom mb-1 px-0">
+            <div appearance="outline">
+              <mat-label class="invite-label">
+                {{ isSharing ? "Public link" : "Invite link" }}</mat-label
+              >
+              <input
+                #link
+                class="form-control copy-link-input"
+                [value]="isSharing ? shareLink : inviteLink || ''"
+                type="text"
+              />
+            </div>
+          </div>
+
+          <div class="col-2 copy-link-parent">
+            <a class="copy-link" (click)="copyLink(link.value)">
+              <small><i class="far fa-copy" matTooltip="Copy link"></i></small>
+            </a>
+          </div>
+          <a class="reset-link" (click)="onResetInviteLink()" *ngIf="!isSharing"
+            >Reset link</a
+          >
+        </div>
+      </div>
+      <div class="col-md-12 px-0">
+        <div mat-dialog-actions align="end" class="px-0"></div>
+      </div>
+    </form>
+  </div>
+</div>

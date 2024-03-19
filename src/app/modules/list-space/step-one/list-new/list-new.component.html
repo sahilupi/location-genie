@@ -1,0 +1,418 @@
+<div class="list-new-main">
+  <app-list-space-header
+    [stepNumber]="1"
+    [stepName]="'The basics'"
+    [showSaveAndExit]="listingId ? true : false"
+    (onSaveAndExit)="onSubmitForm('save')"
+  ></app-list-space-header>
+  <div class="step-one">
+    <div class="container stepper">
+      <div class="row">
+        <div
+          class="single-step col-lg-3 col-md-3 col-sm-12"
+          [ngClass]="i === 0 ? 'active' : ''"
+          *ngFor="let stepper of stepperData; let i = index"
+        >
+          <app-listing-stepper
+            [stepperData]="stepper"
+            [activeIdx]="1"
+            [idx]="i"
+            [totalSteppers]="stepperData.length"
+          ></app-listing-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-fields">
+    <div class="container">
+      <div class="text-center">
+        <div class="api-warning" *ngIf="googleApiError">
+          <small
+            [innerHTML]="'Google Api issue, Please enter address manually'"
+          ></small>
+        </div>
+        <h2 class="description">What is the address of your location?</h2>
+        <h4>
+          Guests will only get your exact address once they’ve booked a
+          reservation.
+        </h4>
+      </div>
+      <form
+        *ngIf="addressForm"
+        [formGroup]="addressForm"
+        (ngSubmit)="onSubmitForm()"
+        autocomplete="off"
+      >
+        <div class="row">
+          <div class="col-9 fullwidth form-group">
+            <div class="">
+              <label for="inputAddress"
+                >Country / Region<span class="text-danger">*</span></label
+              >
+              <!-- (keypress)="
+            commonService.charOnlyWithSpace($event); onFilterCountry($event)
+          "
+          (keyup)="onFilterCountry($event)"
+          (focus)="onFocusCountry()"
+          (blur)="onBlurCountry()" -->
+              <input
+                formControlName="country"
+                type="text"
+                class="form-control"
+                id="inputAddress"
+                placeholder="Select a country"
+                autocomplete="off"
+                autoComplete="new-password"
+                (keypress)="
+                  commonService.charOnlyWithSpace($event);
+                  onFilterCountry($event)
+                "
+                (keyup)="onFilterCountry($event)"
+                (focus)="onFocusCountry()"
+                (blur)="onBlurCountry()"
+              />
+              <small
+                class="has-error--text"
+                *ngIf="c['country'].hasError('required') && isSubmitted"
+                >Country is required</small
+              >
+              <span>
+                <span class="autocomplete-arrow-js autocomplete-arrow">
+                  <i class="fas fa-angle-down"> </i>
+                </span>
+                <div
+                  [ngClass]="showCountryList ? 'show' : ''"
+                  class="autocomplete-content autocomplete-content-js"
+                >
+                  <ul class="autocomplete-content-default">
+                    <li class="autocomplete-content-popular-wrapper-js">
+                      <ul class="autocomplete-content-items">
+                        <li
+                          class="autocomplete-content-item list autocomplete-content-item-class utocomplete-content-item-id"
+                          [ngClass]="
+                            country.name === this.defaultCountry.name
+                              ? 'dark-bg'
+                              : ''
+                          "
+                          *ngFor="let country of countriesList"
+                          data-index="25"
+                          (mousedown)="
+                            onSelectCountry(country.name, country.code)
+                          "
+                        >
+                          {{ country.name }}
+
+                          <i
+                            class="fas fa-check"
+                            *ngIf="country.name === this.defaultCountry.name"
+                          ></i>
+                        </li>
+                        <li
+                          class="autocomplete-content-item"
+                          *ngIf="
+                            (
+                              countriesList
+                              | filter : addressForm.value?.country?.trim()
+                            )?.length === 0
+                          "
+                        >
+                          No results for
+                          <span class="autocomplete-content-empty--query"
+                            >“{{ addressForm.value.country }}“</span
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                    <li
+                      class="autocomplete-content-start-typing-wrapper-js hidden"
+                    ></li>
+                  </ul>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-3 form-group fullwidth">
+            <label for="inputCity">Apt, Suite <small>(Optional)</small></label>
+            <input
+              formControlName="aptAndSuite"
+              type="text"
+              class="form-control"
+              id="inputCity"
+              placeholder="e.g. Apt #3"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-9 fullwidth">
+            <div class="position-relative">
+              <label for="streetAddress"
+                >Street Address <span class="text-danger">*</span></label
+              >
+              <input
+                [ngClass]="{
+                  'has-error':
+                    (c['streetAddress'].invalid &&
+                      c['streetAddress'].touched) ||
+                    (c['streetAddress'].invalid && isSubmitted)
+                }"
+                formControlName="streetAddress"
+                type="text"
+                class="form-control"
+                (focus)="showAutoComplete = true"
+                (blur)="showAutoComplete = false"
+                id="streetAddress"
+                placeholder="e.g. 911 General St."
+                #autocompleteInput
+              />
+              <span>
+                <span class="autocomplete-arrow-js autocomplete-arrow">
+                  <i class="fas fa-angle-down"> </i>
+                </span>
+                <div
+                  [ngClass]="showAutoComplete && predictions ? 'show' : ''"
+                  class="autocomplete-content autocomplete-content-js"
+                >
+                  <ul class="autocomplete-content-default">
+                    <li class="autocomplete-content-popular-wrapper-js">
+                      <ul class="autocomplete-content-items">
+                        <li
+                          *ngFor="let prediction of predictions"
+                          class="autocomplete-content-item list custom justify-content-start autocomplete-content-item-class"
+                          (mousedown)="onSelectStreetAdreess(prediction)"
+                        >
+                          <mat-icon class="mr-2" color="primary">
+                            location_on</mat-icon
+                          >
+                          <span
+                            [innerHTML]="
+                              prediction.description
+                                | highlight : c['streetAddress'].value
+                            "
+                          ></span>
+                          <!-- <i class="fas fa-check"></i> -->
+                          <hr />
+                        </li>
+                        <li
+                          class="autocomplete-content-item"
+                          *ngIf="
+                            addressForm.value.streetAddress &&
+                            addressForm.value.streetAddress.length > 1 &&
+                            !streetAddress &&
+                            predictions.length <= 0 &&
+                            !googleApiError
+                          "
+                        >
+                          No results for
+                          <span class="autocomplete-content-empty--query"
+                            >“{{ addressForm.value.streetAddress }}“</span
+                          >
+                        </li>
+                        <li
+                          class="autocomplete-content-item"
+                          *ngIf="
+                            (!addressForm.value.streetAddress ||
+                              addressForm.value.streetAddress.trim().length <
+                                2 ||
+                              predictions.length <= 0) &&
+                            !googleApiError
+                          "
+                        >
+                          Start typing to get results...
+                        </li>
+                        <li
+                          class="autocomplete-content-item text-danger"
+                          *ngIf="googleApiError"
+                        >
+                          Google Api issue, Please enter address manually
+                        </li>
+                      </ul>
+                    </li>
+                    <li
+                      class="autocomplete-content-start-typing-wrapper-js hidden"
+                    ></li>
+                  </ul>
+                </div>
+              </span>
+              <small
+                class="has-error--text"
+                *ngIf="
+                  (c['streetAddress'].hasError('required') &&
+                    c['streetAddress'].touched) ||
+                  (c['streetAddress'].hasError('required') && isSubmitted)
+                "
+                >Street address is required</small
+              >
+            </div>
+          </div>
+          <!-- *ngIf="addressForm.value.country === tempDefaultCountry.name" -->
+          <div class="col-3 form-group fullwidth">
+            <label for="inputCity"
+              >Emirate/State<small>(Autocomplete)</small>
+              <span class="text-danger">*</span></label
+            >
+            <mat-form-field
+              appearance="outline"
+              [ngClass]="{
+                'has-error-mat':
+                  (c['state'].invalid && c['state'].touched) ||
+                  (c['state'].invalid && isSubmitted)
+              }"
+            >
+              <input matInput formControlName="state" placeholder="Emirate" />
+              <!-- [readonly]="!googleApiError" -->
+              <!-- readonly
+              class="disabled-input" -->
+              <!-- <mat-option
+                *ngFor="let emirate of dubaiEmirates"
+                [value]="emirate.name"
+                >{{ emirate.name }}</mat-option
+              >
+            </mat-select> -->
+              <!-- <mat-select
+                formControlName="state"
+                placeholder="Please select an emirate"
+                [(ngModel)]="selectedEmirate"
+                (ngModelChange)="onEmirateChange($event)"
+              >
+                <mat-option
+                  *ngFor="let emirate of dubaiEmirates"
+                  [value]="emirate.name"
+                >
+                  {{ emirate.name }}
+                </mat-option>
+              </mat-select> -->
+              <mat-error>
+                <small
+                  class="has-error--text"
+                  *ngIf="
+                    (c['state'].hasError('required') && c['state'].touched) ||
+                    (c['state'].hasError('required') && isSubmitted)
+                  "
+                  >Emirates/State is required</small
+                >
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <!-- <div class="col-9 fullwidth">
+          <label for="inputAddress"
+            >City <span class="text-danger">*</span></label
+          >
+          <mat-form-field
+            appearance="outline"
+            [ngClass]="{
+              'has-error-mat':
+                (c['city'].invalid && c['city'].touched) ||
+                (c['city'].invalid && isSubmitted)
+            }"
+          >
+            <mat-select
+              formControlName="city"
+              placeholder="Please select a city"
+            >
+              <mat-option *ngFor="let city of filteredCities" [value]="city">{{
+                city
+              }}</mat-option>
+            </mat-select>
+
+            <mat-error>
+              <small
+                class="has-error--text"
+                *ngIf="
+                  (c['city'].hasError('required') && c['city'].touched) ||
+                  (c['city'].hasError('required') && isSubmitted)
+                "
+                >City is required</small
+              >
+            </mat-error>
+          </mat-form-field>
+
+        
+        </div> -->
+          <div class="col-9 fullwidth form-group">
+            <label for="inputAddress"
+              >City <small>(Autocomplete)</small>
+              <span class="text-danger">*</span></label
+            >
+            <mat-form-field
+              appearance="outline"
+              [ngClass]="{
+                'has-error-mat':
+                  (c['city'].invalid && c['city'].touched) ||
+                  (c['city'].invalid && isSubmitted)
+              }"
+            >
+              <input matInput formControlName="city" placeholder="City" />
+              <!-- [readonly]="!googleApiError" -->
+              <!-- readonly
+                class="disabled-input" -->
+              <!-- <mat-select
+                formControlName="city"
+                placeholder="Please select a city"
+              >
+                <mat-option
+                  *ngFor="let city of filteredCities"
+                  [value]="city"
+                  >{{ city }}</mat-option
+                >
+              </mat-select> -->
+
+              <mat-error>
+                <small
+                  class="has-error--text"
+                  *ngIf="
+                    (c['city'].hasError('required') && c['city'].touched) ||
+                    (c['city'].hasError('required') && isSubmitted) ||
+                    (!selectedEmirate && c['city'].touched)
+                  "
+                >
+                  {{
+                    !selectedEmirate
+                      ? "Please select an emirate first"
+                      : "City is required"
+                  }}
+                </small>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-3 form-group fullwidth">
+            <label for="inputCity">Zip Code <small>(Optional)</small></label>
+            <input
+              [ngClass]="{
+                'has-error':
+                  (c['zipCode'].invalid && c['zipCode'].touched) ||
+                  (c['zipCode'].invalid && isSubmitted)
+              }"
+              formControlName="zipCode"
+              type="text"
+              class="form-control"
+              (keypress)="commonService.numberOnly($event)"
+              maxlength="6"
+              id="inputCity"
+              placeholder="e.g. 94102"
+            />
+            <small
+              class="has-error--text"
+              *ngIf="
+                (c['zipCode'].hasError('required') && c['zipCode'].touched) ||
+                (c['zipCode'].hasError('required') && isSubmitted)
+              "
+              >Zip code is required</small
+            >
+          </div>
+        </div>
+        <div class="button">
+          <app-list-space-buttons
+            [backBtnRoute]="backBtnRoute"
+            [progressValue]="15"
+            [backBtnText]="'Cancel'"
+          ></app-list-space-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

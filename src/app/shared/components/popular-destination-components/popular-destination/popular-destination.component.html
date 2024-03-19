@@ -1,0 +1,84 @@
+<a
+  class="hp-img-content hp-img-content__local_hosts hp-img-content__hovered"
+  rel="nofollow"
+>
+  <i
+    *ngIf="isEditingData && destination.id"
+    class="fas fa-trash fa-md text-danger"
+    (click)="onDeleteLocation(destination.id)"
+  ></i>
+  <figure
+    class="hp-img-content--figure hp-img-content--figure__local_hosts aspect-ratio-content"
+  >
+    <a [href]="getRoute(destination)" target="_blank" *ngIf="destination.id">
+      <picture>
+        <source
+          type="image/webp"
+          data-srcset="{{ destination.imageUrl }}"
+          [srcset]="destination.imageUrl"
+        />
+        <img
+          class="hp-img-content--img loaded"
+          data-src="{{ destination.imageUrl }}"
+          alt="Warehouse Spaces"
+          aria-hidden="true"
+          width="800"
+          height="800"
+          [src]="destination.imageUrl"
+        />
+      </picture>
+    </a>
+    <a [href]="getRoute(destination)" target="_blank" *ngIf="destination.id">
+      <figcaption
+        class="hp-img-content--caption hp-img-content--caption__local_hosts"
+      >
+        <p
+          class="hp-img-content--title hp-img-content--title__local_hosts"
+          [innerHTML]="destination.title"
+        ></p>
+        <p
+          class="hp-img-content--more hp-img-content--more__local_hosts d-flex align-items-center"
+          aria-hidden="true"
+        >
+          {{ destination.linkText }}
+          <mat-icon>arrow_right_alt</mat-icon>
+        </p>
+      </figcaption>
+    </a>
+    <a *ngIf="!destination.id">
+      <picture>
+        <source
+          type="image/webp"
+          data-srcset="{{ destination.imageUrl }}"
+          [srcset]="destination.imageUrl"
+        />
+        <img
+          class="hp-img-content--img loaded"
+          data-src="{{ destination.imageUrl }}"
+          alt="Warehouse Spaces"
+          aria-hidden="true"
+          width="800"
+          height="800"
+          [src]="destination.imageUrl"
+        />
+      </picture>
+    </a>
+    <a *ngIf="!destination.id">
+      <figcaption
+        class="hp-img-content--caption hp-img-content--caption__local_hosts"
+      >
+        <p
+          class="hp-img-content--title hp-img-content--title__local_hosts"
+          [innerHTML]="destination.title"
+        ></p>
+        <p
+          class="hp-img-content--more hp-img-content--more__local_hosts d-flex align-items-center"
+          aria-hidden="true"
+        >
+          {{ destination.linkText }}
+          <mat-icon>arrow_right_alt</mat-icon>
+        </p>
+      </figcaption>
+    </a>
+  </figure>
+</a>

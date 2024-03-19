@@ -1,0 +1,375 @@
+.step-three-main {
+  height: calc(100vh - 60px);
+  overflow: auto;
+}
+
+.location-crew {
+  margin: 0 0 80px 0;
+  h2.heading {
+    font-weight: 600;
+    margin: 0 0 3px 0;
+    margin: 40px 0 50px 0;
+  }
+}
+
+.data {
+  border-radius: 5px;
+  border: 1px solid #c8c5c5;
+  background: #fcfcfc;
+  margin: 0 0 30px 0;
+  position: relative;
+  padding: 12px 15px;
+  h6 {
+    font-weight: 600;
+    margin: 0;
+    font-size: 14px;
+  }
+  img.tick {
+    position: absolute;
+    right: 0;
+    border-left: 1px solid rgb(200, 197, 197);
+    top: 0;
+    padding: 14px 12px;
+    width: 41px;
+    cursor: pointer;
+    height: 100%;
+  }
+  img.cross {
+    width: 46px;
+    position: absolute;
+    right: 40px;
+    border-left: 1px solid rgb(200, 197, 197);
+    top: 0;
+    padding: 14px 16px;
+    cursor: pointer;
+  }
+}
+
+.search-box-inner {
+  position: relative;
+  width: 400px;
+  margin: 40px auto 40px auto;
+  .form-control {
+    height: 42px !important;
+  }
+  button {
+    border-radius: 0 5px 5px 0;
+    border-left: 1px solid #c8c5c5 !important;
+    background: #fcfcfc;
+    border: 0;
+    padding: 7px 21px;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    font-size: 17px;
+  }
+}
+
+p.info {
+  color: #a7a4a4;
+  font-size: 13px;
+  margin: 0 auto 30px auto;
+  width: 60%;
+}
+.opening-hours {
+  border-radius: 5px;
+  border: 1px solid #e1d9d9;
+  background: #fff;
+  padding: 10px 15px;
+  margin: 0 0 10px 0;
+  // width: 80%;
+  h3 {
+    width: 30%;
+    font-weight: 500;
+    font-size: 15px;
+  }
+  .toggle {
+    width: 30%;
+  }
+  .datepickers {
+    width: 50%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    p.mb-0 {
+      padding: 0 30px;
+    }
+    .date-dropdown {
+      border-radius: 5px;
+      // border: 1px solid #c8c5c5;
+      background: #fefefe;
+      padding: 5px 15px;
+      // width: 140px;
+    }
+  }
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox {
+  display: inline;
+}
+
+.checked-cross {
+  background-color: rgba(255, 0, 0, 0.252);
+}
+
+.checked-tick {
+  background-color: rgba(0, 128, 0, 0.285);
+}
+
+.remove-rule {
+  cursor: pointer;
+}
+.remove-rule:hover {
+  color: red;
+}
+
+::ng-deep.mdc-label {
+  padding-top: 0px;
+}
+
+.disabled {
+  color: #8f8f8f;
+}
+
+/* 6-9-2023 */
+::ng-deep {
+  .opening-hours {
+    .mdc-form-field {
+      label {
+        margin: -1px 0 0;
+      }
+    }
+    .toggle {
+      .switch {
+        height: auto;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+  }
+}
+
+.divide {
+  width: 50%;
+}
+
+::ng-deep {
+  .opening-hours {
+    .toggle {
+      .mdc-form-field {
+        align-items: center !important;
+        gap: 7px;
+      }
+    }
+  }
+}
+
+//Responsive
+@media screen and (max-width: 1200px) {
+  .step-one {
+    .single-step {
+      width: 18%;
+    }
+    .row {
+      justify-content: center;
+    }
+  }
+  .location-crew {
+    h2.heading {
+      font-size: 28px;
+      margin: 0px 0 50px 0;
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .location-crew {
+    h2.heading {
+      font-size: 24px;
+    }
+  }
+  .opening-hours {
+    h3 {
+      width: 37%;
+    }
+    .datepickers {
+      width: 62%;
+    }
+  }
+  p.info {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      .box {
+        min-height: auto;
+        padding: 6px 8px 1px 8px;
+        h5.description {
+          min-height: auto;
+        }
+      }
+      .step {
+        width: 80px;
+        height: 45px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .opening-hours {
+    h3 {
+      width: 52%;
+    }
+    ::ng-deep {
+      .toggle {
+        .mdc-form-field {
+          gap: 2px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .container.stepper,
+  .container {
+    width: calc(100% - 30px);
+  }
+  .search-box-inner {
+    width: 100%;
+  }
+  .divide {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 5px;
+  }
+  .opening-hours {
+    flex-direction: column;
+    gap: 15px;
+    h3 {
+      width: auto;
+    }
+    .toggle {
+      width: fit-content;
+      margin: 0 15px 0 0;
+    }
+    .datepickers {
+      width: 100%;
+      p.mb-0 {
+        padding: 0 10px;
+      }
+    }
+  }
+  ::ng-deep {
+    .mdc-notched-outline--notched {
+      .mdc-notched-outline__notch {
+        padding: 0 2px !important;
+      }
+      .mat-mdc-text-field-wrapper {
+        .mat-mdc-form-field-flex {
+          .mat-mdc-floating-label {
+            top: 25px !important;
+          }
+        }
+      }
+    }
+    .mdc-floating-label--float-above {
+      max-width: 165% !important;
+    }
+  }
+  .location-crew {
+    h2.heading {
+      font-size: 18px;
+    }
+  }
+  .tickets {
+    .col-md-6:last-child {
+      .data {
+        margin: 0;
+      }
+    }
+  }
+  ::ng-deep {
+    .opening-hours {
+      .toggle {
+        .mdc-form-field {
+          align-items: center !important;
+          gap: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .search-box-inner {
+    input.form-control {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      padding-right: 77px;
+    }
+  }
+  .data {
+    padding: 12px 5px;
+    img.cross {
+      width: 35px;
+      position: absolute;
+      right: 29px;
+      height: 38px;
+      object-fit: contain;
+      padding: 0px 12px;
+    }
+    img.tick {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 14px 8px;
+      width: 30px;
+      object-fit: contain;
+    }
+    h6 {
+      font-size: 12px;
+    }
+  }
+  .opening-hours {
+    .datepickers {
+      p.mb-0 {
+        padding: 0 5px;
+      }
+    }
+  }
+}

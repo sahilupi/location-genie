@@ -1,0 +1,60 @@
+.container {
+  margin-top: 71px;
+  padding-top: 40px;
+  .landing-owner-publish--title {
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 52px;
+    margin-bottom: 80px;
+  }
+
+  .landing-owner-publish-steps {
+    display: flex;
+    margin-bottom: 98px;
+  }
+
+  .landing-owner-publish-step--title {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    margin-bottom: 10px;
+    min-height: 60px;
+
+    span {
+      color: #ffffff;
+      background: #016670;
+      padding: 2px 11px;
+      border-radius: 50%;
+    }
+  }
+
+  .landing-owner-publish-step--text {
+    color: #858585;
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .landing-owner--title__main {
+    color: #016670;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 30px;
+    margin-bottom: 16px;
+  }
+
+  .landing-owner--img img {
+    max-width: 300px;
+  }
+
+  .landing-owner-publish-benefits {
+    display: flex;
+    margin-bottom: 43px;
+  }
+
+  .landing-owner-publish-benefit--text {
+    color: #333;
+    font-weight: 400;
+    line-height: 32px;
+  }
+}

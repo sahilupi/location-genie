@@ -1,0 +1,625 @@
+<div
+  [ngClass]="isShadowHeader && !isSticky ? 'no-box-shadow' : 'sticky'"
+  class="not-registered-user--header base-header base-header-js not-registered-user header02 base-header__top"
+>
+  <div class="not-registered-user--header-left">
+    <div
+      data-merepopover="popoverSearch"
+      class="header-menu--item header-menu--item__searchLocation"
+    >
+      <div
+        class="dropdown-type-location header-menu--link header-menu--link__searchLocation"
+        type="button"
+        data-toggle="dropdown"
+      >
+        <div class="header-menu--type header-menu--type-js">
+          <!-- <span style="display: inline-block">Logo</span> -->
+          <img
+            src="assets/images/location-logo.png"
+            class="img-fluid"
+            routerLink="/"
+          />
+        </div>
+      </div>
+    </div>
+    <span
+      [ngClass]="{ open: isMenuOpen }"
+      class="mobile-menu-logo-arr"
+      (click)="onToggleMobileMenu()"
+    >
+      <mat-icon role="img">menu</mat-icon>
+    </span>
+  </div>
+
+  <div class="not-registered-user--header-right">
+    <div class="not-registered-user--user-action">
+      <div class="menus" *ngIf="isUserAuthenticated">
+        <div
+          class="not-registered-user--user-action-item not-registered-user--user-action-item__become"
+        >
+          <a
+            routerLink="/projects"
+            routerLinkActive="active"
+            class="not-registered-user--user-action-link not-registered-user--user-action-link__become become-a-host-js"
+            *ngIf="!isHost"
+          >
+            Projects
+          </a>
+        </div>
+
+        <div
+          class="not-registered-user--user-action-item not-registered-user--user-action-item__become"
+        >
+          <a
+            href="/messages"
+            class="not-registered-user--user-action-link not-registered-user--user-action-link__become become-a-host-js"
+          >
+            Messages
+          </a>
+        </div>
+        <div
+          class="not-registered-user--user-action-item not-registered-user--user-action-item__become"
+        >
+          <a
+            href="/bookings"
+            routerLinkActive="active"
+            class="not-registered-user--user-action-link not-registered-user--user-action-link__become become-a-host-js"
+          >
+            Bookings
+          </a>
+        </div>
+        <div
+          *ngIf="isHost"
+          class="not-registered-user--user-action-item not-registered-user--user-action-item__become"
+        >
+          <a
+            routerLink="/my-listings"
+            class="not-registered-user--user-action-link not-registered-user--user-action-link__become become-a-host-js"
+          >
+            Listings
+          </a>
+        </div>
+        <!-- <div
+          class="not-registered-user--user-action-item not-registered-user--user-action-item__become"
+        >
+          <a
+            routerLink="/referral"
+            class="not-registered-user--user-action-link not-registered-user--user-action-link__become become-a-host-js"
+            *ngIf="isHost"
+          >
+            Referral
+          </a>
+        </div> -->
+        <!-- <div
+          class="not-registered-user--user-action-item not-registered-user--user-action-item__become"
+        >
+          <a
+            routerLink="/help-page"
+            routerLinkActive="active"
+            class="not-registered-user--user-action-link not-registered-user--user-action-link__become become-a-host-js"
+          >
+            Help
+          </a>
+        </div> -->
+      </div>
+      <div
+        *ngIf="!isUserAuthenticated"
+        class="btn-group d-flex align-items-center"
+      >
+        <div
+          class="not-registered-user--user-action-item not-registered-user--user-action-item__become"
+        >
+          <a
+            routerLink="/landing-owner"
+            class="not-registered-user--user-action-link not-registered-user--user-action-link__become become-a-host-js"
+          >
+            Become a host
+          </a>
+        </div>
+        <div
+          class="not-registered-user--user-action-item not-registered-user--user-action-item__sign_in"
+        >
+          <button
+            (click)="openLoginDlg(true)"
+            class="sign-in-btn menu-sign-in-btn-js not-registered-user--user-action-link__become not-registered-user--user-action-link__sign_in"
+          >
+            Log In
+          </button>
+        </div>
+        <div class="not-registered-user--user-action-item">
+          <button
+            (click)="openLoginDlg(false)"
+            class="sign-up-btn menu-sign-up-btn-js not-registered-user--user-action-link__become not-registered-user--user-action-link__sign_up_type_btn"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+      <div
+        *ngIf="isUserAuthenticated"
+        class="btn-group d-flex align-items-center"
+      >
+        <!-- <div class="notifications-center-button-js">
+          <i class="far fa-bell"></i>
+          <span class="notification-icon notif-icon-count-js hidden">0</span>
+        </div> -->
+        <div class="header-login authenticated">
+          <div class="current-user-info current-user-info-main">
+            <div class="header-login--forIcon">
+              <div
+                class="header-user mobile-menu-user-btn-js header-user__is_authenticated"
+              >
+                <div
+                  class="header-user--parent header-menu-dropdown-js open bottom-position"
+                  data-merepopover="popover-user-menu"
+                >
+                  <div class="header-user--name"></div>
+                  <div
+                    class="header-user--ava"
+                    mat-button
+                    [matMenuTriggerFor]="menu"
+                  >
+                    <img
+                      #userImg
+                      [src]="userImageUrl"
+                      class="avatar-header-js"
+                      alt="avatar"
+                      (error)="userImg.src = defaultUserImageUrl"
+                    />
+                  </div>
+                </div>
+                <div
+                  id="popover-user-menu"
+                  class="header-user--inner mobile-menu-slide__user_menu-js"
+                >
+                  <mat-menu #menu="matMenu">
+                    <div class="header-user--inner-cont">
+                      <div class="mobile-menu--cont">
+                        <div class="user-menu-content-parent-js">
+                          <div class="user-menu-content-js">
+                            <div class="mobile-menu--item" *ngIf="!hasHostRole">
+                              <a
+                                routerLink="/landing-owner"
+                                class="user-line user-line__become clearfix mobile-menu--link btn-default btn-lg_size_40 become-a-host-js"
+                              >
+                                Become a Host
+                              </a>
+                            </div>
+                            <!-- <div class="mobile-menu--item">
+                              <a class="user-line clearfix mobile-menu--link">
+                                <div class="user-line--icon">
+                                  <i class="far fa-user"></i>
+                                </div>
+                                <div class="user-line--text">My Profile</div>
+                              </a>
+                            </div> -->
+                            <div class="mobile-menu--item">
+                              <a
+                                class="user-line clearfix mobile-menu--link"
+                                routerLink="/account/personal"
+                              >
+                                <div class="user-line--icon">
+                                  <i class="fas fa-cog"></i>
+                                </div>
+                                <div class="user-line--text">
+                                  Account Settings
+                                </div>
+                              </a>
+                            </div>
+                            <div
+                              class="mobile-menu--item"
+                              *ngIf="isHost"
+                              routerLink="/tutorial/slides/slide-1"
+                            >
+                              <a class="user-line clearfix mobile-menu--link">
+                                <div class="user-line--icon">
+                                  <i class="fas fa-book-open"></i>
+                                </div>
+                                <div class="user-line--text">Hosting Guide</div>
+                              </a>
+                            </div>
+                            <!-- <div
+                              class="mobile-menu--item"
+                              *ngIf="isHost"
+                              routerLink="/referral"
+                            >
+                              <a class="user-line clearfix mobile-menu--link">
+                                <div class="user-line--icon">
+                                  <i class="fas fa-gift"></i>
+                                </div>
+                                <div class="user-line--text">Referral</div>
+                              </a>
+                            </div> -->
+                            <!-- <div
+                              class="mobile-menu--item"
+                              *ngIf="isHost"
+                              routerLink="/drive-bookings"
+                            >
+                              <a class="user-line clearfix mobile-menu--link">
+                                <div class="user-line--icon">
+                                  <i class="fas fa-arrow-up"></i>
+                                </div>
+                                <div class="user-line--text">
+                                  Drive Bookings
+                                </div>
+                              </a>
+                            </div> -->
+                            <div
+                              class="mobile-menu--item"
+                              *ngIf="!isHost && hasHostRole"
+                              (click)="setHostToLocal()"
+                            >
+                              <a class="user-line clearfix mobile-menu--link">
+                                <div class="user-line--icon">
+                                  <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="user-line--text">
+                                  Switch to Host
+                                </div>
+                              </a>
+                            </div>
+
+                            <div
+                              class="mobile-menu--item"
+                              *ngIf="isHost && hasHostRole"
+                              (click)="removeHostFromLocal()"
+                            >
+                              <a class="user-line clearfix mobile-menu--link">
+                                <div class="user-line--icon">
+                                  <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="user-line--text">
+                                  Switch to Renter
+                                </div>
+                              </a>
+                            </div>
+
+                            <div class="mobile-menu--item">
+                              <a
+                                (click)="logout()"
+                                class="user-line user-line_type_logOut clearfix log-out-js mobile-menu--link"
+                              >
+                                <div class="user-line--icon">
+                                  <i class="fas fa-sign-out-alt"></i>
+                                </div>
+                                <div class="user-line--text"></div>
+                                Log Out
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="change-locale-button" data-merepopover="popoverLocale">
+      <!-- <div class="change-locale-button--btn" data-toggle="dropdown">
+        <svg
+          class="change-locale-button--icon svg-icon"
+          width="32"
+          height="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M15.2 9.43c.3-.31.57-.43.8-.43.23 0 .5.12.8.43.3.32.6.8.86 1.45.47 1.18.78 2.8.83 4.62h-4.98c.05-1.82.36-3.44.83-4.62.26-.64.55-1.13.86-1.45Zm-2.7 6.07c.06-1.92.39-3.67.91-4.99.19-.46.4-.88.64-1.23a7 7 0 0 0-5.03 6.22h3.49Zm-3.48 1h3.49c.05 1.92.38 3.67.9 4.99.19.46.4.88.64 1.24a7 7 0 0 1-5.03-6.23Zm4.49 0h4.98a13.85 13.85 0 0 1-.83 4.62 4.63 4.63 0 0 1-.86 1.45c-.3.31-.57.43-.8.43-.23 0-.5-.12-.8-.43-.3-.32-.6-.8-.86-1.45-.47-1.18-.78-2.8-.83-4.62Zm5.98 0a14.85 14.85 0 0 1-.9 4.99c-.19.46-.4.88-.64 1.24a7 7 0 0 0 5.03-6.23H19.5Zm3.5-1a7 7 0 0 0-5.04-6.22c.24.35.45.77.64 1.23.52 1.32.85 3.07.9 4.99H23ZM24 16a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"
+          ></path>
+        </svg>
+      </div> -->
+      <div
+        id="popoverLocale"
+        class="change-locale-dropdown dropdown-menu"
+        style="display: none"
+      >
+        <a
+          class="change-locale-dropdown--link change-locale-dropdown--link__active change-locale-link-js"
+          data-locale
+          >North America</a
+        >
+        <a
+          class="change-locale-dropdown--link change-locale-link-js"
+          data-locale="uk"
+          >UK</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile menu -->
+<div
+  id="mobile-menu"
+  [ngClass]="{ 'show-menu': isMenuOpen }"
+  class="header-menu mobile-menu-no_slide mobile-menu-slide__main_menu-js"
+>
+  <div class="mobile-menu--inner">
+    <div class="mobile-menu--cont">
+      <mat-icon (click)="isMenuOpen = !isMenuOpen" class="menu-close"
+        >close</mat-icon
+      >
+      <div class="mobile-menu--item-parent">
+        <div
+          class="mobile-menu--item-parent-next main-sub-menu-cont__top-js"
+          *ngIf="isUserAuthenticated"
+        >
+          <!-- <div
+            class="header-menu--item header-menu--item__home mobile-menu--item mobile-menu--item__home"
+          > -->
+          <div class="header-icons">
+            <mat-icon class="home">home</mat-icon>
+            <a
+              routerLink="/"
+              (click)="isMenuOpen = !isMenuOpen"
+              class="header-menu--link mobile-menu--link"
+            >
+              Home
+            </a>
+          </div>
+          <!-- </div> -->
+          <!-- <div
+            *ngIf="!isHost"
+            class="header-menu--item header-menu--item__myProjects mobile-menu--item mobile-menu--item__myProjects"
+          > -->
+          <div *ngIf="!hasHostRole" class="header-icons">
+            <mat-icon class="projects">person_pin</mat-icon>
+            <a
+              (click)="isMenuOpen = !isMenuOpen"
+              routerLink="/landing-owner"
+              class="header-menu--link mobile-menu--link"
+            >
+              Become a host
+            </a>
+          </div>
+          <div *ngIf="!isHost" class="header-icons">
+            <mat-icon class="projects">assignment_turned_in</mat-icon>
+            <a
+              (click)="isMenuOpen = !isMenuOpen"
+              routerLink="/projects"
+              class="header-menu--link mobile-menu--link"
+            >
+              Projects
+            </a>
+          </div>
+          <!-- </div> -->
+
+          <!-- <div
+            class="header-menu--item header-menu--item__messagesInboxRenter mobile-menu--item mobile-menu--item__messagesInboxRenter"
+          > -->
+          <div class="header-icons">
+            <mat-icon class="msg"> chat_bubble_outline</mat-icon>
+            <a href="/messages" class="header-menu--link mobile-menu--link">
+              Messages
+            </a>
+          </div>
+          <!-- </div> -->
+
+          <!-- <div
+            class="header-menu--item header-menu--item__renterEventsUpcoming mobile-menu--item mobile-menu--item__renterEventsUpcoming"
+          > -->
+          <div class="header-icons">
+            <mat-icon class="booking">calendar_today</mat-icon>
+            <a href="/bookings" class="header-menu--link mobile-menu--link">
+              Bookings
+            </a>
+          </div>
+          <!-- </div> -->
+
+          <!-- <div
+            *ngIf="isHost"listings
+            class="header-menu--item header-menu--item__renterEventsUpcoming mobile-menu--item mobile-menu--item__renterEventsUpcoming"
+          > -->
+          <div class="header-icons" *ngIf="isHost">
+            <mat-icon class="listing">list</mat-icon>
+            <a
+              (click)="isMenuOpen = !isMenuOpen"
+              routerLink="/my-listings"
+              class="header-menu--link mobile-menu--link"
+            >
+              Listings
+            </a>
+          </div>
+          <!-- </div> -->
+          <!-- <div
+            class="header-menu--item header-menu--item__referral mobile-menu--item mobile-menu--item__referral"
+          >
+            <a
+              (click)="isMenuOpen = !isMenuOpen"
+              routerLink="/referral"
+              class="header-menu--link mobile-menu--link"
+            >
+              Referral
+            </a>
+          </div> -->
+          <!-- <div
+            class="header-menu--item header-menu--item__help mobile-menu--item mobile-menu--item__help"
+          >
+            <a
+              (click)="isMenuOpen = !isMenuOpen"
+              routerLink="/help-page"
+              class="header-menu--link mobile-menu--link"
+              rel="noopener noreferrer"
+            >
+              Help
+            </a>
+          </div> -->
+          <!-- <div
+            class="header-menu--item header-menu--item__help mobile-menu--item mobile-menu--item__intercom"
+          >
+            <button
+              (click)="isMenuOpen = !isMenuOpen"
+              class="header-menu--link mobile-menu--link header-menu--btn show-intercom-js"
+            >
+              Contact Support
+            </button>
+          </div> -->
+          <!-- <div
+            class="mobile-menu--item mobile-menu--item__renter_host mobile-menu--item__special_place_mob switch-role-js"
+            data-role="host"
+          > -->
+          <div
+            class="mobile-menu--special-place-mob p-0"
+            (click)="setHostToLocal()"
+            *ngIf="!isHost && hasHostRole"
+          >
+            <div class="header-icons">
+              <mat-icon class="switch">swap_horiz</mat-icon>
+              <span class="mobile-menu--link">Switch to Host</span>
+            </div>
+          </div>
+          <!-- </div> -->
+
+          <!-- <div
+            class="mobile-menu--item mobile-menu--item__renter_host mobile-menu--item__special_place_mob switch-role-js"
+            data-role="host"
+          > -->
+          <div
+            class="mobile-menu--special-place-mob p-0"
+            (click)="removeHostFromLocal()"
+            *ngIf="isHost && hasHostRole"
+          >
+            <div class="header-icons str">
+              <mat-icon class="switch">swap_horiz</mat-icon>
+              <span class="mobile-menu--link">Switch to Renter</span>
+            </div>
+          </div>
+          <!-- </div> -->
+
+          <div
+            class="main-sub-menu-title-js main-sub-menu-title__bottom-js mobile-menu--item mobile-menu--item__title"
+          >
+            <!-- <div
+              class="mobile-menu-user-main mobile-menu--link mobile-menu--link__no_border"
+            >
+              <img
+                class="mobile-menu-user-main--ava"
+                alt="user-image"
+                src="assets/images/dummy/dummy-user.jpg"
+              />
+              <div class="mobile-menu-user-main--name">Test Singh</div>
+            </div> -->
+          </div>
+
+          <div class="user-menu-in-main-js main-sub-menu-cont__bottom-js">
+            <div class="user-menu-in-main-js main-sub-menu-cont__bottom-js">
+              <div class="user-mobile-menu-content user-menu-content-js">
+                <!-- <div class="mobile-menu--item">
+                  <a class="user-line clearfix mobile-menu--link">
+                    <div class="user-line--icon user-line--icon__profile"></div>
+                    <div class="user-line--text">My Profile</div>
+                  </a>
+                </div> -->
+                <!-- <div class="mobile-menu--item"> -->
+                <div class="header-icons">
+                  <mat-icon class="settings">settings</mat-icon>
+                  <a
+                    class="user-line clearfix mobile-menu--link"
+                    routerLink="/account/personal"
+                    (click)="isMenuOpen = !isMenuOpen"
+                  >
+                    <!-- <div
+                      class="user-line--icon user-line--icon__settings"
+                    ></div> -->
+                    <div class="user-line--text">Account Settings</div>
+                  </a>
+                </div>
+                <!-- </div> -->
+                <div class="header-icons">
+                  <div class="mobile-menu--item p-0">
+                    <a
+                      (click)="logout(); isMenuOpen = !isMenuOpen"
+                      class="user-line user-line_type_logOut clearfix log-out-js mobile-menu--link p-0 header-icons"
+                    >
+                      <mat-icon class="input">input</mat-icon>
+                      <!-- <div class="user-line--icon user-line--icon__logout"></div> -->
+                      <div class="user-line--text logout">Logout</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mobile-menu--item-parent-next main-sub-menu-cont__top-js"
+          *ngIf="!isUserAuthenticated"
+        >
+          <!-- <div
+            class="header-menu--item header-menu--item__home mobile-menu--item mobile-menu--item__home"
+          > -->
+          <div class="header-icons">
+            <mat-icon class="home">home</mat-icon>
+            <a
+              routerLink="/"
+              (click)="isMenuOpen = !isMenuOpen"
+              class="header-menu--link mobile-menu--link"
+            >
+              Home
+            </a>
+          </div>
+          <!-- </div> -->
+
+          <!-- <div
+            class="mobile-menu--item mobile-menu--item__become mobile-menu--item__special_place_mob"
+          > -->
+          <div class="header-icons">
+            <mat-icon> person_pin</mat-icon>
+            <div
+              class="mobile-menu--special-place-mob p-0"
+              *ngIf="!isUserAuthenticated"
+            >
+              <a
+                routerLink="/landing-owner"
+                (click)="isMenuOpen = !isMenuOpen"
+                class="mobile-menu--link mobile-menu--link__green become-a-host-js"
+              >
+                Become a Host
+              </a>
+            </div>
+          </div>
+          <!-- </div> -->
+
+          <!-- <div class="mobile-menu--item"> -->
+          <div class="header-icons">
+            <mat-icon class="input">input</mat-icon>
+            <a
+              class="user-line user-line_type_logOut clearfix menu-sign-in-btn-js mobile-menu--link"
+            >
+              <!-- <div class="user-line--icon user-line--icon__login"></div> -->
+              <div
+                class="user-line--text"
+                (click)="openLoginDlg(true); isMenuOpen = !isMenuOpen"
+              >
+                Log In
+              </div>
+            </a>
+          </div>
+          <!-- </div> -->
+
+          <!-- <div class="mobile-menu--item"> -->
+          <div class="header-icons">
+            <mat-icon class="sign-up">person_add</mat-icon>
+            <a
+              class="user-line user-line_type_logOut clearfix menu-sign-up-btn-js mobile-menu--link"
+            >
+              <div class="user-line--icon user-line--icon__signup"></div>
+              <div
+                class="user-line--text"
+                (click)="openLoginDlg(false); isMenuOpen = !isMenuOpen"
+              >
+                Sign Up
+              </div>
+            </a>
+          </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

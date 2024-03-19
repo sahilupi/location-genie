@@ -1,0 +1,236 @@
+<div
+  class="dialog vital-info editprofileinfo"
+  [ngClass]="uploaddiv ? 'w-700' : 'w-400 container'"
+>
+  <div class="dialog-header container">
+    <h1 mat-dialog-title>Profile Image</h1>
+  </div>
+  <div *ngIf="!uploaddiv">
+    <div
+      class="row mat-dialog-content d-flex justify-content-around align-items-center main_profile"
+      mat-dialog-content
+    >
+      <div class="vital-info-inner">
+        <div class="">
+          <div class="mb-2 align-items-center">
+            <div
+              class="profile-pic d-flex justify-content-center"
+              *ngIf="!imageUrl"
+            >
+              <img
+                class="dispaly-pofile d-flex align-items-center justify-content-center"
+                src="assets/images/dummy/dummy-user.jpg"
+                alt="user-img"
+              />
+            </div>
+            <div *ngIf="imageUrl" class="d-flex justify-content-center">
+              <div id="main-image">
+                <img
+                  #userImg
+                  width="75px"
+                  height="75px"
+                  [src]="imageUrl"
+                  class="image mainImg"
+                  (error)="userImg.src = 'assets/images/dummy/dummy-user.jpg'"
+                />
+              </div>
+            </div>
+            <div
+              (click)="onUploadButtonClick()"
+              class="d-flex justify-content-center align-items-center mt-3 mb-1"
+            >
+              <button
+                type="button"
+                mat-button
+                class="common-button uploadbtn filled px-3"
+              >
+                <i class="fas fa-cloud-upload-alt mr-2"></i>
+                <span>Upload</span>
+              </button>
+              <input
+                type="file"
+                #fileUpload
+                accept="image/png, image/jpeg ,image/jpg"
+                style="display: none"
+                (change)="fileChangeEvent($event)"
+              />
+            </div>
+            <div class="fw-bold">
+              <!-- <span>{{ warningMsg }}</span> -->
+              <span>Image size should be between 10 KB to 25 MB</span><br />
+              <span>File type should be only PNG, JPG, JFIF and JPEG</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end" *ngIf="!imageUrl">
+      <button
+        class="outlined"
+        mat-stroked-button
+        (click)="closeBtnClick()"
+        type="button"
+        color="accent"
+      >
+        Cancel
+      </button>
+    </div>
+    <div mat-dialog-actions align="end" *ngIf="imageUrl">
+      <button
+        class="filled"
+        color="accent"
+        type="button"
+        mat-raised-button
+        [disabled]="!imageUrl"
+        (click)="deleteImage()"
+      >
+        Delete
+      </button>
+      <button
+        class="back-button outlined"
+        type="button"
+        mat-button
+        (click)="closeBtnClick()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+  <div *ngIf="uploaddiv">
+    <div
+      mat-dialog-content
+      class="row mat-dialog-content d-flex justify-content-around align-items-center main_profile"
+    >
+      <div class="vital-info-inner">
+        <div class="">
+          <div class="" style="margin: 0 0 20px 0">
+            <!-- <div class="profile-pic" *ngIf="!imageUrl"></div> -->
+            <div class="d-flex align-items-center upload" style="gap: 60px">
+              <div class="">
+                <div class="cropper-container">
+                  <img class="image-preview" [src]="croppedImage" />
+                </div>
+                <div (click)="onUploadButtonClick()" class="d-flex ml-0 mb-1">
+                  <button
+                    type="button"
+                    mat-button
+                    class="common-button uploadbtn crop-upload-btn mx-auto mt-2"
+                  >
+                    <i class="fal fa-cloud-upload mr-2"></i>
+                    <span>Upload</span>
+                  </button>
+                  <input
+                    type="file"
+                    #fileUpload
+                    accept="image/png, image/jpeg ,image/jpg"
+                    style="display: none"
+                    (change)="fileChangeEvent($event)"
+                  />
+                </div>
+              </div>
+              <div class="mt-2">
+                <image-cropper
+                  [imageChangedEvent]="imageChangedEvent"
+                  [aspectRatio]="4 / 4"
+                  [resizeToWidth]="300"
+                  [cropperMinWidth]="500"
+                  [onlyScaleDown]="true"
+                  [roundCropper]="true"
+                  [containWithinAspectRatio]="containWithinAspectRatio"
+                  [canvasRotation]="canvasRotation"
+                  [transform]="transform"
+                  [alignImage]="'left'"
+                  [style.display]="showCropper ? null : 'none'"
+                  format="png"
+                  (imageCropped)="imageCropped($event)"
+                  (imageLoaded)="imageLoaded()"
+                  (loadImageFailed)="loadImageFailed()"
+                ></image-cropper>
+                <div
+                  class="image-buttons d-flex justify-content-around mb-1 mt-2"
+                >
+                  <i
+                    class="fas fa-undo"
+                    matTooltip="Rotate left"
+                    (click)="rotateLeft()"
+                  ></i>
+                  <i
+                    class="fas fa-redo"
+                    matTooltip="Rotate right"
+                    (click)="rotateRight()"
+                  ></i>
+                  <i
+                    class="fas fa-arrows-alt-h"
+                    matTooltip="Flip horizontal"
+                    (click)="flipHorizontal()"
+                  ></i>
+                  <i
+                    class="fas fa-arrows-alt-v"
+                    matTooltip="Flip vertical"
+                    (click)="flipVertical()"
+                  ></i>
+                  <i
+                    [ngClass]="
+                      containWithinAspectRatio ? 'fas fa-fill' : 'fas fa-box'
+                    "
+                    [matTooltip]="
+                      containWithinAspectRatio
+                        ? 'Fill Aspect Ratio'
+                        : 'Contain Within Aspect Ratio'
+                    "
+                    (click)="toggleContainWithinAspectRatio()"
+                  ></i>
+                </div>
+                <div
+                  class="image-buttons d-flex justify-content-around mt-2 mb-2"
+                >
+                  <i
+                    class="fas fa-trash-restore"
+                    matTooltip="Reset image"
+                    (click)="resetImage()"
+                  ></i>
+                  <i
+                    class="fas fa-hand-point-left"
+                    matTooltip="Left rotation"
+                    (click)="leftRotate()"
+                  ></i>
+                  <i
+                    class="fas fa-hand-point-right"
+                    matTooltip="Right rotation"
+                    (click)="rightRotate()"
+                  ></i>
+                  <i
+                    class="fas fa-search-minus"
+                    matTooltip="Zoom -"
+                    (click)="zoomOut()"
+                  ></i>
+                  <i
+                    class="fas fa-search-plus"
+                    matTooltip="Zoom +"
+                    (click)="zoomIn()"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div mat-dialog-actions align="end">
+      <button mat-button (click)="previousData()" class="back-button outlined">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        color="primary"
+        mat-raised-button
+        cdkFocusInitial
+        (click)="saveImage()"
+        class="text-white"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>

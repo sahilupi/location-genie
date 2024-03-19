@@ -1,0 +1,231 @@
+<div class="container seo-page">
+  <div class="container-html">
+    <div class="all-activities-top-section">
+      <h1 class="seo-title">
+        {{
+          this.activeRoute == "activities"
+            ? "All activities on Location Genie"
+            : this.activeRoute == "features"
+            ? "All location features on Location Genie"
+            : this.activeRoute == "cities"
+            ? "All Locations"
+            : "All location types on Location Genie"
+        }}
+      </h1>
+      <h2 class="seo-sub-title">
+        {{
+          this.activeRoute == "activities"
+            ? "Rent your perfect venue"
+            : this.activeRoute == "features"
+            ? "Rent your perfect location features"
+            : this.activeRoute == "cities"
+            ? "Find a venue near you"
+            : "Rent your perfect location type"
+        }}
+      </h2>
+    </div>
+    <div class="seo-list-parent">
+      <div class="seo-list" *ngIf="commercials && commercials.length > 0">
+        <h3 class="seo-list--title">Commercial</h3>
+        <div class="seo-list--content">
+          <a
+            class="seo-list--link"
+            target="_blank"
+            [href]="
+              getRoute(
+                activeRoute === 'types'
+                  ? commercial.categoryName
+                  : commercial.keyFeatureName,
+                activeRoute,
+                commercial.id
+              )
+            "
+            *ngFor="let commercial of commercials"
+          >
+            <span>
+              {{
+                activeRoute == "types"
+                  ? commercial.categoryName
+                  : commercial.keyFeatureName
+              }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="seo-list" *ngIf="events && events.length > 0">
+        <h3 class="seo-list--title">Events</h3>
+        <div class="seo-list--content">
+          <a
+            class="seo-list--link"
+            target="_blank"
+            [href]="getRoute(event.activityName, activeRoute, event.id)"
+            *ngFor="let event of events"
+          >
+            <span>
+              {{ event.activityName }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="seo-list" *ngIf="meetings && meetings.length > 0">
+        <h3 class="seo-list--title">Meetings</h3>
+        <div class="seo-list--content">
+          <a
+            class="seo-list--link"
+            target="_blank"
+            [href]="getRoute(meeting.activityName, activeRoute, meeting.id)"
+            *ngFor="let meeting of meetings"
+          >
+            <span>
+              {{ meeting.activityName }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="seo-list" *ngIf="productions && productions.length > 0">
+        <h3 class="seo-list--title">Production</h3>
+        <div class="seo-list--content">
+          <a
+            class="seo-list--link"
+            target="_blank"
+            [href]="
+              getRoute(production.activityName, activeRoute, production.id)
+            "
+            *ngFor="let production of productions"
+          >
+            <span>
+              {{ production.activityName }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="seo-list" *ngIf="residentials && residentials.length > 0">
+        <h3 class="seo-list--title">Residential</h3>
+        <div class="seo-list--content">
+          <a
+            class="seo-list--link"
+            target="_blank"
+            [href]="
+              getRoute(
+                activeRoute === 'types'
+                  ? residential.categoryName
+                  : residential.keyFeatureName,
+                activeRoute,
+                residential.id
+              )
+            "
+            *ngFor="let residential of residentials"
+          >
+            <span>
+              {{
+                activeRoute == "types"
+                  ? residential.categoryName
+                  : residential.keyFeatureName
+              }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="seo-list" *ngIf="studios && studios.length > 0">
+        <h3 class="seo-list--title">Studio</h3>
+        <div class="seo-list--content">
+          <a
+            class="seo-list--link"
+            target="_blank"
+            [href]="
+              getRoute(
+                activeRoute === 'types'
+                  ? studio.categoryName
+                  : studio.keyFeatureName,
+                activeRoute,
+                studio.id
+              )
+            "
+            *ngFor="let studio of studios"
+          >
+            <span>
+              {{
+                activeRoute == "types"
+                  ? studio.categoryName
+                  : studio.keyFeatureName
+              }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div
+        class="seo-list"
+        *ngIf="transportations && transportations.length > 0"
+      >
+        <h3 class="seo-list--title">Transportation</h3>
+        <div class="seo-list--content">
+          <a
+            class="seo-list--link"
+            target="_blank"
+            [href]="
+              getRoute(
+                activeRoute === 'types'
+                  ? transportation.categoryName
+                  : transportation.keyFeatureName,
+                activeRoute,
+                transportation.id
+              )
+            "
+            *ngFor="let transportation of transportations"
+          >
+            <span>
+              {{
+                activeRoute == "types"
+                  ? transportation.categoryName
+                  : transportation.keyFeatureName
+              }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="seo-list" *ngIf="citiesData && citiesData.length > 0">
+        <div class="seo-list--content">
+          <a
+            [href]="getRoute(city, activeRoute)"
+            class="seo-list--link"
+            target="_blank"
+            *ngFor="let city of citiesData"
+          >
+            <span>
+              {{ city }}
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="seo-banner">
+      <img
+        class="seo-banner--img"
+        src="assets/images/blog/neom-gYmExXn83_8-unsplash.jpg"
+        srcset="
+          assets/images/blog/neom-gYmExXn83_8-unsplash.jpg  960w,
+          assets/images/blog/neom-gYmExXn83_8-unsplash.jpg 1920w
+        "
+        sizes="(max-width: 960px) 100vw, 960px"
+        alt="Need help finding the perfect venue?"
+      />
+      <div class="seo-banner--cont">
+        <div class="seo-banner--title">
+          Need help finding the perfect venue?
+        </div>
+        <div class="seo-banner--text">
+          Our concierge team will help you find what you're looking for.
+        </div>
+        <div class="seo-banner--btn-parent">
+          <a
+            href="location-request"
+            target="_blank"
+            rel="nofollow"
+            class="btn-success btn-lg_size_big seo-banner--btn location-request-js"
+            >Tell us what you need</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

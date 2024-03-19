@@ -1,0 +1,21 @@
+<div class="row steps-header">
+  <div class="col-3">
+    <img
+      src="assets/images/location-logo.png"
+      class="steps-header-logo"
+      width="180"
+      alt="logo"
+      role="button"
+      routerLink="/"
+    />
+  </div>
+  <div class="col-7 steps-header-step">
+    Step {{ stepNumber }}: {{ stepName }}
+  </div>
+  <a
+    *ngIf="showSaveAndExit"
+    (click)="onClickSave()"
+    class="col-lg-2 col-md-5 col-sm-9 steps-header-btn"
+    >Save and Exit</a
+  >
+</div>

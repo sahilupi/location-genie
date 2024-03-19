@@ -1,0 +1,192 @@
+<div class="container">
+  <div class="dialog-header d-flex justify-content-between">
+    <h3 class="heading" mat-dialog-title>{{ heading }}</h3>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+
+  <div class="dialog edit-photoshoot row">
+    <div class="col-md-12">
+      <div class="dialog-content">
+        <div class="custom">
+          <form
+            *ngIf="editPhotoshootForm"
+            [formGroup]="editPhotoshootForm"
+            (ngSubmit)="onSubmitForm()"
+          >
+            <div mat-dialog-content>
+              <mat-form-field
+                *ngIf="data.isEditingData"
+                appearance="outline"
+                class="w-100"
+              >
+                <mat-label>Header</mat-label>
+                <input matInput formControlName="header" />
+                <mat-error
+                  ><small>Maximum length should be 35</small></mat-error
+                >
+              </mat-form-field>
+
+              <div formArrayName="photoShoots">
+                <div
+                  *ngFor="let photoCtrl of photosControls; let i = index"
+                  [formGroupName]="i"
+                >
+                  <h4>Slide {{ i + 1 }}</h4>
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Title</mat-label>
+                    <input matInput formControlName="title" />
+                    <mat-error
+                      *ngIf="photoCtrl.get('title')?.hasError('required')"
+                      ><small>Title is required</small></mat-error
+                    >
+                    <mat-error
+                      *ngIf="photoCtrl.get('title')?.hasError('maxlength')"
+                    >
+                      <small>Maximum length should be 30</small></mat-error
+                    >
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Description</mat-label>
+                    <input matInput formControlName="description" />
+                    <mat-error
+                      *ngIf="photoCtrl.get('description')?.hasError('required')"
+                      ><small>Description is required</small></mat-error
+                    >
+                    <mat-error
+                      *ngIf="
+                        photoCtrl.get('description')?.hasError('maxlength')
+                      "
+                      ><small>Maximum length should be 150</small></mat-error
+                    >
+                  </mat-form-field>
+                  <mat-form-field
+                    *ngIf="data.showPositionInput"
+                    appearance="outline"
+                    class="w-100 col-12"
+                  >
+                    <mat-label>Position</mat-label>
+                    <input
+                      matInput
+                      formControlName="position"
+                      (keypress)="commonService.numberOnly($event)"
+                    />
+                    <mat-error
+                      *ngIf="photoCtrl.get('position')?.hasError('max')"
+                      ><small
+                        >Position should be less than or equal to
+                        {{ data.max }}</small
+                      ></mat-error
+                    >
+                    <mat-error
+                      *ngIf="photoCtrl.get('position')?.hasError('min')"
+                      ><small
+                        >Position should be greater than 0</small
+                      ></mat-error
+                    >
+                    <mat-error
+                      *ngIf="photoCtrl.get('position')?.hasError('required')"
+                      ><small>Position is required</small></mat-error
+                    >
+                    <div
+                      class="mt-2 text-danger"
+                      *ngIf="
+                        isPositionOccupied &&
+                        data.position !== +photoCtrl.value.position &&
+                        +photoCtrl.value.position !== 0
+                      "
+                    >
+                      <small class="mt-2">Position is already occupied</small>
+                    </div>
+                  </mat-form-field>
+                  <div>
+                    <div class="d-flex justify-content-between">
+                      <button
+                        type="button"
+                        mat-raised-button
+                        matPrefix
+                        (click)="f_input.click()"
+                      >
+                        Select Image
+                      </button>
+                      <button
+                        *ngIf="!data.isEditingData && photosControls.length > 1"
+                        type="button"
+                        color="accent"
+                        class="delete-fab"
+                        mat-fab
+                        align="start"
+                        matTooltip="Delete this event"
+                        (click)="onDeleteEvent(i)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                    <input
+                      type="file"
+                      hidden
+                      (change)="onImageSelect($event, i)"
+                      #f_input
+                      accept="image/png, image/jpeg ,image/jpg"
+                    />
+                    <div>
+                      <small
+                        class="has-error--text"
+                        *ngIf="
+                          (photoCtrl.get('imageUrl')?.hasError('required') &&
+                            photoCtrl.value.imageUrl?.hasError('touched')) ||
+                          (photoCtrl.get('imageUrl')?.hasError('required') &&
+                            isSubmitted)
+                        "
+                        >Image is required</small
+                      >
+                    </div>
+                    <div
+                      class="mt-2"
+                      *ngIf="photosControls[i].value.imagePreview"
+                    >
+                      <img
+                        class="mt-2"
+                        [src]="photosControls[i].value.imagePreview"
+                        width="100%"
+                        height="100%"
+                      />
+                    </div>
+                    <hr *ngIf="photosControls.length > 1" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div mat-dialog-actions align="end">
+              <button
+                type="button"
+                color="primary"
+                mat-raised-button
+                align="start"
+                (click)="onAddEvent()"
+                class="text-white"
+                *ngIf="
+                  !data.isEditingData &&
+                  photosControls.length + occupiedPositions.length < data.max
+                "
+              >
+                Add New
+              </button>
+
+              <button
+                type="submit"
+                color="primary"
+                mat-raised-button
+                cdkFocusInitial
+                class="text-white"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

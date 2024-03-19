@@ -1,0 +1,19 @@
+.activity {
+  margin-top: 100px;
+
+  &-title {
+    font-weight: 600;
+  }
+}
+.home-banner-wrapper {
+  transform: translateY(-400px);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.9s ease-in-out;
+
+  &.animate {
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
+  }
+}

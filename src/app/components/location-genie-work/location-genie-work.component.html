@@ -1,0 +1,49 @@
+<div class="all-collection">
+  <div class="banner">
+    <div class="container search-position">
+      <div class="position-relative">
+        <img src="../../../assets/images/search.png" />
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Search for articles..."
+        />
+      </div>
+    </div>
+  </div>
+  <ul class="breadcrumb">
+    <li *ngFor="let breadcrumb of breadcrumbs" class="breadcrumb-item">
+      <a routerLink="{{ breadcrumb.url }}">
+        {{ breadcrumb.label }}
+      </a>
+    </li>
+  </ul>
+
+  <div class="list-data">
+    <div class="container">
+      <h2 class="mb-3">What does Location Genie do?</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="single-list-data">
+            <div class="icon">
+              <img src="../../../assets/images/info.png" />
+            </div>
+            <div class="data">
+              <h3>Hosted by Junaid</h3>
+              <p>By Adil and 2 others 16 articles</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mb-5">
+    <p class="text">
+      Location Genie links landlords with tenants who want to shoot or have an
+      event in their house or space. Renters can look for certain film-friendly
+      venues, get in touch with hosts, and quickly and conveniently complete
+      payments via Location Genie web platform.
+    </p>
+  </div>
+</div>

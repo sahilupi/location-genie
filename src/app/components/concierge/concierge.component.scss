@@ -1,0 +1,41 @@
+@media only screen and (max-width: 767px){
+    .need-help{
+        font-size: 28px!important;
+    }
+    .tell{
+        font-size: 20px!important;
+    }
+    .concierge_wraper h5 span.member-heading {
+        font-size: 16px !important;
+    }
+    .text_sze {
+        font-size: 10px !important;
+        line-height: 17px !important;
+        span{
+        font-size: 11px !important;
+        }
+    }
+}
+@media only screen and (max-width: 575px){
+    .templateDetails img.mcnImage {
+        width: 200px !important;
+    }
+    .mcnTextContent .szz_new{
+        font-size: 25px !important;
+    }
+    .mcnCaptionBlock {
+        flex-wrap: wrap !important;
+    }
+    span.member-heading{
+        font-size: 18px;
+    }
+    .need-help{
+        font-size: 24px!important;
+    }
+    .columnContainer.contentContainer{
+        display: initial!important;
+    }
+    .templateSection.templateFooter{
+        padding-top: 0!important;
+    }
+}    

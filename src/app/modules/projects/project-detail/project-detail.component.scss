@@ -1,0 +1,75 @@
+.container {
+  a {
+    text-decoration: none;
+  }
+}
+.project {
+  margin-top: 71px;
+  padding-top: 30px;
+
+  &-name {
+    font-weight: 400;
+  }
+  &-dates {
+    font-weight: 400;
+    font-size: 14px;
+    color: #858585;
+  }
+  &-share {
+    background: #016670;
+    color: white;
+    height: 32px;
+    width: 34px;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 2px 2px #0167706b;
+    }
+
+    &_inner {
+      font-size: 15px;
+      height: 15px;
+      width: 14px;
+      font-weight: 100;
+    }
+  }
+  &-edit {
+    height: 32px;
+    width: 32px;
+    border: 1px solid #adadad;
+    color: #adadad;
+    border-radius: 50%;
+    display: -ms-flexbox;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 13px;
+    cursor: pointer;
+    &:hover {
+      color: #333;
+      border: 1px solid #333;
+    }
+  }
+  &-description {
+    font-weight: 300;
+  }
+
+  &-logo {
+    width: 400px;
+
+    @media (max-width: 767px) {
+      width: 200px;
+    }
+  }
+  &-back-icon {
+    font-size: 12px;
+  }
+
+  hr {
+    margin-top: 0;
+  }
+  
+}

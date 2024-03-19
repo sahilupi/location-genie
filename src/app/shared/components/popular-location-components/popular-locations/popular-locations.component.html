@@ -1,0 +1,55 @@
+<div class="container-html container-html__wide seo-page-wrap">
+  <div class="seo-section seo-locations-block-js position-relative">
+    <div class="custom-flex">
+      <div class="edit-delete-action" *ngIf="isEditingData">
+        <i
+          mat-button
+          [matMenuTriggerFor]="editMenu"
+          class="fas fa-pen fa-sm section-edit"
+        ></i>
+        <mat-menu #editMenu="matMenu">
+          <button mat-menu-item>
+            <a
+              *ngIf="isEditingData"
+              class="title-edit text-decoration-none"
+              (click)="onEditTitle(title)"
+              >Edit Title</a
+            >
+          </button>
+          <button mat-menu-item>
+            <a
+              *ngIf="isEditingData"
+              class="subTitle-edit text-decoration-none"
+              (click)="onEditTitle(subTitle)"
+              >Edit Sub title</a
+            >
+          </button>
+          <button mat-menu-item>
+            <a
+              *ngIf="isEditingData"
+              class="section-edit text-decoration-none"
+              (click)="onUpdatePostions()"
+              >Update Positions</a
+            >
+          </button>
+        </mat-menu>
+      </div>
+
+      <h2 class="seo-section--locations-title">{{ title.typeName }}</h2>
+      <p class="hp-content-section--description">
+        {{ subTitle.typeName }}
+      </p>
+    </div>
+
+    <div class="locations-js">
+      <div class="seo-locations default-locations-js">
+        <app-popular-location
+          *ngFor="let location of locations.slice(0, 10)"
+          [locationData]="location"
+          [selectedProjectListings]="selectedProjectListings"
+        ></app-popular-location>
+      </div>
+      <div class="seo-locations hidden search-locations-js"></div>
+    </div>
+  </div>
+</div>

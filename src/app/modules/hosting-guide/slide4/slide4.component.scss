@@ -1,0 +1,158 @@
+section.host {
+  margin: 100px 0 0;
+
+  .heading {
+    h1 {
+      font-size: 30px;
+      font-weight: 600;
+    }
+    p {
+      color: #a2a2a2;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+  .row.score {
+    margin: 16px 0 0;
+    .left {
+      background: rgba(217, 217, 217, 0.4);
+      padding: 20px;
+      border-radius: 5px;
+      .top {
+        gap: 10px;
+        margin: 0 0 10px;
+        p {
+          font-size: 18px;
+          font-weight: 600;
+          color: #000;
+        }
+      }
+
+      .listings {
+        background: #fff;
+        margin: 0 0 20px;
+        border-radius: 5px;
+        position: relative;
+        p {
+          padding: 10px;
+        }
+      }
+      ul.listings {
+        padding: 10px 25px;
+        li {
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+    }
+    .right {
+      background: rgba(217, 217, 217, 0.4);
+      padding: 20px;
+      border-radius: 5px;
+      .top {
+        gap: 10px;
+        margin: 0 0 10px;
+        p {
+          font-size: 18px;
+          font-weight: 600;
+          color: #000;
+        }
+      }
+      .listings {
+        background: #fff;
+        margin: 0 0 20px;
+        border-radius: 5px;
+        position: relative;
+        p {
+          padding: 10px;
+        }
+      }
+      ul.listings {
+        padding: 10px 25px;
+        li {
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  .button {
+    text-align: center;
+    margin: 60px 0 50px 0;
+    a {
+      border-radius: 5px;
+      background: #016670;
+      color: #fff;
+      padding: 15px 35px;
+      font-weight: 500;
+      font-size: 16px;
+    }
+  }
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+//Responsive
+@media only screen and (max-width: 1200px) {
+  .button {
+    margin: 50px 0 80px 0;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  section.host {
+    .row.score {
+      .right {
+        margin: 16px 0 0;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  section.host {
+    .heading {
+      h1 {
+        font-size: 18px;
+      }
+    }
+    .button {
+      padding: 10px 25px;
+      margin: 30px 0;
+      a {
+        padding: 10px 25px;
+        font-size: 14px;
+      }
+    }
+    .row.score {
+      .right {
+        .top {
+          p {
+            font-size: 16px;
+          }
+        }
+      }
+      .left {
+        .top {
+          p {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.stepCount {
+  text-align: end;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+}

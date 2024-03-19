@@ -1,0 +1,289 @@
+.set_height {
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.set_width {
+  width: 83px;
+}
+.Step-one {
+  margin-top: 71px;
+  padding-top: 70px;
+  .col-4 {
+    text-align: center;
+  }
+  .col-4:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 24px;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #cecece;
+    z-index: -1;
+  }
+  .col-4:last-child::after {
+    display: none;
+  }
+}
+label {
+  color: #000;
+  font-weight: 600;
+  font-size: 13px;
+  margin: 0;
+}
+.step {
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  border: 1px solid #016670;
+  border-radius: 50%;
+  font-size: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #016670;
+  margin: 0 auto;
+  &.active {
+    background-color: #016670;
+    color: #fff;
+  }
+}
+
+app-input-spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.stepper {
+  h3.title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 8px 0 3px 0;
+  }
+  h5.description {
+    color: #a7a4a4;
+    font-size: 13px;
+  }
+}
+
+.form-fields {
+  padding: 40px 0 20px;
+  h2 {
+    font-weight: 600;
+    margin: 0 0 20px 0;
+  }
+  h4 {
+    color: #a7a4a4;
+    font-size: 13px;
+  }
+}
+
+.type {
+  padding: 0 0 90px 0;
+  border-radius: 6px;
+  h2.heading {
+    font-weight: 600;
+    margin: 0 0 20px 0;
+  }
+}
+
+.customcheckbox {
+  display: inline-block;
+  margin: 0 15px 0 0;
+  label {
+    line-height: 24px;
+    font-weight: 500;
+  }
+}
+
+.buttons {
+  button.btn {
+    border: 1px solid #e7e7e7;
+    box-shadow: none;
+  }
+  button.btn:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+  button.btn:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+  button.active {
+    background: #016670;
+    color: #fff;
+  }
+}
+
+::ng-deep.mat-button-toggle-appearance-standard
+  .mat-button-toggle-label-content {
+  padding: 0 20px !important;
+}
+
+::ng-deep.toggle-yes.mat-button-toggle-checked {
+  background-color: #016670 !important;
+  color: white !important;
+}
+
+::ng-deep.toggle-no.mat-button-toggle-checked {
+  background-color: #8f8e94;
+  color: white !important;
+}
+
+/* 30-8-2023 */
+.form-fields {
+  .icon {
+    display: flex;
+    input.form-control {
+      // width: 65px;
+    }
+    .mat-icon {
+      overflow: initial;
+      padding: 0 3px;
+    }
+  }
+}
+
+.mdc-checkbox__native-control:focus {
+  box-shadow: none;
+  background: none;
+  border: none;
+  outline: none;
+  display: none;
+}
+
+::ng-deep {
+  .mdc-checkbox__ripple {
+    display: none !important;
+  }
+}
+
+::ng-deep {
+  .customcheckbox {
+    .mdc-checkbox {
+      margin: 0 0px 0 -10px;
+    }
+  }
+}
+
+//Responsiveness
+
+@media screen and (max-width: 1200px) {
+  ::ng-deep {
+    .customcheckbox {
+      .mdc-checkbox {
+        margin: 0 -7px 0 -10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .form-fields {
+    h2 {
+      font-size: 24px;
+    }
+  }
+  .access {
+    .customcheckbox {
+      &:nth-child(3) {
+        margin: 0 31px 0 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nwe_field {
+    height: calc(100vh - 21px);
+    overflow: auto;
+  }
+  .full-page.wrapper {
+    height: 505px !important;
+    overflow: auto !important;
+  }
+  .set_width {
+    width: 160.2px;
+  }
+  .field-group.padding {
+    padding-bottom: 1.5rem;
+  }
+  .type {
+    padding: 0 0 30px 0;
+    .buttons {
+      margin: 10px 0 0;
+    }
+    .container {
+      .text-center {
+        text-align: left !important;
+      }
+    }
+  }
+  .customcheckbox {
+    display: inline-block;
+    &:nth-child(4) {
+      margin: 0 -6px 0 0;
+    }
+    label {
+      line-height: 24px;
+      font-weight: 500;
+    }
+  }
+  .container.parking {
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 765px) {
+  .set_flx {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 575px) {
+  .set_width {
+    width: 126.8px;
+}
+  .form-fields {
+    h2 {
+      font-size: 20px;
+    }
+    .field-group {
+      width: calc(100% - 38px);
+      margin: 0 auto;
+    }
+  }
+  .col-md-6.access {
+    width: calc(100% - 15px);
+    margin: 0 auto;
+  }
+  .type {
+    .customcheckbox {
+      display: block;
+    }
+  }
+  .text-center.amenities {
+    width: calc(100% - 15px);
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 408px) {
+  .set_flx {
+    width: 100% !important;
+  }
+  .set_width {
+    width: 100% !important;
+}
+  .form-fields {
+    h2 {
+      font-size: 18px;
+    }
+  }
+  .access {
+    .customcheckbox {
+      &:nth-child(5) {
+        white-space: nowrap;
+      }
+    }
+  }
+}

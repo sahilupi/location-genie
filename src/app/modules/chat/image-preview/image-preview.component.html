@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="dialog-header d-flex justify-content-between">
+    <h3 class="heading" mat-dialog-title>
+      {{ title }}
+    </h3>
+    <div (click)="downloadImage()" matTooltip="Download" class="mr-2">
+      <mat-icon class="download-link">cloud_download</mat-icon>
+    </div>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="dialog-content py-1">
+    <div class="row mx-0 image-wrapper">
+      <img
+        *ngIf="!data.fileFlag"
+        class="w-100"
+        [src]="data.previewLink"
+        alt="image preview"
+      />
+      <ng-container
+        *ngIf="data.messageType && data.messageType.toLowerCase() === 'mov'"
+      >
+        <video
+          [src]="data.previewLink"
+          height="400"
+          width="100%"
+          controls
+          autoplay
+        ></video>
+      </ng-container>
+      <ngx-doc-viewer
+        *ngIf="
+          data.fileFlag &&
+          (!data.messageType || data.messageType.toLowerCase() !== 'mov')
+        "
+        [url]="data.previewLink"
+        [viewerUrl]="data.previewLink"
+        viewer="url"
+        style="width: 100%; height: 400px"
+      ></ngx-doc-viewer>
+    </div>
+  </div>
+  <!-- <div mat-dialog-actions align="end">
+      <button
+        *ngIf="showCancelBtn"
+        mat-button
+        (click)="onDismiss()"
+        class="cancel outlined"
+      >
+        {{ cancelBtnText }}
+      </button>
+      <button
+        cdkFocusInitial
+        mat-raised-button
+        color="primary"
+        (click)="onConfirm()"
+        class="text-white"
+       
+      >
+        {{ confirmBtnText }}
+      </button>
+    </div> -->
+</div>
+
+<!-- <app-square-spinner
+    class="spinner animate__animated animate__fadeIn animate__faster"
+    *ngIf="isLoading"
+  ></app-square-spinner> -->

@@ -1,0 +1,186 @@
+.step-three-main {
+  height: calc(100vh - 60px);
+  overflow: auto;
+}
+
+.host {
+  margin: 0 0 80px 0;
+  margin-bottom: 100px;
+  h2.heading {
+    font-weight: 600;
+  }
+  p {
+    color: #736f6f;
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 22px;
+    span {
+      font-weight: 600;
+      color: #000;
+    }
+  }
+}
+
+.textarea-div {
+  label {
+    font-weight: 600;
+  }
+  textarea.form-control {
+    height: 200px;
+    overflow: auto;
+    padding: 10px 10px;
+  }
+}
+
+::ng-deep {
+  .activities {
+    .single-activitie {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      h3 {
+        font-weight: 600;
+        margin: 0;
+        font-size: 20px;
+      }
+      h6 {
+        color: #736f6f;
+        font-weight: 500;
+        font-size: 14px;
+        margin: 0;
+      }
+      .mdc-form-field {
+        align-items: flex-start !important;
+        .mdc-checkbox {
+          top: 0px !important;
+          margin: -8px 0 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.number {
+  h5 {
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 40px 0 10px 0;
+  }
+  input[type="text"] {
+    border-radius: 5px;
+    border: 1px solid #c8c5c5;
+    background: #fdfcfc;
+    padding: 10px 10px;
+    width: 70px;
+    text-align: center;
+  }
+  h6 {
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+.new_three.app-step-three-third-page
+  .activities
+  .single-activitie
+  .mdc-form-field
+  .mdc-checkbox {
+  top: 3px !important;
+  margin: -8px 0 0 !important;
+}
+
+//Responsive
+@media screen and (max-width: 1200px) {
+  .step-one {
+    .single-step {
+      width: 18%;
+    }
+    .row {
+      justify-content: center;
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .host {
+    h2.heading {
+      font-size: 24px;
+    }
+    p {
+      width: 75%;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+      .box {
+        min-height: auto;
+        padding: 6px 8px 1px 8px;
+        h5.description {
+          min-height: auto;
+        }
+      }
+      .step {
+        width: 80px;
+        height: 45px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .host {
+    h2.heading {
+      margin-top: 0 !important;
+      font-size: 24px;
+      margin-bottom: 25px !important;
+    }
+    h2.heading.activities {
+      margin-top: 25px !important;
+    }
+  }
+  .activities {
+    .single-activitie {
+      margin: 0 0 15px;
+      h3 {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .container.stepper,
+  .container {
+    width: calc(100% - 30px);
+  }
+  .host {
+    h2.heading {
+      font-size: 18px;
+    }
+    p.note {
+      width: 100%;
+    }
+  }
+}

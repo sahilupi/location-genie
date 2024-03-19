@@ -1,0 +1,392 @@
+<main class="main-host animate__animated animate__fadeIn">
+  <section
+    class="host-banner"
+    [style.background-image]="'url(' + bannerData.imageUrl + ')'"
+  >
+    <div class="edit-delete-action-for-banner-only">
+      <i
+        class="fas fa-pen fa-md banner"
+        *ngIf="isEditingData && bannerData.id"
+        (click)="onEditBanner()"
+      ></i>
+      <i
+        class="fas fa-plus fa-md banner"
+        (click)="onEditBanner()"
+        *ngIf="isEditingData && !bannerData.id"
+      ></i>
+    </div>
+    <div class="custom-vw-width">
+      <div class="container-html card">
+        <h4 class="text-left img-heading">{{ bannerData.title }}</h4>
+        <p class="img-description">
+          {{ bannerData.description }}
+        </p>
+        <div class="img-btn">
+          <button
+            [routerLink]="bannerData.link"
+            type="button"
+            class="w-100 hp-search--submit-button btn btn-success btn-lg_size_bigger total-width"
+          >
+            {{ bannerData.linkText }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h6 class="img-sign">
+        Johnny C.<br />
+        Malibu, CA
+      </h6>
+    </div>
+  </section>
+
+  <section class="container host">
+    <div class="position-relative custom-column">
+      <h2 class="heading">{{ header }}</h2>
+
+      <div class="edit-delete-action">
+        <i
+          class="fas fa-pen fa-md photoshoot"
+          *ngIf="isEditingData && isShowingAddBtn('photoshoots') > 0"
+          (click)="onEditPhotoShoots()"
+        ></i>
+        <i
+          class="fas fa-plus fa-md"
+          *ngIf="isEditingData && isShowingAddBtn('photoshoots') < 3"
+          (click)="onAddHostPhotoshoots()"
+        ></i>
+      </div>
+    </div>
+    <div class="row photoshoot">
+      <div
+        class="col-lg-4 col-md-6 col-sm-12 what-type-of"
+        *ngFor="let photoshoot of photoshoots"
+      >
+        <div class="card" *ngIf="photoshoot">
+          <i
+            *ngIf="isEditingData && photoshoot && photoshoot.id"
+            class="fas fa-trash fa-md text-danger"
+            (click)="onDeleteData(photoshoot.id)"
+          ></i>
+          <div
+            class="icon-image"
+            [ngClass]="photoshoot.id ? 'dynamic-image' : ''"
+          >
+            <img [src]="photoshoot?.imageUrl" />
+          </div>
+          <h2>{{ photoshoot.title }}</h2>
+          <p>
+            {{ photoshoot.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <div
+      class="owner-heading d-flex align-items-center justify-content-center custom-column"
+    >
+      <h2 class="heading mb-4" style="color: #213b55">
+        {{ workStepsHeader.typeName }}
+      </h2>
+      <i
+        class="fas fa-pen fa-md workTitle"
+        *ngIf="isEditingData"
+        (click)="onEditTitle(workStepsHeader)"
+      ></i>
+    </div>
+  </div>
+
+  <div class="container host host-sections">
+    <section class="step1 bg-color">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 custom-column">
+            <div class="center-body">
+              <div class="loader-circle-99">
+                <div class="center">1</div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+              </div>
+            </div>
+
+            <div class="edit-delete-action">
+              <!-- <i
+                class="fas fa-pen fa-md workTitle"
+                *ngIf="isEditingData"
+                (click)="onEditTitle(workStepsHeader)"
+              ></i> -->
+              <i
+                class="fas fa-pen fa-md step1"
+                *ngIf="isEditingData && isShowingAddBtn('step1') > 0"
+                (click)="onEditStep1()"
+              ></i>
+              <i
+                class="fas fa-plus fa-md"
+                *ngIf="isEditingData && isShowingAddBtn('step1') < 2"
+                (click)="onAddStep1()"
+              ></i>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="container signup">
+              <h4 class="sub-heading text-center">{{ step1Header }}</h4>
+              <div class="row justify-content-center signhost">
+                <div
+                  class="col-lg-4 col-md-4 col-sm-12"
+                  *ngFor="let step of step1"
+                >
+                  <div
+                    class="card vector-card"
+                    *ngIf="step1 && step1.length > 0"
+                  >
+                    <i
+                      *ngIf="isEditingData && step?.id"
+                      class="fas fa-trash fa-md text-danger"
+                      (click)="onDeleteData(step?.id)"
+                    ></i>
+                    <div class="img-group">
+                      <img
+                        [src]="step?.imageUrl"
+                        class="img-fluid"
+                        [ngClass]="step?.id ? '' : 'vector-image'"
+                      />
+                    </div>
+                    <div class="card-content first">
+                      <h2>{{ step?.title }}</h2>
+                      <p>
+                        {{ step?.description }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-4 col-md-4 col-sm-12"
+                  *ngFor="let step of step1Dummy"
+                >
+                  <div
+                    class="card vector-card"
+                    *ngIf="step1Dummy && step1Dummy.length > 0"
+                  >
+                    <i
+                      *ngIf="isEditingData && step?.id"
+                      class="fas fa-trash fa-md text-danger"
+                      (click)="onDeleteData(step?.id)"
+                    ></i>
+                    <div class="img-group">
+                      <img
+                        [src]="step?.imageUrl"
+                        class="vector-image dummy-image img-fluid"
+                      />
+                    </div>
+                    <div class="card-content">
+                      <h2>{{ step?.title }}</h2>
+                      <p>
+                        {{ step?.description }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="container host host-sections">
+    <section class="step2">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 custom-column">
+            <div class="center-body">
+              <div class="loader-circle-99">
+                <div class="center">2</div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="edit-delete-action">
+              <i
+                class="fas fa-pen fa-md step2"
+                *ngIf="isEditingData && isShowingAddBtn('step2') > 0"
+                (click)="onEditStep2()"
+              ></i>
+              <i
+                class="fas fa-plus fa-md"
+                *ngIf="isEditingData && isShowingAddBtn('step2') < 3"
+                (click)="onAddStep2()"
+              ></i>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <h4 class="sub-heading text-center">{{ step2Header }}</h4>
+            <div class="container">
+              <div class="row receive justify-content-center">
+                <div
+                  class="col-lg-4 col-md-6 col-sm-12"
+                  *ngFor="let step of step2"
+                >
+                  <div class="card vector-card">
+                    <i
+                      *ngIf="isEditingData && step?.id"
+                      class="fas fa-trash fa-md text-danger"
+                      (click)="onDeleteData(step?.id)"
+                    ></i>
+                    <div class="img-grp">
+                      <img
+                        class="img-fluid"
+                        [src]="step?.imageUrl"
+                        [ngClass]="step?.id ? '' : 'vector-image'"
+                      />
+                    </div>
+                    <h2>{{ step?.title }}</h2>
+                    <p>
+                      {{ step?.description }}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-4 col-md-6 col-sm-12"
+                  *ngFor="let step of step2Dummy"
+                >
+                  <div class="card vector-card">
+                    <div class="edit-delete-action">
+                      <i
+                        *ngIf="isEditingData && step?.id"
+                        class="fas fa-trash fa-md text-danger"
+                        (click)="onDeleteData(step?.id)"
+                      ></i>
+                    </div>
+                    <div class="img-group">
+                      <img
+                        [src]="step?.imageUrl"
+                        class="vector-image dummy-image img-fluid"
+                      />
+                    </div>
+                    <h2>{{ step?.title }}</h2>
+                    <p>
+                      {{ step?.description }}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="container host host-sections">
+    <section class="step3 bg-color">
+      <div class="row">
+        <div class="col-md-12 custom-column">
+          <div class="center-body">
+            <div class="loader-circle-99">
+              <div class="center">3</div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
+          </div>
+
+          <div class="edit-delete-action">
+            <i
+              class="fas fa-pen fa-md step3"
+              *ngIf="isEditingData && isShowingAddBtn('step3') > 0"
+              (click)="onEditStep3()"
+            ></i>
+            <i
+              class="fas fa-plus fa-md"
+              *ngIf="isEditingData && isShowingAddBtn('step3') < 2"
+              (click)="onAddStep3()"
+            ></i>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <h4 class="sub-heading text-center">{{ step3Header }}</h4>
+          <div class="container">
+            <div class="row justify-content-center paid">
+              <div
+                class="col-lg-4 col-md-6 col-sm-12 receive"
+                *ngFor="let step of step3"
+              >
+                <div class="card vector-card">
+                  <i
+                    *ngIf="isEditingData && step?.id"
+                    class="fas fa-trash fa-md text-danger"
+                    (click)="onDeleteData(step?.id)"
+                  ></i>
+                  <div class="img-group">
+                    <img
+                      class="img-fluid"
+                      [src]="step?.imageUrl"
+                      [ngClass]="step?.id ? '' : 'vector-image'"
+                    />
+                  </div>
+                  <h2>{{ step?.title }}</h2>
+                  <p>
+                    {{ step?.description }}
+                  </p>
+                </div>
+              </div>
+              <div
+                class="col-lg-4 col-md-6 col-sm-12"
+                *ngFor="let step of step3Dummy"
+              >
+                <div class="card vector-card">
+                  <i
+                    *ngIf="isEditingData && step?.id"
+                    class="fas fa-trash fa-md text-danger"
+                    (click)="onDeleteData(step?.id)"
+                  ></i>
+                  <div class="img-group">
+                    <img
+                      [src]="step?.imageUrl"
+                      class="vector-image dummy-image img-fluid"
+                    />
+                  </div>
+                  <h2>{{ step?.title }}</h2>
+                  <p>
+                    {{ step?.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="work">
+    <div class="container host">
+      <div class="edit-delete-action">
+        <i
+          class="fas fa-pen fa-md get-start-title"
+          *ngIf="isEditingData"
+          (click)="onEditTitle(getStartedHeader)"
+        ></i>
+      </div>
+      <h2 class="heading mt-0 mb-3">{{ getStartedHeader.typeName }}</h2>
+
+      <div class="row">
+        <div class="col-12 list-button">
+          <button
+            [routerLink]="bannerData.link"
+            type="button"
+            class="hp-search--submit-button btn btn-success btn-lg_size_bigger"
+          >
+            {{ bannerData.linkText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

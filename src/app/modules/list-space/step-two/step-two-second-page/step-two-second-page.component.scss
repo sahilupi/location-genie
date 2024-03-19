@@ -1,0 +1,379 @@
+.step-two {
+  background-color: #c8c5c5;
+}
+.steptwosecondpage ::ng-deep.check_boxx .mdc-form-field .mdc-checkbox {
+  margin: -6px 0 0 !important;
+}
+.data-table {
+  padding: 0 0 100px 0;
+  .customcheckbox {
+    display: inline-block;
+    margin: 0 -5px 7px 0;
+    .custom-control-label {
+      position: relative;
+      margin-bottom: 0;
+      vertical-align: top;
+      line-height: 24px;
+      font-size: 13px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+  }
+  .card {
+    border-radius: 5px;
+    border: 1px solid #c8c5c5;
+    background: #f8f8f8;
+    padding: 15px 20px 5px 20px;
+    width: 49%;
+    margin: 0 0 23px 0;
+    h5 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 15px 0;
+    }
+  }
+}
+
+/* 30-8-2023 */
+.box {
+  box-shadow: 0px 0 4px 0px rgb(136 136 136 / 25%);
+  min-height: 146px;
+  padding: 6px 8px 0 5px;
+  border-radius: 7px;
+  margin: 10px 0 0;
+}
+
+.features {
+  width: 24%;
+}
+
+.view-sec {
+  margin-right: 5px;
+  padding: 0 0 0 10px;
+  .col-md-3.view {
+    padding-left: 5px !important;
+  }
+}
+
+::ng-deep .steptwosecondpage {
+  .mdc-form-field {
+    display: inline-flex;
+    align-items: normal !important;
+    .mdc-checkbox {
+      margin: -8px 0 0 !important;
+      padding-left: 0;
+      padding-right: 5px;
+      .mdc-checkbox__background {
+        left: 0;
+      }
+    }
+    label.mdc-label {
+      padding-top: 2px !important;
+    }
+  }
+}
+
+.step-one {
+  .single-step.active {
+    .step.active {
+      span {
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .mdc-checkbox__ripple {
+    display: none !important;
+  }
+  .row.driveaway.longtext {
+    .mdc-form-field {
+      label {
+        word-break: break-word !important;
+      }
+    }
+  }
+  .row.driveaway.break {
+    .mdc-form-field {
+      label {
+        word-break: break-word !important;
+      }
+    }
+  }
+  .row.driveaway.labelfix {
+    .col-md-3 {
+      &:nth-child(7) {
+        .customcheckbox {
+          max-width: 94px;
+        }
+      }
+    }
+  }
+}
+
+.row.driveaway.porch {
+  .col-md-3 {
+    &:last-child {
+      .customcheckbox {
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.row.view-sec.driveaway {
+  .col-md-3 {
+    .customcheckbox {
+      padding: 0 5px;
+    }
+  }
+}
+
+::ng-deep {
+  .row.driveaway {
+    .mat-mdc-checkbox {
+      .mdc-form-field {
+        label {
+          margin-bottom: 0px !important;
+          padding-top: 3px !important;
+          min-width: 120px;
+          word-break: break-word;
+        }
+      }
+    }
+  }
+}
+
+//Responsive
+@media screen and (max-width: 1200px) {
+  .step-one {
+    .single-step {
+      width: 18%;
+    }
+    .row {
+      justify-content: center;
+    }
+  }
+  .data-table {
+    .features {
+      width: 33%;
+    }
+    .customcheckbox {
+      &:last-child {
+        margin: 0 5px;
+      }
+    }
+  }
+  .row.driveaway {
+    .col-md-3 {
+      flex: 0 0 33%;
+      max-width: 33%;
+    }
+  }
+
+  .row.driveaway.porch {
+    .col-md-3 {
+      &:last-child {
+        .customcheckbox {
+          white-space: initial;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .step {
+    width: 35px;
+    height: 35px;
+    font-size: 15px;
+  }
+  .box {
+    padding: 6px 8px 1px 5px;
+    min-height: 242px;
+    word-wrap: break-word;
+  }
+  .stepper {
+    h3.title {
+      font-size: 13px;
+    }
+  }
+  .step-one {
+    .single-step {
+      width: 18%;
+      &:after {
+        content: "";
+        position: absolute;
+        top: 17px;
+      }
+    }
+  }
+  .type {
+    .card {
+      width: calc(25% - 15px);
+    }
+    h2.heading {
+      font-size: 26px;
+    }
+  }
+  .row.driveaway {
+    .col-md-3 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+  .data-table {
+    .features {
+      width: 50%;
+    }
+    ::ng-deep {
+      .custom-checkbox.setlabels {
+        .mdc-form-field {
+          label.mdc-label {
+            word-break: break-word !important;
+          }
+        }
+      }
+    }
+    .card {
+      margin: 0 0 15px 0;
+    }
+  }
+  ::ng-deep {
+    .row.driveaway.longtext {
+      .mdc-form-field label {
+        word-break: initial;
+      }
+    }
+    .row.driveaway {
+      .mat-mdc-checkbox {
+        .mdc-form-field {
+          label {
+            margin-bottom: 0px !important;
+            padding-top: 3px !important;
+            min-width: 120px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      .box {
+        min-height: auto;
+      }
+      .step {
+        width: 80px;
+        height: 49px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .step {
+    text-align: left;
+    margin: 0;
+  }
+  .box {
+    text-align: left;
+  }
+  .type {
+    .card {
+      width: calc(33% - 15px);
+    }
+  }
+  .row.driveaway {
+    .col-md-3 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+  .data-table {
+    .features {
+      width: 100%;
+    }
+    .card {
+      margin: 0 0 10px 0;
+    }
+  }
+  .data-table {
+    .customcheckbox {
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .row.driveaway {
+      .mat-mdc-checkbox {
+        .mdc-form-field {
+          label {
+            min-width: 120px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .type {
+    .card {
+      width: calc(50% - 15px);
+      .image {
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+  .container.stepper {
+    width: calc(100% - 30px);
+  }
+  .step-one {
+    .single-step.active {
+      .step {
+        width: auto;
+        height: auto;
+        padding: 10px 3px 12px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .container {
+    max-width: calc(100% - 30px);
+  }
+  .data-table {
+    .card {
+      width: 100%;
+    }
+  }
+}

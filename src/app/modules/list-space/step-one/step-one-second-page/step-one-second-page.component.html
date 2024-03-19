@@ -1,0 +1,140 @@
+<app-list-space-header
+  [stepNumber]="1"
+  [stepName]="'The basics'"
+  (onSaveAndExit)="onUpdatedLocationCategory('save')"
+></app-list-space-header>
+
+<div class="step-one">
+  <div class="container stepper">
+    <div class="row">
+      <div
+        class="single-step col-lg-3 col-md-3 col-sm-12"
+        [ngClass]="i === 2 ? 'active' : ''"
+        *ngFor="let stepper of stepperData; let i = index"
+      >
+        <app-listing-stepper
+          [stepperData]="stepper"
+          [activeIdx]="3"
+          [idx]="i"
+          [totalSteppers]="stepperData.length"
+        ></app-listing-stepper>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-fields">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="heading">What kind of location is it?</h2>
+    </div>
+    <div class="d-flex flex-row">
+      <div class="card" *ngFor="let location of locationKinds">
+        <div class="customcheckbox">
+          <div class="custom-control custom-checkbox">
+            <input
+              type="radio"
+              class="custom-control-input"
+              [id]="location.id"
+              name="locationKinds"
+              [checked]="location.id === categoryType"
+              (click)="onGetLocationType(location.id)"
+            />
+            <label class="custom-control-label cursor" [for]="location.id">
+              <img [src]="location.imgSrc" />
+              <h6>{{ location.name }}</h6>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="type custom-bg-checkbox width_full"
+  *ngIf="
+    showLocationTypes &&
+    availableLocationTypes &&
+    availableLocationTypes.length > 0
+  "
+>
+  <div class="text-center">
+    <h2 class="heading">What type?</h2>
+  </div>
+  <div class="container">
+    <div class="row" style="gap: 15px; justify-content: center">
+      <label
+        [htmlFor]="type.categoryName"
+        class="card col-2 px-0 card-border"
+        [ngClass]="type.checked ? 'bordercheck' : ''"
+        *ngFor="let type of availableLocationTypes"
+        (click)="
+          (!isDisabledType && !type.checked) || type.checked
+            ? (type.checked = !type.checked)
+            : null;
+          checkDisable()
+        "
+        role="button"
+      >
+        <div class="card-border">
+          <div
+            class="image card-border"
+            [ngClass]="
+              isDisabledType && !type.checked ? 'disabledcheckbox' : ''
+            "
+          >
+            <img
+              [src]="type.imagePath.imageFullPath"
+              #img
+              (error)="img.src = 'assets/images/dummy/default_image.png'"
+            />
+          </div>
+          <h2
+            [ngClass]="
+              isDisabledType && !type.checked ? 'disabledcheckbox' : ''
+            "
+          >
+            {{ type.categoryName }}
+          </h2>
+          <div class="customcheckbox">
+            <div class="custom-control custom-checkbox">
+              <mat-checkbox
+                class="example-margin"
+                [disabled]="isDisabledType && !type.checked"
+                [(ngModel)]="type.checked"
+                [id]="type.categoryName"
+                (change)="checkDisable()"
+                (click)="$event.stopPropagation()"
+                color="primary"
+                class="text-white"
+              >
+              </mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="hint-text text-center">
+        <div>
+          <img src="assets/images/location-type.png" />
+        </div>
+        <p class="mb-0 mt-2">
+          If your location is associated with more than one category, please
+          select the one that fits best.
+        </p>
+        <p>When choosing a type, please select up to two types only.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-list-space-buttons
+  [backBtnRoute]="backBtnRoute"
+  [disabledNxtBtn]="isDisabledBtn"
+  (nextBtnClick)="onUpdatedLocationCategory()"
+  [progressValue]="60"
+></app-list-space-buttons>

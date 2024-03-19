@@ -1,0 +1,139 @@
+.step-one-main {
+  height: calc(100vh - 60px);
+  overflow: auto;
+}
+
+.form-fields {
+  padding: 40px 0 40px;
+  margin-bottom: 100px;
+  h2 {
+    font-weight: 600;
+    margin: 0 0 3px 0;
+  }
+  h4 {
+    color: #a7a4a4;
+    font-size: 13px;
+    padding: 15px 0 20px;
+  }
+}
+
+label {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.autocomplete-content {
+  transform: translateY(-100px);
+  transition: all 0.3s ease-in-out;
+}
+
+.show.autocomplete-content {
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+}
+
+.autocomplete-content-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.autocomplete-arrow {
+  right: 31px;
+  top: 53%;
+}
+
+.google-maps {
+  width: 60%;
+  // height: 70%;
+  margin: auto;
+  border: 1px solid #016670;
+  position: relative;
+
+  .drag-btn {
+    z-index: 1000;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    height: 45px;
+    min-width: 80px;
+  }
+}
+
+/* 29-8-2023 */
+::ng-deep {
+  .map-container {
+    margin: auto;
+  }
+}
+
+// Responsiveness
+
+@media screen and (max-width: 991px) {
+  .form-fields {
+    h2 {
+      font-size: 28px;
+    }
+  }
+  ::ng-deep {
+    .map-container {
+      width: 100% !important;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      .box {
+        min-height: auto;
+        padding: 6px 8px 1px 8px;
+        h5.description {
+          min-height: auto;
+        }
+      }
+      .step {
+        width: 80px;
+        height: 45px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .form-fields {
+    h2 {
+      font-size: 24px;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .form-fields {
+    h2 {
+      font-size: 18px;
+    }
+  }
+  .google-maps {
+    width: 100%;
+  }
+}

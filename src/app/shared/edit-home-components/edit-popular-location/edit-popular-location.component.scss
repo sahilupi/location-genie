@@ -1,0 +1,139 @@
+.dialog-header {
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.heading {
+  align-items: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
+.sub-title {
+  padding: 0 24px 9px;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.container {
+  margin-top: 15px;
+}
+.content {
+  margin-right: 25px;
+  width: 100px;
+}
+
+.form-fields {
+  h2 {
+    font-weight: 600;
+    margin: 0 0 20px 0;
+  }
+  h4 {
+    color: #a7a4a4;
+    font-size: 13px;
+  }
+  .card {
+    width: 25%;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    height: 128px;
+    img {
+      height: 50px;
+      margin: 0 auto 18px auto;
+      filter: brightness(100%);
+    }
+    h6 {
+      font-size: 12px;
+      font-weight: 400;
+      margin: 0;
+      position: inherit;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      padding: 0 7px;
+    }
+  }
+  .customcheckbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    .custom-control {
+      min-height: 100%;
+      padding-left: 0;
+    }
+    .custom-control-label {
+      cursor: pointer;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 128px !important;
+      display: block !important;
+      padding-top: 14px;
+      transition: all 0.3s ease-in-out;
+      border-color: #016670;
+    }
+    .checked-number {
+      width: 21px;
+      height: 21px;
+      background: #016670;
+      border-radius: 50%;
+      position: absolute;
+      left: 3px;
+      bottom: 3px;
+      color: #fff;
+      font-size: 9px !important;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input[type="checkbox"] {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .custom-control-label::after {
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      display: none;
+    }
+    .custom-control-label::before {
+      width: 100%;
+      height: 98%;
+      left: 0;
+      top: 0;
+      background: #efefef;
+      border: 0 !important;
+      box-shadow: none !important;
+      transition: all 0.3s ease-in-out;
+    }
+    .custom-control-input:checked ~ .custom-control-label::before {
+      border: 1px solid #016670;
+    }
+    .custom-control-input:checked ~ .custom-control-label {
+      border: 1px solid #016670;
+    }
+    .custom-control-input:checked ~ .custom-control-label img {
+      filter: brightness(100%);
+    }
+  }
+}
+
+.search-spinner {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+
+  ::ng-deep .spinner {
+    height: 35px;
+  }
+}

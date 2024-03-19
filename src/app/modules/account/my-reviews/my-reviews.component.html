@@ -1,0 +1,130 @@
+<div class="container" *ngIf="reviews && reviews.length && !isLoading">
+  <div class="row mx-0">
+    <div class="col-12 review mb-5">
+      <div class="d-flex align-items-center review_flex">
+        <h3 class="review-title mb-4">Your reviews on Listings</h3>
+        <div class="review-rating ml-3 mb-4">
+          <!-- <div class="review-rating__star-ratings">
+              <div
+                class="fill-ratings"
+                [style.width]="(exactAverageRating * 100) / 5 + '%'"
+              >
+                <span>★★★★★</span>
+              </div>
+              <div class="empty-ratings">
+                <span>★★★★★</span>
+              </div>
+            </div> -->
+        </div>
+      </div>
+      <div
+        class="review-content mt-3 mb-4"
+        *ngFor="let review of reviews; let i = index"
+      >
+        <div class="review-content__item d-flex">
+          <div class="review-content__item--image">
+            <!-- <img
+              #reviewUserImg
+              [src]="review.userImg"
+              [alt]="
+                review.firstName
+                  ? review.firstName + ' ' + review.lastName
+                  : 'User name'
+              "
+              (error)="reviewUserImg.src = 'assets/images/dummy/dummy-user.jpg'"
+            /> -->
+          </div>
+
+          <div class="review-content__item--details">
+            <div class="d-flex">
+              <a
+                [href]="'/listing/' + getEncodedListingId(review.listingId)"
+                target="_blank"
+                class="review-content__item--details-name"
+                matTooltip="View Location"
+                >{{ review.listingTitle }}</a
+              >
+
+              <div class="d-flex align-items-center ml-2">
+                <div class="review-content__item--details-rating">
+                  <mat-icon
+                    *ngFor="
+                      let rating of [
+                        reviews[i].userRating,
+                        reviews[i].userRating,
+                        reviews[i].userRating,
+                        reviews[i].userRating,
+                        reviews[i].userRating
+                      ];
+                      let ratingIdx = index
+                    "
+                  >
+                    {{ rating > ratingIdx ? "star" : "star_border" }}</mat-icon
+                  >
+                </div>
+              </div>
+            </div>
+            <small>{{ review.listingAddress }}</small>
+            <div class="review-content__item--details-comment">
+              <div class="review-content__item--details-comment__time">
+                {{
+                  commonService
+                    .calculateTimeAgo(review.createdDate)
+                    .charAt(0) === "-"
+                    ? commonService
+                        .calculateTimeAgo(review.createdDate)
+                        .slice(1)
+                    : commonService.calculateTimeAgo(review.createdDate)
+                }}
+              </div>
+              <div class="review-content__item--details-comment__text">
+                <p>
+                  {{
+                    !review.showMore
+                      ? review.userReview.slice(0, 100) +
+                        (review.userReview.length > 100 ? "..." : "")
+                      : review.userReview
+                  }}
+                </p>
+                <small
+                  class="review-content__item--show-more"
+                  *ngIf="review.userReview.length > 100"
+                  role="button"
+                  color="primary"
+                  (click)="review.showMore = !review.showMore"
+                  >{{ !review.showMore ? "Show more" : "Show less" }}
+                </small>
+              </div>
+            </div>
+          </div>
+          <i
+            class="review-content__item--edit fas fa-pen fa-md"
+            (click)="onAddUpdateReview(review.listingId, true, review.reviewId)"
+          ></i>
+          <!-- <i
+              class="review-content__item--trash fas fa-trash fa-md"
+              (click)="onDeleteReview(review.id)"
+            ></i> -->
+        </div>
+      </div>
+      <div
+        class="review-load-more"
+        role="button"
+        (click)="loadMoreReviews()"
+        *ngIf="reviewsTotolCount > reviews.length"
+      >
+        <small>Load more reviews</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!reviews || reviews.length <= 0">
+  <div class="row">
+    <div class="col-12 review mb-5">
+      <div class="d-flex align-items-center">
+        <h3 class="review-title mb-4 m-auto">No ratings</h3>
+      </div>
+    </div>
+  </div>
+</div>

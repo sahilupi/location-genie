@@ -1,0 +1,258 @@
+<div class="seo-locations--location" [ngClass]="class">
+  <div class="lb lb-js lb__superhost lb__rating5">
+    <div class="lb--img-content-wrapper">
+      <div class="lb--img-content">
+        <div [class]="className" [style.height]="height">
+          <div class="lb-slider--track" data-glide-el="track">
+            <owl-carousel-o
+              [options]="customOptions"
+              class="lb-slider--slides glide__slides slides-js homenormal"
+            >
+              <ng-container
+                class="lb-slider--slide glide__slide--clone"
+                style="width: 179.6px; margin-right: 8px"
+              >
+                <ng-template
+                  carouselSlide
+                  *ngFor="
+                    let img of locationData.images
+                      ? locationData.images
+                      : locationData.image?.split(' ')
+                  "
+                >
+                  <!-- <div class="listing-grid"> -->
+                  <a
+                    *ngIf="locationData.listingId"
+                    routerLink="/listing/{{ encryptedListingId }}"
+                    class="lb-slider--link slide-link-js listing-location"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      [src]="
+                        img ? img : 'assets/images/dummy/default_image.png'
+                      "
+                      #image
+                      class="lb-slider--img slide-img-js img-fluid"
+                      alt="Location title"
+                      (error)="
+                        image.src = 'assets/images/dummy/default_image.png'
+                      "
+                    />
+                  </a>
+                  <!-- </div> -->
+                  <a
+                    *ngIf="!locationData.listingId"
+                    class="lb-slider--link slide-link-js listing-location"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      [src]="img"
+                      class="lb-slider--img slide-img-js"
+                      alt="Location title"
+                      #dummyImg
+                      (error)="
+                        dummyImg.src = 'assets/images/dummy/default_image.png'
+                      "
+                    />
+                  </a>
+                </ng-template>
+              </ng-container>
+            </owl-carousel-o>
+          </div>
+        </div>
+        <div class="lb--img-content-overlay">
+          <div class="lb--superhost superhost-js">
+            <p class="m-0">SuperHost</p>
+          </div>
+          <div
+            class="lb--fav"
+            (click)="locationData.listingId ? getProjects() : null"
+          >
+            <i
+              *ngIf="locationData.listingId"
+              class="listing-heart"
+              [ngClass]="
+                selectedProjectListings.includes(locationData.listingId)
+                  ? 'fas fa-heart'
+                  : 'far fa-heart'
+              "
+              [matMenuTriggerFor]="locationData.listingId ? projectMenu : null"
+            ></i>
+            <div class="bookmarks-container-js">
+              <mat-menu #projectMenu="matMenu">
+                <div *ngIf="isLoading">
+                  <app-spinner [spinnerColor]="'#016670'"></app-spinner>
+                </div>
+                <ng-container
+                  *ngIf="(!projects || projects.length <= 0) && !isLoading"
+                >
+                  <div><small>No projects found.</small></div>
+                </ng-container>
+                <ng-container *ngIf="projects">
+                  <button mat-menu-item *ngFor="let project of projects">
+                    <div
+                      role="button"
+                      class="d-flex align-items-center project-menu"
+                      (click)="
+                        onAddLocationToProject(
+                          project.id,
+                          project.listingIds &&
+                            project.listingIds.includes(locationData.listingId)
+                            ? false
+                            : true,
+                          locationData.listingId
+                        )
+                      "
+                    >
+                      <img
+                        class="object_css"
+                        width="40"
+                        height="40"
+                        [src]="
+                          project.imageFullPath
+                            ? project.imageFullPath
+                            : dummyImage
+                        "
+                        [alt]="project.title"
+                      />
+                      <div class="ml-2">{{ project.title }}</div>
+                      <i
+                        *ngIf="locationData.listingId"
+                        class="p-absolute"
+                        [ngClass]="
+                          project.listingIds &&
+                          project.listingIds.includes(locationData.listingId)
+                            ? 'fas fa-heart'
+                            : 'far fa-heart'
+                        "
+                      ></i>
+                    </div>
+                  </button>
+                </ng-container>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="lb--text-content bottom-content remove_bullets">
+      <a
+        *ngIf="locationData.listingId"
+        routerLink="/listing/{{ encryptedListingId }}"
+        class="lb--title title-js"
+        rel="noopener noreferrer"
+        >{{
+          locationData.listing?.locationTitle
+            ? locationData.listing?.locationTitle
+            : "Unnamed Location"
+        }}</a
+      >
+      <a
+        *ngIf="!locationData.listingId"
+        class="lb--title title-js"
+        rel="noopener noreferrer"
+        >{{
+          locationData.listing?.locationTitle
+            ? locationData.listing?.locationTitle
+            : "Unnamed Location"
+        }}</a
+      >
+
+      <hr />
+
+      <ul
+        class="lb--props-list align-items-center justify-content-between mb-1"
+      >
+        <li class="lb--prop lb--prop__price mr-2">
+          <span class="lb--price-value price-js">
+            {{
+              charegesPerHour
+                | currency : priceCurrency + " " : "symbol-narrow" : "1.0-0"
+            }}</span
+          >/hr
+        </li>
+        <li class="remove_cls">
+          <div class="radting_design">
+            <div class="d-flex justify-content-center" *ngIf="overAllRatings">
+              <div
+                class="review-rating d-flex justify-content-center align-items-baseline"
+              >
+                <div
+                  class="review-rating__star-ratings"
+                  [matTooltip]="overAllRatings.toFixed(1)"
+                >
+                  <div
+                    class="fill-ratings"
+                    [style.width]="(overAllRatings * 100) / 5 + '%'"
+                  >
+                    <span>★★★★★</span>
+                  </div>
+                  <div class="empty-ratings">
+                    <span>★★★★★</span>
+                  </div>
+                </div>
+                <small *ngIf="locationData.listing?.totalCountReviews"
+                  >({{ locationData.listing?.totalCountReviews }})</small
+                >
+              </div>
+            </div>
+            <div
+              class="d-flex no-rating justify-content-center"
+              *ngIf="!overAllRatings"
+            >
+              <small>No ratings</small>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="address_instant mb-2">
+        <ul class="p-0">
+          <li class="lb--prop lb--prop__instant-book">
+            <svg class="lb--instant-icon svg-icon">
+              <use xlink:href="#ic-instant"></use>
+            </svg>
+            Instant book
+          </li>
+          <li class="lb--prop address_loc">
+            <address class="lb--address address-js m-0">
+              {{
+                locationData.listing?.listingAddress?.city
+                  ? locationData.listing?.listingAddress?.city
+                  : "New City"
+              }}
+            </address>
+          </li>
+          <li class="lb--prop address_loc">
+            <address class="lb--address address-js m-0"></address>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="radting_design">
+      <div class="d-flex justify-content-center" *ngIf="overAllRatings">
+        <div class="review-rating">
+          <div
+            class="review-rating__star-ratings"
+            [matTooltip]="overAllRatings.toFixed(2)"
+          >
+            <div
+              class="fill-ratings"
+              [style.width]="(overAllRatings * 100) / 5 + '%'"
+            >
+              <span>★★★★★</span>
+            </div>
+            <div class="empty-ratings">
+              <span>★★★★★</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="d-flex no-rating justify-content-center"
+        *ngIf="!overAllRatings"
+      >
+        <small>No ratings</small>
+      </div>
+    </div> -->
+  </div>
+</div>

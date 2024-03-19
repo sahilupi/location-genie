@@ -1,0 +1,186 @@
+<div class="step-three-main new_three">
+  <app-list-space-header
+    [stepNumber]="3"
+    [stepName]="'Get ready to shoot'"
+    (onSaveAndExit)="onUpdateWelcomeGuide(welcomeGuideForm.value, 'save')"
+  ></app-list-space-header>
+
+  <div class="step-one">
+    <div class="container stepper">
+      <div class="row" style="gap: 6px">
+        <div
+          class="single-step single-step-in-third"
+          [ngClass]="i === 2 ? 'active' : ''"
+          *ngFor="let stepper of stepperData; let i = index"
+        >
+          <app-listing-stepper
+            [stepperData]="stepper"
+            [activeIdx]="3"
+            [idx]="i"
+            [totalSteppers]="stepperData.length"
+          ></app-listing-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="host">
+    <h2 class="heading text-center mt-5">Welcome Guide</h2>
+    <p class="mb-4">
+      Make your guests feel comfortable with a thoughtful welcome guide. Create
+      your guide once, and you won’t have to rewrite or resend emails for every
+      booking.You can give guests clear step-by-step instructions and tell them
+      how to connect to Wi-Fi or where they can find important things. Describe
+      important additions to the listing rules or any other information that you
+      consider necessary to convey to your guests. Only guests with a confirmed
+      booking can access your guide.
+    </p>
+
+    <div class="textarea-div container">
+      <form
+        #welcomeGuideForm="ngForm"
+        (ngSubmit)="onUpdateWelcomeGuide(welcomeGuideForm.value)"
+      >
+        <label>Welcome guide</label>
+        <textarea
+          class="form-control"
+          name="message"
+          [(ngModel)]="welcomeGuide.message"
+          placeholder="Type a message"
+        ></textarea>
+      </form>
+      <p class="note m-0 text-left mt-2">
+        <span class="mr-2">Note:</span>This guide will be automatically sent to
+        each renter two days prior to the booking start date.
+      </p>
+    </div>
+
+    <div class="activities container" #activities>
+      <h2 class="heading text-center mt-5 mb-5 activities">
+        Which activities would you like to host?
+      </h2>
+      <form *ngIf="activityForm" [formGroup]="activityForm">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="single-activitie">
+              <mat-checkbox
+                class="example-margin"
+                color="primary"
+                class="text-white"
+                formControlName="production"
+                ><span class="">
+                  <h3>Production</h3>
+                  <h6>Film and photo shoots</h6>
+                </span>
+              </mat-checkbox>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="single-activitie">
+              <mat-checkbox
+                class="example-margin"
+                color="primary"
+                class="text-white"
+                formControlName="event"
+                ><span class="">
+                  <h3>Event</h3>
+                  <h6>Baby showers, wedding receptions, art exhibits</h6>
+                </span>
+              </mat-checkbox>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="single-activitie">
+              <mat-checkbox
+                class="example-margin"
+                color="primary"
+                class="text-white"
+                formControlName="meeting"
+                ><span class="">
+                  <h3>Meeting</h3>
+                  <h6>Workshops, trainings, conferences</h6>
+                </span>
+              </mat-checkbox>
+            </div>
+          </div>
+          <div
+            class="col-md-6 col-12 m-auto"
+            [class.app-validation-message-blink]="isSubmitted"
+            *ngIf="
+              !activityForm.value.production &&
+              !activityForm.value.event &&
+              !activityForm.value.meeting
+            "
+          >
+            <app-validation-message
+              [message]="validationMsg"
+            ></app-validation-message>
+          </div>
+        </div>
+        <!-- <div class="number container m-auto">
+          <h5>Maximum number of attendees? *</h5>
+          <div class="d-flex align-items-center">
+            <input
+              formControlName="numberOfAttendees"
+              type="text"
+              value="12"
+              (keypress)="commonService.numberOnly($event)"
+              [ngClass]="{
+                'has-error':
+                  (activityForm.controls['numberOfAttendees'].invalid &&
+                    activityForm.controls['numberOfAttendees'].touched) ||
+                  (activityForm.controls['numberOfAttendees'].invalid &&
+                    isSubmitted)
+              }"
+            />
+            <h6 class="mb-0 ml-3">People</h6>
+          </div>
+          <div
+            *ngIf="
+              (activityForm.controls['numberOfAttendees'].hasError(
+                'required'
+              ) &&
+                activityForm.controls['numberOfAttendees'].touched) ||
+              (activityForm.controls['numberOfAttendees'].hasError(
+                'required'
+              ) &&
+                isSubmitted)
+            "
+          >
+            <small class="has-error--text">This field is required</small>
+          </div>
+          <div
+            *ngIf="
+              (activityForm.controls['numberOfAttendees'].value <= 0 &&
+                activityForm.controls['numberOfAttendees'].touched) ||
+              (activityForm.controls['numberOfAttendees'].value <= 0 &&
+                isSubmitted)
+            "
+          >
+            <small class="has-error--text"
+              >Value must be greater than zero</small
+            >
+          </div>
+          <div
+            *ngIf="
+              (activityForm.controls['numberOfAttendees'].hasError('max') &&
+                activityForm.controls['numberOfAttendees'].touched) ||
+              (activityForm.controls['numberOfAttendees'].hasError('max') &&
+                isSubmitted)
+            "
+          >
+            <small class="has-error--text"
+              >Please enter no more than 3 characters</small
+            >
+          </div>
+        </div> -->
+      </form>
+    </div>
+  </div>
+
+  <app-list-space-buttons
+    [backBtnRoute]="backBtnRoute"
+    [progressValue]="55"
+    (nextBtnClick)="onUpdateWelcomeGuide(welcomeGuideForm.value)"
+  ></app-list-space-buttons>
+</div>

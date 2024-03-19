@@ -1,0 +1,51 @@
+<div
+  class="hp-activities-v2-js autocomplete-root mb-4 mt-2"
+  [ngClass]="showDropDown ? 'autocomplete-root__open' : ''"
+>
+  <div class="hp-search--dropdown-btn">
+    <input
+      id="hp-search--activity"
+      class="hp-search--dropdown hp-search--dropdown-custom hp-search--dropdown-activities autocomplete-input-js"
+      placeholder="Start typing to pick an activity"
+      (focus)="showDropDown = true"
+      (blur)="showDropDown = false"
+      autocomplete="off"
+      [placeholder]="'Attendees:' + selectedAttendies.text"
+      [value]="'Attendees: ' + selectedAttendies.text"
+      readonly
+    />
+  </div>
+  <span
+    ><span class="autocomplete-arrow-js autocomplete-arrow"
+      ><i class="fas fa-angle-down"></i
+    ></span>
+    <div
+      *ngIf="showDropDown"
+      class="autocomplete-content autocomplete-content-js"
+    >
+      <ul class="autocomplete-content-default">
+        <li
+          class="autocomplete-content-popular-wrapper-js animate__animated animate__slideInDown animate__faster"
+        >
+          <ul class="autocomplete-content-items">
+            <li
+              class="autocomplete-content-item d-flex justify-content-between"
+              *ngFor="let item of attendiesDropdown; let i = index"
+              data-index="25"
+              [ngClass]="item.available ? '' : 'disabledcheckbox'"
+              (mousedown)="onUpdateSelectedAttendies(item)"
+            >
+              <span>{{ item.text }}</span>
+              <span
+                >{{
+                  item.charges
+                    | currency : currency + " " : "symbol-narrow" : "1.0-0"
+                }}/hr</span
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </span>
+</div>

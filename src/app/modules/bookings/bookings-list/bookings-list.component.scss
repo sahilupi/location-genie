@@ -1,0 +1,131 @@
+.booking {
+  margin-top: 100px;
+
+  &--heading {
+    margin: auto;
+    padding: 40px 0 10px 0;
+    h1 {
+      color: #000000;
+      font-weight: 600;
+      font-size: 36px;
+      line-height: 60px;
+      text-align: center;
+    }
+  }
+
+  &--button {
+    text-align: center;
+    margin: 35px;
+
+    .btn {
+      border-radius: 6px;
+    }
+  }
+
+  .booking-status {
+    &--btn {
+      min-width: 90px;
+      padding: 12px 15px;
+      margin: 0;
+      border: none;
+      outline: none;
+      text-align: center;
+      white-space: nowrap;
+      cursor: pointer;
+      background-color: #e2f6ff;
+      font-size: 14px;
+      color: #333;
+
+      &.active {
+        background-color: #016670;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// table css
+// .booking-table {
+//   font-family: arial, sans-serif;
+//   border-collapse: collapse;
+//   width: 100%;
+//   &--row {
+//     background-color: #f5f5f5;
+//   }
+//   td {
+//     padding: 10px 0;
+//   }
+//   td,
+//   th {
+//     border: 1px solid #f5f5f5;
+//     text-align: center;
+//     padding: 8px;
+//     max-width: 194px;
+//     max-height: 104px;
+//     font-weight: 700;
+//   }
+//   th {
+//     color: #016670;
+//   }
+// }
+
+.custom-tabs {
+  ::ng-deep {
+    .mat-mdc-tab-labels {
+      justify-content: center;
+      margin: 0 0 20px 0;
+    }
+    .mat-mdc-tab {
+      background: #e2f6ff;
+      font-size: 14px;
+    }
+    .mat-mdc-tab.mdc-tab--active {
+      background: #016670;
+    }
+    .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+      color: #fff;
+    }
+    .mat-mdc-tab .mdc-tab-indicator__content--underline {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    max-width: 95%;
+  }
+}
+@media screen and (max-width: 575px){
+  .booking-status.d-flex.justify-content-center {
+    flex-direction: column !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .custom-tabs ::ng-deep .mat-mdc-tab {
+    padding: 0px 4px;
+    font-size: 12px;
+    height: 36px;
+  }
+  .booking {
+    .booking-status--btn{
+      min-width: 75px;
+      padding: 8px 5px;
+      font-size: 12px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 400px) {
+  .custom-tabs ::ng-deep .mat-mdc-tab {
+    font-size: 11px !important;
+    padding: 0px 9px;
+    min-width: 10px;
+  }
+  .custom-tabs ::ng-deep .mat-mdc-tab-header-pagination-after,
+  .custom-tabs ::ng-deep .mat-mdc-tab-header-pagination-before {
+    display: none;
+  }
+}

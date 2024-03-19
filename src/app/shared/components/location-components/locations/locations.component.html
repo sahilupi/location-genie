@@ -1,0 +1,37 @@
+<section
+  class="hp-content-section hp-content-section__prof hp-container hp-professionals"
+>
+  <div class="edit-delete-action">
+    <i
+      class="fas fa-pen fa-md"
+      *ngIf="isEditingData && isShowingEditButton()"
+      (click)="onEditEvents()"
+    ></i>
+    <i
+      class="fas fa-plus fa-md"
+      *ngIf="isEditingData && getOccupiedPositions() <= 1"
+      (click)="onAddDestinations()"
+    ></i>
+  </div>
+  <div class="hp-content-section--info">
+    <h2 class="hp-content-section--title" id="section--for-professionals">
+      {{ header }}
+    </h2>
+    <p class="hp-content-section--description">
+      {{ subHeader }}
+    </p>
+  </div>
+
+  <ul class="hp-content-section--content-list">
+    <li
+      class="hp-content-section--content-item hp-content-section--content-item__for_pro"
+      *ngFor="let location of locations"
+    >
+      <app-location
+        [location]="location"
+        [isEditingData]="isEditingData"
+        (deleteLocationEmiiter)="onDeleteLocation($event)"
+      ></app-location>
+    </li>
+  </ul>
+</section>

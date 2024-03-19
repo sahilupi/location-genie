@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&family=Wellfleet&display=swap");
+
+.wrapper {
+  /* background: linear-gradient(180deg, #14f06c, #0575e6); */
+  min-height: 480px;
+  position: relative;
+  max-width: 520px;
+  padding: 20px;
+  margin: 0 auto;
+  /* font-family: 'Poppins', sans-serif; */
+  font-family: "Wellfleet", cursive;
+}
+
+.wrapper:before {
+  content: "";
+  height: 250px;
+  width: 250px;
+  background: linear-gradient(360deg, #fc00ff, #00dbde);
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  border-radius: 50%;
+}
+
+.wrapper:after {
+  content: "";
+  height: 250px;
+  width: 250px;
+  background: linear-gradient(300deg, #ee0979, #ff6a00);
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+  border-radius: 50%;
+}
+
+.card-container {
+  //   position: absolute;
+  top: 50%;
+  left: 50%;
+  //   transform: translate(-50%, -50%);
+  //   height: 220px;
+  width: 100%;
+  z-index: 99;
+  background: rgba(37, 37, 37, 0.63);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 20px;
+  color: white;
+}
+
+.card-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.bank-name {
+  font-size: 18px;
+}
+
+.bank-logo {
+  height: 50px;
+  width: 70px;
+}
+
+.bank-logo img {
+  height: 100%;
+  width: 100%;
+}
+
+.card-chip-container {
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chip-logo {
+  height: 50px;
+  width: 50px;
+}
+
+.chip-logo img {
+  height: 100%;
+}
+
+.card-number-container {
+  display: flex;
+  width: 75%;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.expr-date,
+.card-holder-name {
+  font-size: 14px;
+}
+
+.card-exp-holderName-container {
+  display: flex;
+  width: 80%;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+
+.delete {
+  border-radius: 50%;
+}

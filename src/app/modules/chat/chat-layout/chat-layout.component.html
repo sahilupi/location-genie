@@ -1,0 +1,29 @@
+<div class="tabs-wrapper">
+  <div class="row px-0">
+    <div class="col-lg-3 col-sm-12 users left-side p-0">
+      <nav mat-tab-nav-bar>
+        <a
+          mat-tab-link
+          routerLinkActive
+          #users="routerLinkActive"
+          [href]="'/messages'"
+          [active]="!isAdminUrl"
+        >
+          Users
+        </a>
+        <a
+          mat-tab-link
+          routerLinkActive
+          #admin="routerLinkActive"
+          [href]="'/messages/admin'"
+          [active]="isAdminUrl"
+        >
+          Admin
+        </a>
+      </nav>
+    </div>
+    <div class="col-12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

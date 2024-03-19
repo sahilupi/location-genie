@@ -1,0 +1,194 @@
+<div class="card login-card">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-bold">Login & Security</h1>
+
+      <form
+        class="mt-4"
+        *ngIf="changePasswordForm"
+        [formGroup]="changePasswordForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="form-group">
+          <label for="oldPassword" class="label">Current Password</label>
+          <input
+            [type]="isPasswordType ? 'text' : 'password'"
+            class="form-control"
+            id="oldPassword"
+            formControlName="oldPassword"
+            [ngClass]="{
+              'has-error':
+                (c['oldPassword'].invalid && c['oldPassword'].touched) ||
+                (c['oldPassword'].invalid && isSubmitted) ||
+                (c['oldPassword'].hasError('pattern') && isSubmitted)
+            }"
+          />
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['oldPassword'].hasError('required') &&
+                c['oldPassword'].touched) ||
+              (c['oldPassword'].hasError('required') && isSubmitted)
+            "
+            >Old password is required</small
+          >
+        </div>
+        <div class="form-group relative">
+          <label for="newPassword" class="label">New Password</label>
+          <input
+            [type]="isPasswordType ? 'text' : 'password'"
+            class="form-control"
+            id="newPassword"
+            formControlName="newPassword"
+            [ngClass]="{
+              'has-error':
+                (c['newPassword'].invalid && c['newPassword'].touched) ||
+                (c['newPassword'].invalid && isSubmitted) ||
+                (c['newPassword'].hasError('pattern') && isSubmitted)
+            }"
+          />
+          <i
+            class="sign-up-input-icon show-pass-js fas"
+            [ngClass]="isPasswordType ? 'fa-eye' : 'fa-eye-slash'"
+            (click)="isPasswordType = !isPasswordType"
+          ></i>
+        </div>
+        <div class="errors">
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['newPassword'].hasError('required') &&
+                c['newPassword'].touched) ||
+              (c['newPassword'].hasError('required') && isSubmitted)
+            "
+            >New Password is required</small
+          >
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['newPassword'].hasError('pattern') &&
+                c['newPassword'].touched) ||
+              (c['newPassword'].hasError('pattern') && isSubmitted)
+            "
+            >Password must of 8 characters with atleast one uppercase alphabet
+            and a numeric value</small
+          >
+          <small class="has-error--text" *ngIf="samePasswordValidation()"
+            >Old password and New Password are same, Please enter a different
+            new Password</small
+          >
+        </div>
+
+        <div class="form-group relative">
+          <label for="confirmNewPassword" class="label"
+            >Confirm New Password</label
+          >
+          <input
+            [type]="isPasswordType ? 'text' : 'password'"
+            class="form-control"
+            id="confirmNewPassword"
+            formControlName="confirmNewPassword"
+            [ngClass]="{
+              'has-error':
+                (c['confirmNewPassword'].invalid &&
+                  c['confirmNewPassword'].touched) ||
+                (c['confirmNewPassword'].invalid && isSubmitted) ||
+                (c['confirmNewPassword'].hasError('pattern') && isSubmitted)
+            }"
+          />
+          <i
+            class="sign-up-input-icon show-pass-js fas"
+            [ngClass]="isPasswordType ? 'fa-eye' : 'fa-eye-slash'"
+            (click)="isPasswordType = !isPasswordType"
+          ></i>
+        </div>
+        <div class="errors">
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['confirmNewPassword'].hasError('required') &&
+                c['confirmNewPassword'].touched) ||
+              (c['confirmNewPassword'].hasError('required') && isSubmitted)
+            "
+            >Please confirm your password.</small
+          >
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['confirmNewPassword'].hasError('pattern') &&
+                c['confirmNewPassword'].touched) ||
+              (c['confirmNewPassword'].hasError('pattern') && isSubmitted)
+            "
+            >Password must of 8 characters with atleast one uppercase alphabet
+            and a numeric value</small
+          >
+          <small class="has-error--text" *ngIf="matchPasswordValidation()"
+            >Passwords do not match.</small
+          >
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="text-light mt-2"
+          [disabled]="
+            changePasswordForm.invalid ||
+            samePasswordValidation() ||
+            matchPasswordValidation()
+          "
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- <div class="row mt-4">
+    <div class="col-12">
+      <h1 class="text-bold">Linked accounts</h1>
+      <div class="facebook">
+        <div class="d-flex align-items-center">
+          <div class="social">
+            <img
+              src="assets/images/f_logo_RGB-Blue_1024.png"
+              style="width: 18px"
+            />
+          </div>
+          <span style="font-size: 15px">Facebook</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="not-connected">not connected</div>
+          <div class="connected">Connect</div>
+        </div>
+      </div>
+
+      <div class="facebook">
+        <div class="d-flex align-items-center">
+          <div class="social">
+            <img src="assets/images/7611770 1.png" style="width: 19px" />
+          </div>
+          <span style="font-size: 15px">Google</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="not-connected">not connected</div>
+          <div class="connected">Connect</div>
+        </div>
+      </div>
+
+      <div class="facebook">
+        <div class="d-flex align-items-center">
+          <div class="social">
+            <img src="assets/images/apple-icon-4.png" style="width: 19px" />
+          </div>
+
+          <span style="font-size: 15px">Apple</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="not-connected">not connected</div>
+          <div class="connected">Connect</div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

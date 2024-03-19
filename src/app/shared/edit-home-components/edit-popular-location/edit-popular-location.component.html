@@ -1,0 +1,130 @@
+<div
+  class="container animate__animated animate__fadeIn"
+  role="button"
+  tabindex="1"
+  #locationWrapper
+>
+  <app-smooth-height [trigger]="locationWrapper.innerHTML">
+    <div class="dialog-header d-flex justify-content-between">
+      <h1 mat-dialog-title class="heading">Select Location Positions</h1>
+      <div class="d-flex flex-460">
+        <div class="position-relative">
+          <input
+            class="form-control search-input"
+            type="search"
+            placeholder="Search"
+            [formControl]="searchCtrl"
+          />
+          <app-spinner
+            *ngIf="isSearching"
+            [spinnerColor]="'#016670'"
+            class="search-spinner"
+          ></app-spinner>
+          <!-- <i class="fa fa-search icon" role="button" aria-hidden="true"></i> -->
+        </div>
+      </div>
+      <div class="close-parent">
+        <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+      </div>
+    </div>
+
+    <div
+      class="form-fields"
+      id="dialog-content-popular-locations"
+      mat-dialog-content
+      (wheel)="onScrollDown($event)"
+    >
+      <app-square-spinner *ngIf="isLoading" class="m-auto"></app-square-spinner>
+      <div *ngIf="!isLoading && (!locations || locations.length <= 0)">
+        <p>No locations found!</p>
+      </div>
+      <div
+        *ngIf="!isLoading"
+        class="container animate__animated animate__fadeIn"
+      >
+        <div
+          class="row justify-content-center"
+          style="gap: 5px"
+          *ngIf="locations && locations.length > 0"
+        >
+          <div
+            class="card col-md-2 col-sm-6"
+            *ngFor="let location of locations; let i = index"
+          >
+            <div
+              class="customcheckbox"
+              [ngClass]="
+                checkedLocations.length >= 10 && !location.checked
+                  ? 'disabledcheckbox'
+                  : ''
+              "
+            >
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  [id]="location.listingId"
+                  [(ngModel)]="location.checked"
+                  (change)="getChecked(location, false)"
+                  [disabled]="
+                    checkedLocations.length >= 10 && !location.checked
+                  "
+                  name="locationKinds"
+                />
+                <label
+                  class="custom-control-label cursor"
+                  [for]="location.listingId"
+                >
+                  <img
+                    [src]="location.imagePath"
+                    #img
+                    (error)="img.src = dummyImage"
+                  />
+                  <h6>
+                    {{
+                      location?.locationTitle
+                        ? location?.locationTitle
+                        : "Unnamed Listing"
+                    }}
+                  </h6>
+                  <h6
+                    class="checked-number animate__animated animate__zoomIn animate__faster"
+                    *ngIf="location.position"
+                  >
+                    {{ location.position }}
+                  </h6>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-spinner
+      [spinnerColor]="'#016670'"
+      *ngIf="isPaginationLoading"
+    ></app-spinner>
+
+    <div mat-dialog-actions align="end">
+      <!-- <button
+      mat-stroked-button
+      (click)="dialogRef.close(null)"
+      type="button"
+      color="accent"
+    >
+      Cancel
+    </button> -->
+      <button
+        type="button"
+        color="primary"
+        mat-raised-button
+        cdkFocusInitial
+        (click)="onSave()"
+        class="text-white"
+      >
+        Save
+      </button>
+    </div>
+  </app-smooth-height>
+</div>

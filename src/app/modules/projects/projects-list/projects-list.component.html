@@ -1,0 +1,65 @@
+<div class="main pb-4">
+  <section class="container">
+    <div class="row justify-content-end main-text">
+      <div class="col-sm-12 d-flex justify-content-end">
+        <button
+          type="button"
+          class="common-button btn btn-success ml-3 mb-4 text-white"
+          color="primary"
+          mat-raised-button
+          (click)="addNewProject()"
+        >
+          <i class="fas fa-plus mr-2"></i>Add New Project
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="container mt-4"
+    *ngIf="!projectsList || projectsList.length <= 0"
+  >
+    <div class="row">
+      <div class="col-12 text-center mt-4">
+        <img
+          class="mb-4 img-logo"
+          src="assets/images/location-logo.png"
+          alt="logo"
+        />
+        <h4 class="mt-4">You have no Active Projects</h4>
+        <div class="col-sm-12 mt-4">
+          <button
+            type="button"
+            class="ml-3 mb-4 text-white"
+            color="primary"
+            mat-stroked-button
+            (click)="addNewProject()"
+          >
+            <i class="fas fa-plus mr-2"></i>Add New Project
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="container">
+    <div class="row">
+      <app-project
+        class="col-md-4 col-sm-6 custom-600 animate__animated animate__fadeIn"
+        *ngFor="let project of projectsList"
+        [project]="project"
+        [loggedInUserEmail]="loggedInUserEmail"
+        (deleteProjectEmitter)="onDeleteProject($event)"
+      ></app-project>
+    </div>
+  </section>
+
+  <mat-paginator
+    *ngIf="totalCount > 10"
+    [length]="totalCount"
+    [pageIndex]="pagination.pageNumber - 1"
+    [pageSize]="pagination.pageSize"
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    showFirstLastButtons
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+</div>

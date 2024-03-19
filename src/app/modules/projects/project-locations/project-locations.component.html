@@ -1,0 +1,344 @@
+<ng-container *ngIf="projectLocation">
+  <div
+    class="row project mx-0"
+    *ngFor="let location of projectLocation; let i = index"
+  >
+    <div class="col-md-5 col-12 project-image pl-0">
+      <img
+        role="button"
+        width="100%"
+        [src]="location.locationImage ? location.locationImage : dummyImage"
+        [alt]="location.locationTitle"
+      />
+      <div class="project-image--actions">
+        <i
+          class="mat-mdc-tooltip-trigger far fa-copy"
+          (click)="copyProject(location.listingId)"
+        ></i>
+        <i
+          class="fas fa-trash fa-md text-danger ml-1"
+          (click)="deleteProjectLocation(location.projectListingId)"
+        ></i>
+      </div>
+    </div>
+    <div class="col-md-7 col-12 pl-0">
+      <div class="d-flex justify-content-between flex-column-500">
+        <div class="heading">
+          <h4 class="">{{ location.locationTitle }}</h4>
+        </div>
+        <div class="d-flex like">
+          <div class="project-interaction--parent">
+            <mat-icon
+              matTooltip="Like"
+              class="project-interaction like mr-2"
+              [ngClass]="location.isProjectLiked ? 'liked' : ''"
+              (click)="
+                onLikeDislikeProjectLocation(
+                  location.projectListingId,
+                  true,
+                  location
+                )
+              "
+              >thumb_up</mat-icon
+            >
+            <div class="project-interaction--like-people">
+              <small
+                *ngIf="location.likeCount"
+                class="project-interaction--likecount"
+                role="button"
+                >{{ location.likeCount }}</small
+              >
+              <div
+                class="project-interaction--like-team"
+                *ngIf="
+                  location.likeTeamMembers &&
+                  location.likeTeamMembers.length > 0
+                "
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                  *ngFor="let like of location.likeTeamMembers"
+                >
+                  <img
+                    [src]="
+                      like.profilePic && like.profilePic.includes('https')
+                        ? like.profilePic
+                        : like.profilePic && !like.profilePic.includes('https')
+                        ? like.profilePic
+                        : dummyImage
+                    "
+                    [alt]="like.firstName"
+                    width="30"
+                    height="30"
+                    style="border-radius: 50%"
+                  />
+                  <small
+                    >{{ like.firstName ? like.firstName : "Test" }}
+                    {{ like.lastName ? like.lastName : "User" }}</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-interaction--parent">
+            <mat-icon
+              matTooltip="Dislike"
+              class="project-interaction dislike"
+              [ngClass]="location.isProjectDisliked ? 'disliked' : ''"
+              (click)="
+                onLikeDislikeProjectLocation(
+                  location.projectListingId,
+                  false,
+                  location
+                )
+              "
+              >thumb_down</mat-icon
+            >
+            <div class="project-interaction--dislike-people">
+              <small
+                role="button"
+                *ngIf="location.dislikeCount"
+                class="project-interaction--dislikecount"
+                >{{ location.dislikeCount }}</small
+              >
+              <div class="project-interaction--dislike-team mb-2">
+                <div
+                  class="d-flex justify-content-between align-items-center"
+                  *ngFor="let dislike of location.dislikeTeamMembers"
+                >
+                  <img
+                    [src]="
+                      dislike.profilePic && dislike.profilePic.includes('https')
+                        ? dislike.profilePic
+                        : dislike.profilePic &&
+                          !dislike.profilePic.includes('https')
+                        ? dislike.profilePic
+                        : dummyImage
+                    "
+                    [alt]="dislike.firstName"
+                    width="30"
+                    height="30"
+                    style="border-radius: 50%"
+                  />
+                  <small
+                    >{{ dislike.firstName ? dislike.firstName : "" }}
+                    {{ dislike.lastName ? dislike.lastName : "" }}</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-bold">
+          From
+          {{
+            location.pricingPerHour
+              | currency
+                : location.currency.currencySymbol + " "
+                : "symbol-narrow"
+                : "1.0-0"
+          }}
+          per hour.
+          <span
+            ><small>{{ location.city }}, {{ location.country }}</small></span
+          >
+        </p>
+      </div>
+      <div class="project-status mb-4">
+        <span
+          class="text-bold"
+          tabindex="0"
+          (focus)="isStatusOpen[i] = true"
+          (blur)="isStatusOpen[i] = false"
+        >
+          Status:
+          <span
+            *ngIf="projectLocationStatus[location.status] !== 'Booked'"
+            [style]="'color: ' + statusData.color"
+            >{{
+              location.status
+                ? projectLocationStatus[location.status]
+                : projectLocationStatus[1]
+            }}
+          </span>
+          <div
+            class="project-status-fly--approved"
+            *ngIf="projectLocationStatus[location.status] === 'Booked'"
+          >
+            Booked
+          </div>
+        </span>
+
+        <div
+          class="project-status-fly"
+          [ngClass]="isStatusOpen[i] ? 'open' : ''"
+        >
+          <div
+            class="project-status-fly--review project-status-fly--item"
+            (click)="
+              onChangeStatus(
+                1,
+                projectLocationStatusColors[1],
+                i,
+                location.projectListingId,
+                1
+              )
+            "
+          >
+            {{ projectLocationStatus[1] }}
+          </div>
+          <div
+            class="project-status-fly--scouted project-status-fly--item"
+            (click)="
+              onChangeStatus(
+                2,
+                projectLocationStatusColors[2],
+                i,
+                location.projectListingId,
+                2
+              )
+            "
+          >
+            {{ projectLocationStatus[2] }}
+          </div>
+          <div
+            class="project-status-fly--contacted project-status-fly--item"
+            (click)="
+              onChangeStatus(
+                3,
+                projectLocationStatusColors[3],
+                i,
+                location.projectListingId,
+                3
+              )
+            "
+          >
+            {{ projectLocationStatus[3] }}
+          </div>
+          <div
+            class="project-status-fly--booked project-status-fly--item"
+            (click)="
+              onChangeStatus(
+                4,
+                projectLocationStatusColors[4],
+                i,
+                location.projectListingId,
+                4
+              )
+            "
+          >
+            <div class="project-status-fly--approved">
+              {{ projectLocationStatus[4] }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <small class="mt-4" *ngIf="!location.commentsCount"
+        ><i class="fas fa-comment-dots"></i> No notes</small
+      >
+      <mat-accordion
+        *ngIf="location.commentsCount"
+        [id]="i"
+        class="project-comments"
+      >
+        <mat-expansion-panel class="mb-3">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <small
+                ><i class="fas fa-comment-dots"></i>
+                {{ location.commentsCount }} Comments</small
+              >
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div
+            *ngFor="let member of location.commentsTeamMembers"
+            class="project-comments--top"
+          >
+            <div class="d-flex align-items-start">
+              <div class="project-comments--image">
+                <img
+                  [src]="
+                    member.profilePic && member.profilePic.includes('https')
+                      ? member.profilePic
+                      : member.profilePic &&
+                        !member.profilePic.includes('https')
+                      ? member.profilePic
+                      : dummyImage
+                  "
+                  width="35"
+                  [alt]="member.firstName"
+                />
+              </div>
+              <small class="project-comments--name">
+                {{ member.firstName }} {{ member.lastName }}</small
+              >
+              <div
+                class="project-comments--comment d-block animate__animated animate__fadeIn"
+              >
+                {{
+                  member.showMore
+                    ? member.comment
+                    : member.comment.slice(0, 200) +
+                      (member.comment.length > 200 ? "..." : "")
+                }}
+              </div>
+            </div>
+            <a
+              *ngIf="member.comment.length >= 200"
+              (click)="
+                member.showMore = !member.showMore;
+                !member.showMore ? scrollTopElement(i) : null
+              "
+              class="project-comments--show-more"
+            >
+              {{ !member.showMore ? "Show more" : "Show less" }}
+            </a>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div class="project-input">
+        <form
+          #commentForm="ngForm"
+          (ngSubmit)="onAddComment(i, location.projectListingId)"
+        >
+          <input
+            class="form-control project-input--text"
+            placeholder="Leave a note...."
+            type="text"
+            name="comment"
+            required
+            [(ngModel)]="comments[i]"
+          />
+          <button
+            type="submit"
+            class="project-input--send"
+            [disabled]="!comments[i]"
+          >
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- if no locations found -->
+<div
+  class="row project mb-4"
+  *ngIf="!projectLocation || projectLocation.length <= 0"
+>
+  <div class="col-12 text-center mb-4">
+    <i class="fas fa-home mb-4 project-empty--icon"></i>
+    <h6 class="project-empty--header">Location list is empty</h6>
+    <p class="project-empty--text">
+      To add more items go to the search and click on the heart.
+    </p>
+    <button class="btn btn-success" routerLink="/">Go to search</button>
+  </div>
+</div>

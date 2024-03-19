@@ -1,0 +1,47 @@
+.margin-top {
+  margin-top: 100px;
+}
+.privacy_policy {
+  .container-html p, li{
+    color: #606060;
+  }
+}
+@media screen and (max-width: 767px) {
+  .margin-top {
+    margin-top: 80px;
+  }
+  .privacy_policy {
+    .container-html{
+      h1{
+        font-size: 25px !important;
+        font-weight: 600;
+      }
+      h2{
+        font-size: 20px !important;
+      }
+
+    } 
+    .container-html p, li{
+      font-size: 13px !important;
+      color: #606060;
+    }
+  }
+  
+}
+@media screen and (max-width: 575px) {
+  .privacy_policy {
+    .container-html h2{
+      font-size: 18px !important;
+      font-weight: 600;
+    }
+    .text-page {
+      h1{
+        font-size: 22px !important;
+      }
+    }
+    .container-html p, .li {
+      font-size: 12px !important;
+    }
+  }
+  
+}

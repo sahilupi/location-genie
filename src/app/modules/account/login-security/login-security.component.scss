@@ -1,0 +1,67 @@
+.login-card {
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 15px 2px rgba(187, 171, 171, 0.25);
+  border: 0;
+  padding: 20px;
+  margin: 0 0 20px;
+  h1 {
+    font-size: 20.92px;
+  }
+  .description {
+    color: #736f6f;
+    font-weight: 500;
+  }
+  label.label {
+    font-weight: 600;
+  }
+}
+
+.facebook {
+  border: 1px solid #c8c5c5;
+  margin-bottom: 30px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sign-up-social-error--text {
+  color: #fe3824;
+  content: "î¤£";
+  left: 16px;
+  position: absolute;
+  top: -13px;
+}
+
+.sign-up-input-icon {
+  align-items: center;
+  color: #8f8e94;
+  display: flex;
+  font-size: 16px;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 15px;
+  width: 48px;
+  cursor: pointer;
+}
+
+.errors {
+  margin-top: -12px;
+}
+.social {
+  width: 30px;
+}
+.not-connected {
+  font-size: 14px;
+  margin: 7px 0 00;
+  font-weight: 600;
+}
+.connected {
+  background: #5ac117;
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #fff;
+  line-height: 19px;
+}

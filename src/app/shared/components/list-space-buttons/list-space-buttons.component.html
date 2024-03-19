@@ -1,0 +1,26 @@
+<div class="main">
+  <mat-progress-bar
+    class="mat-progress-bar"
+    mode="determinate"
+    [value]="progressValue"
+  ></mat-progress-bar>
+  <div align="start" class="back-btn">
+    <button type="button" mat-stroked-button [routerLink]="backBtnRoute">
+      {{ backBtnText }}
+    </button>
+  </div>
+  <div align="end" class="next-btn">
+    <button
+      type="submit"
+      color="primary"
+      mat-raised-button
+      class="text-white"
+      (click)="onNextBtnClick()"
+      [routerLink]="nxtBtnRoute"
+      [disabled]="disabledNxtBtn"
+      [ngClass]="disabledNxtBtn ? 'disabledcheckbox' : ''"
+    >
+      {{ nextBtnText }}
+    </button>
+  </div>
+</div>

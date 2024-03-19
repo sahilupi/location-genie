@@ -1,0 +1,75 @@
+<app-overlay *ngIf="isLoading"></app-overlay>
+<section class="home-banner-wrapper" [class.animate]="!isLoading">
+  <app-banner
+    [bannerData]="bannerData"
+    [isEditingData]="isEditingData"
+    [allActivities]="allActivities"
+    [popularActivities]="popularActivities"
+  ></app-banner>
+</section>
+
+<section class="hp-content-section hp-container hp-popular-activities">
+  <app-spaces
+    [spaces]="sourceSpaces"
+    [type]="sourceSpaceType"
+    (editTitleEmiiter)="onEditTitle($event)"
+    [title]="sourceSpaceTitle"
+    [isEditingData]="isEditingData"
+    [allActivities]="allActivities"
+    [popularActivities]="popularActivities"
+  ></app-spaces>
+
+  <app-spaces
+    [spaces]="workSpaces"
+    [type]="workSpaceType"
+    (editTitleEmiiter)="onEditTitle($event)"
+    [title]="discoverEventTitle"
+    [isEditingData]="isEditingData"
+    [allActivities]="allActivities"
+    [popularActivities]="popularActivities"
+  ></app-spaces>
+
+  <app-spaces
+    [spaces]="partySpaces"
+    [type]="partySpaceType"
+    (editTitleEmiiter)="onEditTitle($event)"
+    [title]="partyVenueTitle"
+    [isEditingData]="isEditingData"
+    [allActivities]="allActivities"
+    [popularActivities]="popularActivities"
+  ></app-spaces>
+</section>
+
+<app-locations
+  [isEditingData]="isEditingData"
+  [locations]="professionalLocations"
+  [header]="professionalLocationsHeader"
+  [subHeader]="professionalLocationsSubHeader"
+  [allActivities]="allActivities"
+  [popularActivities]="popularActivities"
+></app-locations>
+
+<app-popular-locations
+  [locations]="locations"
+  [isEditingData]="isEditingData"
+  (editTitleEmiiter)="onEditTitle($event)"
+  [title]="popularLocationTitle"
+  [subTitle]="popularLocationSubTitle"
+></app-popular-locations>
+
+<app-event-locations
+  [isEditingData]="isEditingData"
+  [locations]="eventLocations"
+  [header]="eventLocationsheader"
+  [subHeader]="eventLocationsSubHeader"
+  [allActivities]="allActivities"
+  [popularActivities]="popularActivities"
+></app-event-locations>
+
+<app-popular-destinations
+  [isEditingData]="isEditingData"
+  [destinations]="destinations"
+  [header]="destinationsHeader"
+  [allActivities]="allActivities"
+  [popularActivities]="popularActivities"
+></app-popular-destinations>

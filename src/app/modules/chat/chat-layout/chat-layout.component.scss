@@ -1,0 +1,10 @@
+.tabs-wrapper {
+  margin-top: 71px;
+  overflow: hidden;
+}
+nav.mat-mdc-tab-nav-bar {
+  min-width: 276px;
+}
+.tabs-wrapper {
+  height: calc(100vh - 72px);
+}

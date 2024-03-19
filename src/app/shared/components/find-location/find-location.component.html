@@ -1,0 +1,278 @@
+<div class="hp-top-info">
+  <div class="hp-search">
+    <h1 class="hp-search--title" id="hp-search--title">
+      <span *ngIf="!isActivitySearch" [innerHTML]="bannerData.title"></span>
+      <span
+        *ngIf="isActivitySearch && spaceName !== 'cities'"
+        [innerHTML]="
+          'Find ' +
+          (currentRoute | titlecase) +
+          (!currentRoute.includes(spaceName) ? ' ' + spaceName : '') +
+          ' for rent near me '
+        "
+      ></span>
+      <span
+        *ngIf="isActivitySearch && spaceName === 'cities'"
+        [innerHTML]="
+          'Find the best locations for rent in ' + (currentRoute | titlecase)
+        "
+      ></span>
+    </h1>
+    <form
+      *ngIf="searchForm"
+      class="hp-search--form hp-search--form-js"
+      [formGroup]="searchForm"
+    >
+      <ul class="hp-search--fields-list">
+        <li class="hp-search--field">
+          <label
+            class="hp-search--label form-label form-label__type_lite"
+            for="hp-search--activity"
+          >
+            What are you planning?
+          </label>
+          <div
+            class="hp-activities-v2-js autocomplete-root"
+            [ngClass]="showEventList ? 'autocomplete-root__open' : ''"
+          >
+            <div class="hp-search--dropdown-btn">
+              <input
+                id="hp-search--activity"
+                class="hp-search--dropdown hp-search--dropdown-activities autocomplete-input-js"
+                placeholder="Start typing to pick an activity"
+                (focus)="onFocusEvent(); preventCloseOnClick()"
+                formControlName="event"
+                autocomplete="off"
+              />
+            </div>
+            <span
+              ><span class="autocomplete-arrow-js autocomplete-arrow"
+                ><i class="fas fa-angle-down"></i
+              ></span>
+              <div class="autocomplete-content auto_height autocomplete-content-js">
+                <ul class="autocomplete-content-default">
+                  <div
+                    class="activity-category"
+                    role="button"
+                    (click)="preventCloseOnClick()"
+                  >
+                    <a
+                      class="select-category mr-4"
+                      [class.active]="!showAllActivities"
+                      (click)="showAllActivities = false"
+                      >Popular<span>({{ popularActivities.length }})</span></a
+                    >
+                    <a
+                      class="select-category"
+                      [class.active]="showAllActivities"
+                      (click)="showAllActivities = true"
+                      >All Activities<span>({{ allActivities.length }})</span>
+                    </a>
+                  </div>
+                  <li class="autocomplete-content-popular-wrapper-js mt-2">
+                    <ul class="autocomplete-content-items">
+                      <ng-container *ngIf="showAllActivities">
+                        <li
+                          class="autocomplete-content-item"
+                          *ngFor="
+                            let activity of allActivities
+                              | filter : searchForm.value.event;
+                            let i = index
+                          "
+                          data-index="25"
+                          (mousedown)="
+                            onSelectEvent(activity.name, activity.id)
+                          "
+                        >
+                          <span
+                            [innerHTML]="
+                              activity.name | highlight : searchForm.value.event
+                            "
+                          ></span>
+                        </li>
+                        <li
+                          class="autocomplete-content-item"
+                          *ngIf="
+                            (
+                              allActivities
+                              | filter : searchForm.value.event.trim()
+                            )?.length === 0
+                          "
+                        >
+                          No results for
+                          <span class="autocomplete-content-empty--query"
+                            >“{{ searchForm.value.event }}“</span
+                          >
+                        </li>
+                      </ng-container>
+                      <ng-container *ngIf="!showAllActivities">
+                        <li
+                          class="autocomplete-content-item"
+                          *ngFor="
+                            let activity of popularActivities
+                              | filter : searchForm.value.event;
+                            let i = index
+                          "
+                          data-index="25"
+                          (mousedown)="
+                            onSelectEvent(activity.name, activity.id)
+                          "
+                        >
+                          <span
+                            [innerHTML]="
+                              activity.name | highlight : searchForm.value.event
+                            "
+                          ></span>
+                        </li>
+                        <li
+                          class="autocomplete-content-item"
+                          *ngIf="
+                            (
+                              popularActivities
+                              | filter : searchForm.value.event.trim()
+                            )?.length === 0
+                          "
+                        >
+                          No results
+                          <!-- for
+                          <span class="autocomplete-content-empty--query"
+                            >“{{ searchForm.value.event }}“</span
+                          > -->
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </li>
+                  <li
+                    class="autocomplete-content-start-typing-wrapper-js hidden"
+                  >
+                    <ul class="autocomplete-content-items">
+                      <li
+                        class="autocomplete-content-item-search search-more-activities-js"
+                      >
+                        <div
+                          class="autocomplete-content-item-search__back search-more-activities-back-js"
+                        ></div>
+                        <div class="autocomplete-content-item-search__typing">
+                          Start typing
+                          <svg
+                            class="autocomplete-content-item-search__emoji"
+                            width="25"
+                            height="25"
+                            viewBox="0 0 25 25"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                          >
+                            <path
+                              d="M0.5 24.68H24.5V0.68H0.5V24.68Z"
+                              fill="url(#pattern0)"
+                            ></path>
+                            <defs>
+                              <pattern
+                                id="pattern0"
+                                patternContentUnits="objectBoundingBox"
+                                width="1"
+                                height="1"
+                              >
+                                <use
+                                  xlink:href="#image0_1261_33394"
+                                  transform="scale(0.00625)"
+                                ></use>
+                              </pattern>
+                              <image
+                                id="image0_1261_33394"
+                                width="160"
+                                height="160"
+                                xlink:href="assets/images/download.png"
+                              ></image>
+                            </defs>
+                          </svg>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </li>
+        <li class="hp-search--field">
+          <label
+            class="hp-search--label form-label form-label__type_lite"
+            for="hp-search--where"
+            >Where?</label
+          >
+          <div
+            class="hp-where autocomplete-root"
+            [ngClass]="showLocationList ? 'autocomplete-root__open' : ''"
+          >
+            <div class="hp-search--dropdown-btn">
+              <input
+                id="hp-search--where"
+                class="hp-search--dropdown hp-search--dropdown-where autocomplete-input-js"
+                placeholder="Dubai"
+                (focus)="onFocusLocation()"
+                (blur)="onBlurLocation()"
+                formControlName="location"
+                autocomplete="off"
+              />
+            </div>
+            <span>
+              <span class="autocomplete-arrow-js autocomplete-arrow"
+                ><i class="fas fa-angle-down"></i
+              ></span>
+              <div class="autocomplete-content autocomplete-content-js select_new">
+                <ul class="autocomplete-content-default">
+                  <li
+                    class="autocomplete-content-item"
+                    *ngFor="
+                      let city of cities | filter : searchForm.value.location
+                    "
+                    data-index="14"
+                    (mousedown)="onSelectLocation(city)"
+                  >
+                    {{ city.name }}
+                  </li>
+                  <li
+                    class="autocomplete-content-item"
+                    *ngIf="
+                      (cities | filter : searchForm.value.location.trim())
+                        ?.length === 0
+                    "
+                  >
+                    No results for
+                    <span class="autocomplete-content-empty--query"
+                      >“{{ searchForm.value.location }}“</span
+                    >
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </li>
+        <li class="hp-search--field hp-search--submit-field">
+          <button
+            type="button"
+            class="hp-search--submit-button btn btn-success btn-lg_size_bigger total-width"
+            [disabled]="!bannerData.locationRoute || !bannerData.eventRoute"
+            (click)="onSearhLocation()"
+          >
+            Find location
+          </button>
+        </li>
+      </ul>
+    </form>
+  </div>
+  <div class="hp-contacts">
+    <p class="hp-contacts--text">
+      <span id="hp-contacts--title">{{ bannerData.text }}</span>
+      <a
+        class="link__underline location-request-js"
+        target="_blank"
+        rel="noopener noreferrer"
+        [routerLink]="bannerData.link ? bannerData.link : '/location-request'"
+        >{{ bannerData.linkText }}</a
+      >
+    </p>
+  </div>
+</div>

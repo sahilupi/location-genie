@@ -1,0 +1,168 @@
+<app-list-space-header
+  [stepNumber]="2"
+  [stepName]="'Set the scene'"
+  (onSaveAndExit)="onClickNext()"
+></app-list-space-header>
+
+<div fileDragDrop (filesChangeEmiter)="onFileChange($event)">
+  <div class="step-one" id="print">
+    <div class="container stepper">
+      <div class="row" style="gap: 14px">
+        <div
+          class="single-step"
+          [ngClass]="i === 4 ? 'active' : ''"
+          *ngFor="let stepper of stepperData; let i = index"
+        >
+          <app-listing-stepper
+            [stepperData]="stepper"
+            [activeIdx]="5"
+            [idx]="i"
+            [totalSteppers]="stepperData.length"
+          ></app-listing-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="type">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="heading mb-0">Get your listing to stand out</h2>
+        <div class="image-dialog-2">
+          <input
+            type="file"
+            multiple
+            accept="image/png, image/jpeg ,image/jpg"
+            (change)="onFileChange($event)"
+          />
+          <img src="assets/images/list-space/step-2/icon.png" />
+        </div>
+      </div>
+      <p class="info">
+        You need at least 5 photos. You can skip this step, but you won’t be
+        able to publish the location.
+      </p>
+      <p>
+        Add as many images of your location as you'd like. Producers typically
+        select a location based on the pictures. This helps them tremendously.
+        Make sure your images are at least 1200px width. Horizontal images work
+        best.
+      </p>
+      <div class="image-dialog" *ngIf="!images || images.length <= 0">
+        <div class="image-dialog-inner">
+          <input
+            type="file"
+            multiple
+            accept="image/png, image/jpeg ,image/jpg"
+            (change)="onFileChange($event)"
+          />
+          <img src="assets/images/upload.png" style="width: 50px" />
+          <h5>
+            Drag and drop <span>or</span> click <span>to</span> upload your
+            photos
+          </h5>
+          <p>Add as many images of your location as you’d like (at least 5).</p>
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div
+            class="col-sm-12 col-lg-3 col-md-4 image mb-3"
+            *ngFor="let img of images; let i = index"
+          >
+            <div
+              cdkDropList
+              [cdkDropListConnectedTo]="drops"
+              [cdkDropListData]="i"
+              class="drag-image"
+            >
+              <div
+                cdkDrag
+                class="drag-box"
+                (cdkDragEntered)="entered($event)"
+                [cdkDragData]="i"
+                [style.backgroundColor]="'#b9d4f6'"
+              >
+                <div class="upper">
+                  <i
+                    class="fas fa-trash fa-md text-danger"
+                    (click)="deleteImage(+listingId, +img.imagePathId)"
+                  ></i>
+                  <div class="drag-img">
+                    <img
+                      [src]="img.imgSrc"
+                      alt="list-image"
+                      class="w-100 dragging img-drag"
+                    />
+                  </div>
+
+                  <p class="drag-para text-light">Drag to change position</p>
+                  <div class="drag-actions">
+                    <div
+                      *ngIf="i > 0"
+                      (click)="moveUp(i)"
+                      class="drag-actions__arrow arrow--up mb-2"
+                    >
+                      <mat-icon>arrow_upward</mat-icon>
+                    </div>
+                    <div
+                      *ngIf="i + 1 < images.length"
+                      (click)="moveDown(i)"
+                      class="drag-actions__arrow arrow--down"
+                    >
+                      <mat-icon>arrow_downward</mat-icon>
+                    </div>
+                  </div>
+                </div>
+
+                <input
+                  (blur)="onUpdateImgDescription(img.imagePathId, i, $event)"
+                  [value]="img.imageDescription ? img.imageDescription : ''"
+                  placeholder="Description"
+                  class="w-100 description"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="image-dialog col-sm-12 col-lg-3 col-md-4 mb-3"
+            *ngIf="images && images.length > 0"
+          >
+            <div class="image-dialog-inner-2 h-100">
+              <div class="image-dialog-inner-2-actions">
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg ,image/jpg"
+                  multiple
+                  (change)="onFileChange($event)"
+                />
+                <img src="assets/images/upload.png" style="width: 50px" />
+                <h5>Add more</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <img src="assets/images/Group 670.png" style="width: 240px" />
+          <h2 class="title" style="font-size: 13px; margin: 10px 0 50px 0">
+            If your location is associated with more than one category, please
+            select the one that fits best. When choosing a type, please select
+            up to two types only.
+          </h2>
+        </div>
+      </div>
+    </div> -->
+
+    <app-list-space-buttons
+      [backBtnRoute]="backBtnRoute"
+      (nextBtnClick)="onClickNext()"
+      [progressValue]="98"
+      [nextBtnText]="'Finish'"
+    ></app-list-space-buttons>
+  </div>
+</div>

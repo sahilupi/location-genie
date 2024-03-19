@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="dialog-header d-flex justify-content-between">
+    <h3 class="heading" [ngClass]="isLongText ? 'm-auto' : ''" mat-dialog-title>
+      {{ title }}
+    </h3>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="dialog-content py-1">
+    <div class="row mx-0">
+      <div *ngIf="isReasonRequired" class="w-100">
+        <label for="inputText">
+          {{ descriptionText }}
+        </label>
+        <textarea
+          name="inputText"
+          id="inputText"
+          class="describe-field"
+          placeholder="Please give reason in atleast 15 characters"
+          [(ngModel)]="inputText"
+          minlength="15"
+          #inputTextControl="ngModel"
+        ></textarea>
+        <div class="errors">
+          <small
+            class="has-error--text"
+            *ngIf="inputTextControl.touched && inputTextControl.invalid"
+            >Minimum 15 characters are required.</small
+          >
+        </div>
+      </div>
+      <div class="col-12 custom px-0">
+        <img
+          *ngIf="isDeleting"
+          class="animate__animated animate__fadeIn"
+          src="assets/images/Group 357.png"
+          style="width: 70px"
+        />
+        <p
+          *ngIf="!isReasonRequired"
+          class="mb-0 mt-2"
+          [ngClass]="isLongText ? ' w-75 m-auto text-center' : ''"
+        >
+          {{ message }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button
+      *ngIf="showCancelBtn"
+      mat-button
+      (click)="onDismiss()"
+      class="cancel outlined"
+    >
+      {{ cancelBtnText }}
+    </button>
+    <button
+      cdkFocusInitial
+      mat-raised-button
+      color="primary"
+      (click)="onConfirm()"
+      class="text-white"
+      [ngClass]="
+        isReasonRequired && (!inputText || inputText.trim().length < 15)
+          ? 'disabledcheckbox'
+          : ''
+      "
+      [disabled]="
+        isReasonRequired && (!inputText || inputText.trim().length < 15)
+      "
+    >
+      {{ confirmBtnText }}
+    </button>
+  </div>
+</div>
+
+<app-square-spinner
+  class="spinner animate__animated animate__fadeIn animate__faster"
+  *ngIf="isLoading"
+></app-square-spinner>

@@ -1,0 +1,244 @@
+<div class="step-three-main get_setps">
+  <app-list-space-header
+    [stepNumber]="3"
+    [stepName]="'Get ready to shoot'"
+    (onSaveAndExit)="onSaveAndExit()"
+  ></app-list-space-header>
+
+  <div class="step-one">
+    <div class="container stepper">
+      <div class="row" style="gap: 6px">
+        <div
+          class="single-step single-step-in-third"
+          [ngClass]="i === 5 ? 'active' : ''"
+          *ngFor="let stepper of stepperData; let i = index"
+        >
+          <app-listing-stepper
+            [stepperData]="stepper"
+            [activeIdx]="6"
+            [idx]="i"
+            [totalSteppers]="stepperData.length"
+          ></app-listing-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <form
+            *ngIf="phoneInfoForm"
+            [formGroup]="phoneInfoForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <div class="form-group create-profile" mat-dialog-content>
+              <p>
+                We'll use your mobile number to text you about your bookings and
+                messages. We never share your number publicly
+              </p>
+              <mat-label>Mobile phone *</mat-label>
+
+              <div class="enter-phone form-control d-flex pl-1 py-0">
+                <div class="country-image">
+                  <img
+                    src="{{
+                      'http://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                        selectedCountry +
+                        '.svg'
+                    }}"
+                    width="24px"
+                    height="24px"
+                  />
+
+                  <mat-form-field appearance="fill">
+                    <input
+                      type="text"
+                      matInput
+                      maxlength="7"
+                      [formControl]="dialCodeControl"
+                      (blur)="changeCountry($event)"
+                      [matAutocomplete]="auto"
+                      (paste)="$event.preventDefault()"
+                    />
+                    <i
+                      class="fa fa-caret-down input-icon"
+                      aria-hidden="true"
+                    ></i>
+
+                    <mat-autocomplete
+                      #auto="matAutocomplete"
+                      [displayWith]="displayFn"
+                      class="flag-dropdown"
+                    >
+                      <mat-option
+                        *ngFor="let item of filteredCountryCodes | async"
+                        [value]="item"
+                        (click)="onChangeCountry(item)"
+                      >
+                        <img
+                          src="{{
+                            'http://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                              item.code +
+                              '.svg'
+                          }}"
+                          width="20px"
+                          height="20px"
+                        />&nbsp; <span>{{ item.dialCode }}</span> &nbsp;
+                        <span>{{ item.code }}</span>
+                      </mat-option>
+                    </mat-autocomplete>
+                    <mat-error>
+                      <small>Phone number is required</small>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <input
+                  formControlName="phoneNumber"
+                  class="is-invalid phoneNo"
+                  id="exampleInputMobile"
+                  (paste)="$event.preventDefault()"
+                  (keypress)="commonService.numberOnly($event)"
+                  maxlength="10"
+                />
+              </div>
+              <small
+                class="has-error--text"
+                *ngIf="
+                  (c['phoneNumber'].hasError('required') &&
+                    c['phoneNumber'].touched) ||
+                  (c['phoneNumber'].hasError('required') && isSubmitted)
+                "
+                >Phone number is required</small
+              >
+              <small
+                class="has-error--text"
+                *ngIf="
+                  (c['phoneNumber'].hasError('minlength') &&
+                    c['phoneNumber'].touched) ||
+                  (c['phoneNumber'].hasError('minlength') && isSubmitted)
+                "
+                >Phone number should be minimum of 9 characters</small
+              >
+
+              <mat-form-field
+                appearance="outline"
+                class="w-100 password"
+                *ngIf="isPasswordRequired && !isExternalLogin"
+              >
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" type="password" />
+                <mat-error>
+                  <small>Password is required</small>
+                </mat-error>
+              </mat-form-field>
+              <app-validation-message
+                class="w-100"
+                *ngIf="isPasswordRequired"
+                [message]="validationMsg"
+              ></app-validation-message>
+              <div class="otp-box" *ngIf="isOTPsent && isExternalLogin">
+                <p class="animate__animated animate__fadeInUp">
+                  We sent a code to <span class="text-bold">{{ email }}</span>
+                </p>
+                <p class="animate__animated animate__fadeInUp">
+                  OTP is valid only for 2 minutes
+                </p>
+                <mat-form-field
+                  appearance="outline"
+                  class="w-100 mt-4"
+                  [class.d-none]="!isExternalLogin || !isOTPsent"
+                  [class.disabledcheckbox]="!isOTPsent"
+                >
+                  <mat-label>Enter the code sent to your email</mat-label>
+                  <input
+                    [readonly]="!isOTPsent"
+                    matInput
+                    formControlName="otp"
+                    type="text"
+                  />
+                  <mat-error>
+                    <small
+                      class="animate__animated animate__fadeInUp"
+                      *ngIf="isOTPsent && isSubmitted && isExternalLogin"
+                      >Otp is required</small
+                    >
+                  </mat-error>
+                </mat-form-field>
+                <p
+                  *ngIf="display && isOTPsent && isExternalLogin"
+                  class="animate__animated animate__fadeInUp"
+                >
+                  You can send a code once again in
+                  <span class="text-bold">{{ display }}</span>
+                </p>
+                <p
+                  *ngIf="!display && isOTPsent && isExternalLogin"
+                  class="animate__animated animate__fadeInUp"
+                >
+                  Didn't get a code?
+                  <button
+                    type="button"
+                    (click)="onResendOtp()"
+                    class="link send-otp-again"
+                  >
+                    Resend
+                  </button>
+                </p>
+              </div>
+            </div>
+          </form>
+
+          <h5 class="mt-4">Type of bookings you want *</h5>
+          <mat-radio-group
+            aria-label="Select an option"
+            [(ngModel)]="isInstantBooking"
+          >
+            <mat-radio-button
+              role="button"
+              color="primary"
+              class="d-block c-pointer booking-desc booking-desc-instant"
+              [value]="true"
+              >Instant Booking
+              <span class="booking-desc-instant-wrapper">
+                <i class="fas fa-question-circle"></i>
+                <div class="booking-desc-instant">
+                  <app-validation-message
+                    class="validationMsg"
+                    [message]="
+                      'Booking will happen instantly and payment will be deducted immediately.'
+                    "
+                  ></app-validation-message>
+                </div> </span
+            ></mat-radio-button>
+
+            <mat-radio-button
+              role="button"
+              color="primary"
+              class="d-block c-pointer booking-desc booking-desc-request"
+              [value]="false"
+              >Request Booking
+              <span class="booking-desc-request-wrapper">
+                <i class="fas fa-question-circle"></i>
+                <div class="booking-desc-request">
+                  <app-validation-message
+                    class="validationMsg"
+                    [message]="
+                      'A booking request will be sent to host (you) and payment will be deducted after host accepts the request.'
+                    "
+                  ></app-validation-message></div></span
+            ></mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-list-space-buttons
+    [backBtnRoute]="backBtnRoute"
+    (nextBtnClick)="onSubmit()"
+    [progressValue]="98"
+    [nextBtnText]="'Finish'"
+  ></app-list-space-buttons>
+</div>

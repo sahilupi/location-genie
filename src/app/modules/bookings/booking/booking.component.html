@@ -1,0 +1,295 @@
+<!-- 
+<div class="row booking--header">
+  <div class="col-lg-2 col-sm-12 booking--header--inner"></div>
+  <div class="col-lg-2 col-sm-12 booking--header--inner">Hotel Name</div>
+  <div class="col-lg-2 col-sm-12 booking--header--inner">Date</div>
+  <div class="col-lg-2 col-sm-12 booking--header--inner">
+    Start and End Time
+  </div>
+  <div class="col-lg-2 col-sm-12 booking--header--inner">Fees</div>
+  <div class="col-lg-2 col-sm-12 booking--header--inner"></div>
+</div>
+
+<div class="row booking--content" *ngFor="let booking of bookings">
+  <div class="col-2 booking--content--inner">
+    <img
+      class="booking--content--inner--img"
+      [src]="booking.imgUrl"
+      [alt]="booking.hotelName"
+    />
+  </div>
+  <div class="col-lg-2 col-sm-12 booking--content--inner">
+    {{ booking.hotelName }}
+  </div>
+  <div class="col-lg-2 col-sm-12 booking--content--inner">
+    {{ booking.date }}
+  </div>
+  <div class="col-lg-2 col-sm-12 booking--content--inner">
+    {{ booking.startTime }} to {{ booking.endTime }}
+  </div>
+  <div class="col-lg-2 col-sm-12 booking--content--inner">
+    {{ booking.currency }} {{ booking.fees }}
+  </div>
+  <div class="col-lg-2 col-sm-12 booking--content--inner">
+    <a>View Detail</a>
+  </div>
+</div> -->
+
+<div class="booking-table">
+  <table>
+    <thead>
+      <tr>
+        <!-- <th></th> -->
+        <th>Location</th>
+        <th>Project Name</th>
+        <ng-container *ngIf="role && role.toLowerCase() === 'host'">
+          <th>Renter Name</th>
+          <th>Renter Email</th>
+        </ng-container>
+        <ng-container *ngIf="role && role.toLowerCase() === 'renter'">
+          <th>Host Name</th>
+          <th>Host Email</th>
+        </ng-container>
+
+        <th>Dates</th>
+        <th>Start and End Time</th>
+        <th>Total payout</th>
+        <th>Action</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="bookings && bookings.length > 0" [@translateAnimation]>
+      <tr *ngFor="let booking of bookings; let i = index">
+        <!-- <td>
+          <img
+            class="booking--content--inner--img"
+            [src]="booking.imgUrl"
+            [alt]="booking.locationTitle"
+          />
+        </td> -->
+        <td>
+          <div class="height_set">
+            <a
+              class="text-decoration-none text-dark booking_heegt"
+              [href]="'/listing/' + getEncryptedId(booking.listingId)"
+              target="_blank"
+            >
+              {{ booking.locationTitle }}
+            </a>
+          </div>
+        </td>
+        <td>
+          <a class="text-decoration-none text-dark booking_heegt">{{
+            booking.projectName
+          }}</a>
+        </td>
+        <ng-container *ngIf="role && role.toLowerCase() === 'host'">
+          <td class="renter-host-details" [matTooltip]="booking.renterName">
+            {{ booking.renterName ? booking.renterName : "-" }}
+          </td>
+          <td class="renter-host-details" [matTooltip]="booking.renterEmail">
+            {{ booking.renterEmail ? booking.renterEmail : "-" }}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="role && role.toLowerCase() === 'renter'">
+          <td class="renter-host-details" [matTooltip]="booking.hostName">
+            {{ booking.hostName ? booking.hostName : "-" }}
+          </td>
+          <td class="renter-host-details" [matTooltip]="booking.hostEmail">
+            {{ booking.hostEmail ? booking.hostEmail : "-" }}
+          </td>
+        </ng-container>
+        <td>
+          <span class="d-flex" *ngFor="let date of booking.dates">{{
+            date
+          }}</span>
+        </td>
+        <td>
+          <span class="d-flex" *ngFor="let time of booking.times">{{
+            time
+          }}</span>
+        </td>
+        <!-- <td>{{ booking.startTime }} to {{ booking.endTime }}</td> -->
+        <td>
+          {{
+            booking.fees
+              | currency
+                : booking.currency?.currencySymbol + " "
+                : "symbol-narrow"
+                : "1.0-0"
+          }}
+        </td>
+        <td color="primary" class="d-flex">
+          <div class="height_set">
+            <a
+              class="view-details"
+              matTooltip="View Details"
+              (click)="onViewBooking(booking.id)"
+              ><mat-icon>remove_red_eye</mat-icon></a
+            >
+          </div>
+          <div
+            class="height_set"
+            *ngIf="
+              role.toLowerCase() === 'renter' &&
+              booking.status === 4 &&
+              (!booking.totalCountReviews || booking.totalCountReviews <= 0)
+            "
+          >
+            <a
+              class="add-review"
+              matTooltip="Add Review"
+              (click)="onAddUpdateReview(booking.listingId, i)"
+              ><mat-icon>rate_review</mat-icon></a
+            >
+          </div>
+          <div class="height_set ml-1">
+            <a
+              *ngIf="
+                !booking.isInstantBooking &&
+                role.toLowerCase() === 'host' &&
+                (booking.status === 3 || booking.status === 6)
+              "
+              [ngClass]="
+                !booking.isInstantBooking &&
+                role.toLowerCase() === 'host' &&
+                (booking.status === 3 || booking.status === 6) &&
+                (currentBookingStatus === 'upcoming' ||
+                  currentBookingStatus === 'requested' ||
+                  currentBookingStatus === 'all')
+                  ? ''
+                  : 'disabled-action'
+              "
+              [class.disbled-action]="booking.isExpired"
+              matTooltip="Accept"
+              class="accept"
+              (click)="onUpdateBookingStatus(true, booking.id)"
+              ><mat-icon>check</mat-icon></a
+            >
+          </div>
+          <div class="height_set ml-1">
+            <a
+              *ngIf="
+                !booking.isInstantBooking &&
+                role.toLowerCase() === 'host' &&
+                (booking.status === 3 || booking.status === 6)
+              "
+              [ngClass]="
+                !booking.isInstantBooking &&
+                role.toLowerCase() === 'host' &&
+                (booking.status === 3 || booking.status === 6) &&
+                (currentBookingStatus === 'upcoming' ||
+                  currentBookingStatus === 'requested' ||
+                  currentBookingStatus === 'all')
+                  ? ''
+                  : 'disabled-action'
+              "
+              matTooltip="Reject"
+              [class.disbled-action]="booking.isExpired"
+              class="reject"
+              (click)="onUpdateBookingStatus(false, booking.id)"
+              ><mat-icon>close</mat-icon></a
+            >
+          </div>
+          <!-- <a
+            *ngIf="
+              role.toLowerCase() === 'renter' &&
+              booking.status === 4 &&
+              (currentBookingStatus === 'completed' ||
+                currentBookingStatus === 'all')
+            "
+            matTooltip="Add review"
+            class="review"
+            (click)="onAddReview(booking.listingId, false)"
+            ><mat-icon> rate_review</mat-icon></a
+          > -->
+          <!-- [ngClass]="
+          !booking.isInstantBooking &&
+          role.toLowerCase() === 'renter' &&
+          (booking.status === 1 ||
+            booking.status === 5 ||
+            booking.status === 2)
+            ? 'disabled-action'
+            : ''
+        " -->
+          <!-- !booking.isInstantBooking && booking.status === 3 && -->
+          <div class="height_set ml-1">
+            <a
+              *ngIf="
+                role.toLowerCase() === 'renter' &&
+                (currentBookingStatus === 'upcoming' ||
+                  currentBookingStatus === 'requested' ||
+                  (currentBookingStatus === 'all' &&
+                    booking.status !== 2 &&
+                    booking.status !== 4 &&
+                    booking.status !== 5))
+              "
+              [class.disbled-action]="booking.isExpired"
+              matTooltip="Cancel Booking"
+              class="cancel"
+              (click)="onCancelBookingByRenter(booking.id)"
+              ><mat-icon>close</mat-icon></a
+            >
+          </div>
+        </td>
+        <td color="primary" class="text-center">
+          <!-- STATUS 3 FOR PENDING -->
+          <div
+            *ngIf="
+              !booking.isInstantBooking &&
+              (booking.status === 3 || booking.status === 6)
+            "
+            [class]="booking.isExpired ? 'canceled' : 'pending'"
+          >
+            {{ booking.isExpired ? "Expired" : "Requested" }}
+          </div>
+          <!-- STATUS 2 FOR CANCELED -->
+          <div
+            *ngIf="
+              (!booking.isInstantBooking && booking.status === 2) ||
+              (booking.isInstantBooking && booking.status === 2)
+            "
+            class="canceled"
+          >
+            Cancelled
+          </div>
+          <!-- STATUS 5 FOR REJECTED -->
+          <div
+            *ngIf="!booking.isInstantBooking && booking.status === 5"
+            class="rejected"
+          >
+            Rejected
+          </div>
+          <!-- STATUS 1 FOR ACCEPTED -->
+          <div
+            *ngIf="
+              (booking.isInstantBooking && booking.status !== 2) ||
+              (!booking.isInstantBooking && booking.status === 1) ||
+              (!booking.isInstantBooking && booking.status === 4)
+            "
+            class="accepted text-center"
+          >
+            {{ booking.status === 1 ? "Booked" : "Completed" }}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mt-4" *ngIf="!bookings || bookings.length <= 0">
+    <div
+      class="col-12 w-100 text-center mt-4 animate__animated animate__fadeIn"
+    >
+      <h6>
+        You have no
+        {{ currentBookingStatus === "all" ? "active" : currentBookingStatus }}
+        bookings
+      </h6>
+    </div>
+  </div>
+</div>
+
+<app-square-spinner
+  class="spinner animate__animated animate__fadeIn animate__faster"
+  *ngIf="isLoading"
+></app-square-spinner>

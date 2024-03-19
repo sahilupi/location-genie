@@ -1,0 +1,363 @@
+.Step-one {
+  margin-top: 71px;
+  padding-top: 25px;
+  .col-4 {
+    text-align: center;
+  }
+  .width_full.type {
+    .card .image img {
+      max-width: 100% !important;
+    }
+  }
+  .col-4:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 24px;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #cecece;
+    z-index: -1;
+  }
+  .col-4:last-child::after {
+    display: none;
+  }
+}
+
+.step {
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  border: 1px solid #016670;
+  border-radius: 50%;
+  font-size: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #016670;
+  margin: 0 auto;
+  &.active {
+    background-color: #016670;
+    color: #fff;
+  }
+}
+
+.stepper {
+  h3.title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 8px 0 3px 0;
+  }
+  h5.description {
+    color: #a7a4a4;
+    font-size: 13px;
+  }
+}
+
+.form-fields {
+  padding: 40px 0 80px;
+  h2 {
+    font-weight: 600;
+    margin: 0 0 20px 0;
+  }
+  h4 {
+    color: #a7a4a4;
+    font-size: 13px;
+  }
+  .card-border {
+    border: 3px solid transparent !important;
+  }
+  .card {
+    width: 25%;
+    border-radius: 5px;
+    background: #efefef;
+    padding: 20px;
+    text-align: center;
+    height: 128px;
+
+    // &.active{
+    //     background: #016670;
+    // }
+    img {
+      width: 50px;
+      margin: 0 auto 18px auto;
+      filter: brightness(0%);
+    }
+    h6 {
+      font-size: 15px;
+      font-weight: 500;
+      margin: 0;
+      position: inherit;
+    }
+  }
+  .customcheckbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .custom-control {
+      min-height: 100%;
+      padding-left: 0;
+    }
+    .custom-control-label {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 128px !important;
+      display: block !important;
+      padding: 14px 0;
+    }
+    input[type="checkbox"] {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .custom-control-label::after {
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      display: none;
+    }
+    .custom-control-label::before {
+      width: 100%;
+      height: 98%;
+      left: 0;
+      top: 0;
+      background: #efefef;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    .custom-control-input:checked ~ .custom-control-label::before {
+      border-color: #016670;
+      background-color: #016670;
+    }
+    .custom-control-input:checked ~ .custom-control-label img {
+      filter: brightness(0) invert(1);
+    }
+    .custom-control-input:checked ~ .custom-control-label h6 {
+      color: #fff;
+    }
+  }
+}
+
+.type {
+  padding: 0 0 90px 0;
+  border-radius: 6px;
+  h2.heading {
+    font-weight: 600;
+    margin: 0 0 20px 0;
+  }
+  .card {
+    position: relative;
+    .image {
+      margin: 0px;
+      img {
+        border-radius: 6px;
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+      }
+    }
+    h2 {
+      font-size: 12px;
+      padding: 5px 10px 9px;
+      margin: 0;
+      word-break: break-word;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .customcheckbox {
+    position: absolute;
+    right: 0;
+    top: 0;
+    .custom-control-label::before {
+      width: 20px;
+      height: 20px;
+    }
+    .custom-control-label::after {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+// ::ng-deep {
+//   .main {
+//     .next-btn {
+//       button.mdc-button.mat-primary.mat-mdc-button-base {
+//       }
+//     }
+//   }
+// }
+
+.custom-bg-checkbox
+  ::ng-deep
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
+    [data-indeterminate="true"]
+  )
+  ~ .mdc-checkbox__background {
+  background: #fff !important;
+}
+
+.form-fields {
+  .d-flex.flex-row {
+    gap: 60px;
+  }
+}
+
+//Responsiveness
+
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 991px) {
+  .form-fields {
+    h2 {
+      font-size: 26px;
+    }
+    .d-flex.flex-row {
+      gap: 10px;
+    }
+  }
+  .type {
+    .card {
+      min-width: 45%;
+      .image {
+        img {
+          height: 254px;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      .box {
+        min-height: auto;
+        padding: 6px 8px 1px 8px;
+        h5.description {
+          min-height: auto;
+        }
+      }
+      .step {
+        width: 80px;
+        height: 45px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .form-fields {
+    h2 {
+      font-size: 22px;
+    }
+    .d-flex.flex-row {
+      flex-wrap: wrap;
+      .card {
+        width: 45%;
+      }
+    }
+  }
+  .type {
+    .card {
+      min-width: 45%;
+      .image {
+        img {
+          height: 200px;
+        }
+      }
+    }
+    h2.heading {
+      font-size: 26px;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .form-fields {
+    h2 {
+      font-size: 18px;
+    }
+    .d-flex.flex-row {
+      flex-wrap: wrap;
+      .card {
+        width: calc(100% - 50px);
+        margin: 0 auto;
+      }
+    }
+  }
+  .type {
+    .card {
+      min-width: calc(100% - 80px);
+      margin: 0 auto;
+      .image {
+        img {
+          height: auto;
+          object-fit: cover;
+        }
+      }
+    }
+    h2.heading {
+      font-size: 22px;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .type {
+    .card {
+      min-width: calc(100% - 80px);
+      margin: 0 auto;
+      .image {
+        img {
+          height: auto;
+        }
+      }
+    }
+  }
+}
+
+.hint-text {
+  color: #8f8e94;
+  font-size: 13px;
+  line-height: 20px;
+  width: 70%;
+  margin: auto;
+  margin-bottom: 32px;
+  margin-top: 32px;
+  p{
+    &:last-child{
+      margin: 5px 0 0;
+    }
+  }
+}

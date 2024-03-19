@@ -1,0 +1,15 @@
+.hp-content-section--content-item__local_hosts {
+  flex-basis: 20% !important;
+}
+
+@media (max-width: 991px) {
+  .hp-content-section--content-item__local_hosts {
+    flex-basis: 25% !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hp-content-section--content-item__local_hosts {
+    flex-basis: 50% !important;
+  }
+}

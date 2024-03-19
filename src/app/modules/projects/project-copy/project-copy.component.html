@@ -1,0 +1,53 @@
+<div class="container">
+  <div
+    class="dialog-header create-appoitment-header d-flex justify-content-between"
+  >
+    <h3 class="heading">Copy To</h3>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+
+  <div class="dialog add-Staff create-appointment">
+    <div mat-dialog-content class="dialog-content">
+      <div class="row mx-0 pt-1">
+        <div class="col-md-12 custom mb-1 px-0">
+          <div *ngFor="let project of projects" class="check-box">
+            <mat-divider></mat-divider>
+            <mat-checkbox
+              [(ngModel)]="project.checked"
+              [disabled]="
+                project.id === +data.projectId ||
+                (project.listingIds &&
+                  project.listingIds.includes(this.data.listingId))
+                  ? true
+                  : false
+              "
+              (change)="onUpdateSelectedIds(project.id, project.checked)"
+              [id]="project.id.toString()"
+              color="primary"
+              class="text-white mt-2"
+            >
+              <span>{{ project.title }}</span>
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="col-md-12 custom mb-1 px-0"></div>
+      </div>
+    </div>
+    <div class="col-md-12 px-0">
+      <div mat-dialog-actions align="end" class="px-0">
+        <button
+          type="button"
+          color="primary"
+          class="text-light"
+          mat-raised-button
+          (click)="onCopyProjects()"
+          [disabled]="!selectedProjectIds || selectedProjectIds.length <= 0"
+        >
+          Copy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,252 @@
+<div class="step-three-main">
+  <app-list-space-header
+    [stepNumber]="3"
+    [stepName]="'Get ready to shoot'"
+    (onSaveAndExit)="onNavigateToListing()"
+  ></app-list-space-header>
+
+  <div class="step-one">
+    <div class="container stepper">
+      <div class="row" style="gap: 6px">
+        <div
+          class="single-step single-step-in-third"
+          [ngClass]="i === 1 ? 'active' : ''"
+          *ngFor="let stepper of stepperData; let i = index"
+        >
+          <app-listing-stepper
+            [stepperData]="stepper"
+            [activeIdx]="2"
+            [idx]="i"
+            [totalSteppers]="stepperData.length"
+          ></app-listing-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="heading text-center mt-5">Availability Calendar</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12 m-auto">
+          <label class="mt-4">Selected dates</label>
+          <!-- <form [formGroup]="selecteRangeForm">
+        <mat-form-field appearance="outline">
+          <mat-date-range-input [rangePicker]="picker" [min]="today">
+            <input
+              matStartDate
+              matInput
+              [placeholder]="startDate ? startDate : 'Start Date'"
+              (click)="picker.open()"
+              [min]="today"
+              #dateRangeStart
+              formControlName="start"
+            />
+            <input
+              matEndDate
+              matInput
+              formControlName="end"
+              (click)="picker.open()"
+              [placeholder]="endDate ? endDate : 'End Date'"
+              #dateRangeEnd
+              (dateChange)="onChangeUpperDates(dateRangeStart, dateRangeEnd)"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </form> -->
+          <kendo-daterange #daterange>
+            <kendo-floatinglabel>
+              <kendo-dateinput
+                kendoDateRangeStartInput
+                [(ngModel)]="selectedRange.start"
+                [min]="today"
+                [max]="maxDate"
+                style="pointer-events: none"
+              >
+                <ng-template kendoCalendarCellTemplate let-date>
+                  <td
+                    [ngClass]="
+                      isDateInPast(date) && !isCurrentDate(date)
+                        ? 'past-date'
+                        : ''
+                    "
+                  >
+                    {{ date.getDate() }}
+                  </td>
+                </ng-template>
+              </kendo-dateinput>
+            </kendo-floatinglabel>
+            <kendo-floatinglabel>
+              <kendo-dateinput
+                kendoDateRangeEndInput
+                [(ngModel)]="selectedRange.end"
+                [min]="minDate"
+                [max]="maxDate"
+                style="pointer-events: none"
+              >
+                <ng-template kendoCalendarCellTemplate let-date>
+                  <td
+                    [ngClass]="
+                      isDateInPast(date) && !isCurrentDate(date)
+                        ? 'past-date'
+                        : ''
+                    "
+                  >
+                    {{ date.getDate() }}
+                  </td>
+                </ng-template></kendo-dateinput
+              >
+            </kendo-floatinglabel>
+          </kendo-daterange>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 m-auto availability">
+          <label> Availability</label>
+          <div class="buttons">
+            <mat-button-toggle-group
+              [disabled]="!selectedRange.start || isInlineLoading"
+              color="primary"
+            >
+              <mat-button-toggle
+                class="toggle-yes"
+                [value]="true"
+                [checked]="selectedRange.start && !checkIfDateAvailble()"
+                (click)="onUpdateBlockedAndAvailableDates('available')"
+                ><i *ngIf="isInlineLoading" class="fas fa-spinner fa-spin"></i>
+                Available</mat-button-toggle
+              >
+              <mat-button-toggle
+                class="toggle-no"
+                [value]="false"
+                [checked]="selectedRange.start && checkIfDateAvailble()"
+                (click)="onUpdateBlockedAndAvailableDates('block')"
+                [disabled]="!selectedRange || isInlineLoading"
+                ><i *ngIf="isInlineLoading" class="fas fa-spinner fa-spin"></i
+                >Blocked</mat-button-toggle
+              >
+            </mat-button-toggle-group>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12 m-auto mb-0 more">
+          <button class="" mat-button [matMenuTriggerFor]="menu">
+            More<i class="fas fa-caret-down"></i>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="onBlockOrUnblockWeekends(true)">
+              Block all weekends
+            </button>
+            <button mat-menu-item (click)="onBlockOrUnblockWeekends(false)">
+              Unblock all weekends
+            </button>
+            <button mat-menu-item (click)="onUnblockBlockWeekDays(true)">
+              Block all business days
+            </button>
+            <button mat-menu-item (click)="onUnblockBlockWeekDays(false)">
+              Unblock all business days
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="row mt-5 mb-5">
+        <div class="col-lg-12 col-md-10 col-sm-12 m-auto">
+          <!-- 
+            isWeekendsDisabled || !isNotDisablingWeekends
+              ? disableWeekends
+              : isWeekDaysDisabled || !isNotDisablingWeekDays
+              ? disableWeekDays
+              : isWeekendsDisabled && isWeekDaysDisabled
+              ? disableWeekends || disableWeekDays
+              :  -->
+          <!-- <kendo-multiviewcalendar
+          #calender
+          kendoDateRangeSelection
+          [selectionRange]="selectedRange"
+          (selectionRangeChange)="onChange($event)"
+          (click)="handleCalendarClick($event)"
+          [min]="minDate"
+          [max]="maxDate"
+          [disabledDates]="disabledDates"
+        ></kendo-multiviewcalendar>
+      </div> -->
+          <kendo-multiviewcalendar
+            #calender
+            kendoDateRangeSelection
+            [selectionRange]="selectedRange"
+            (selectionRangeChange)="onChange($event)"
+            (click)="handleCalendarClick($event)"
+            [min]="minDate"
+            [max]="maxDate"
+            [disabledDates]="disabledDates"
+          >
+            <!-- <ng-template kendoCalendarCellTemplate let-date>
+            <span
+              *ngIf="isDateInPast(date)"
+              [ngClass]="
+                isDateInPast(date) && !isCurrentDate(date) ? 'past-date' : ''
+              "
+            >
+              {{ date.getDate() }}
+            </span>
+          </ng-template> -->
+          </kendo-multiviewcalendar>
+        </div>
+      </div>
+      <!-- <div class="direct text-center">
+      <h2 class="heading text-center mt-5 mb-1 directsync">
+        Direct Sync: not connected
+      </h2>
+      <p class="mb-3">
+        Read-write sync with calendars such as iCloud, Google, Exchange, Office
+        365 and Outlook.com
+      </p>
+      <div class="sync-group d-flex align-items-center justify-content-center">
+        <button class="sync btn btn-primary">Sync Now</button>
+        <div class="d-flex align-items-center justify-content-center">
+          <img src="assets/images/apple-icon 1.png" />
+          <img src="assets/images/7611770 1.png" />
+          <img src="assets/images/office-365 1.png" />
+          <img
+            src="assets/images/Microsoft_Office_Outlook_(2018–present) 1.png"
+          />
+        </div>
+      </div>
+      <p class="mt-2">
+        Once your calendars are synced, time slots marked as busy (unavailable)
+        on your connected calendar will be automatically blocked on Location
+        genie and marked as external events.
+      </p>
+    </div>
+    <div class="select-box-div">
+      <div class="container position-relative">
+        <img src="assets/images/arrow-down.png" class="arrow-down" />
+        <select class="form-control">
+          <option>Other software (iCal)</option>
+          <option>Other software (iCal)</option>
+          <option>Other software (iCal)</option>
+        </select>
+      </div>
+    </div> -->
+    </div>
+    <!-- (nextBtnClick)="onUpdateBlockedAndAvailableDates()" -->
+
+    <app-list-space-buttons
+      [backBtnRoute]="backBtnRoute"
+      [progressValue]="35"
+      [nxtBtnRoute]="nxtBtnRoute"
+    ></app-list-space-buttons>
+
+    <div class="overlay" *ngIf="isLoading">
+      <div class="spinner">
+        <app-square-spinner></app-square-spinner>
+      </div>
+    </div>
+  </div>
+</div>

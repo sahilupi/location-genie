@@ -1,0 +1,249 @@
+<footer class="js-footer js-stop-Intercom clearfix">
+  <div>
+    <div class="footer">
+      <div class="container-html container-html__wide">
+        <div class="footer-menu">
+          <div class="footer-menu--cont">
+            <div class="footer-menu--top-side">
+              <div class="footer-menu--top-left">
+                <a class="footer-menu-logo">
+                  <!-- <img class="share-invite-pic--img" src="" alt="Logo" /> -->
+                  <img
+                    class="share-invite-pic--img"
+                    src="assets/images/location-logo.png"
+                    class="img-fluid"
+                  />
+                </a>
+                <div class="footer-soc--list">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    class="footer-soc--item"
+                    aria-label="Facebook"
+                  >
+                    <!-- <span class="footer-soc--icon icon-ic_facebook_rounded"></span> -->
+                    <i class="fab fa-facebook"></i>
+                    <span class="footer-soc--text">Facebook</span>
+                  </a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    class="footer-soc--item"
+                    aria-label="instagram"
+                  >
+                    <!-- <span class="footer-soc--icon icon-ic_insta_new2"></span> -->
+                    <i class="fab fa-instagram"></i>
+                    <span class="footer-soc--text">Instagram</span>
+                  </a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    class="footer-soc--item"
+                    aria-label="Youtube"
+                  >
+                    <!-- <span class="footer-soc--icon icon-ic_youtube_new2"></span> -->
+                    <i class="fab fa-youtube"></i>
+                    <span class="footer-soc--text">Youtube</span>
+                  </a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    class="footer-soc--item"
+                    aria-label="Reviews"
+                  >
+                    <!-- <span class="footer-soc--icon icon-ic_reviews"></span> -->
+                    <i class="fas fa-star"></i>
+                    <span class="footer-soc--text">Reviews</span>
+                  </a>
+                </div>
+              </div>
+              <div class="footer-menu--top-right">
+                <div class="footer-menu--col">
+                  <p class="footer-menu--head">Company</p>
+                  <a
+                    class="footer-menu--link"
+                    routerLink="about"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >About</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    routerLink="blog"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Blog</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    routerLink="guides"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Guides</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    routerLink="concierge"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Concierge</a
+                  >
+                  <!-- <a
+                    class="footer-menu--link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Students</a
+                  > -->
+                  <a
+                    class="footer-menu--link"
+                    routerLink="careers"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    >Careers</a
+                  >
+                </div>
+                <div class="footer-menu--col">
+                  <p class="footer-menu--head">Support</p>
+                  <a
+                    class="footer-menu--link"
+                    routerLink="landing-owner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >List Your Space</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    routerLink="help-page"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >FAQ</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    routerLink="community"
+                    rel="noopener noreferrer nofollow"
+                    target="_blank"
+                    >Community</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    routerLink="guidelines"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Guidelines</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    routerLink="resource-center"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Resource Center</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    routerLink="trust-and-safety"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Trust &amp; Safety</a
+                  >
+                </div>
+                <div class="footer-menu--col">
+                  <p class="footer-menu--head">Activities</p>
+                  <a
+                    [href]="getRoute(activities, 'activities')"
+                    *ngFor="let activities of activitiesData"
+                    class="footer-menu--link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ activities.name }}</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    [routerLink]="'book-location/activities'"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View All</a
+                  >
+                </div>
+                <div class="footer-menu--col">
+                  <p class="footer-menu--head">Types</p>
+                  <a
+                    [href]="getRoute(types, 'types')"
+                    *ngFor="let types of typesData"
+                    class="footer-menu--link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ types.name }}</a
+                  >
+                  <a
+                    class="footer-menu--link"
+                    [routerLink]="'book-location/types'"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View All</a
+                  >
+                </div>
+                <div class="footer-menu--col footer-menu--col-splitted">
+                  <p class="footer-menu--head">Cities</p>
+                  <div class="footer-menu--col-part">
+                    <a
+                      [href]="getRoute(city, 'cities')"
+                      *ngFor="let city of citiesData"
+                      class="footer-menu--link"
+                      target="_blank"
+                      >{{ city.name }}</a
+                    >
+                    <a
+                      class="footer-menu--link"
+                      target="_blank"
+                      [routerLink]="'book-location/cities'"
+                      >View All</a
+                    >
+                  </div>
+                </div>
+                <div class="footer-menu--col footer-menu--col-splitted">
+                  <p class="footer-menu--head">Features</p>
+                  <div class="footer-menu--col-part">
+                    <a
+                      [href]="getRoute(features, 'features')"
+                      *ngFor="let features of featuresData"
+                      class="footer-menu--link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >{{ features.name }}</a
+                    >
+                    <a
+                      class="footer-menu--link"
+                      [routerLink]="'book-location/features'"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >View All</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-menu--bottom-side">
+        <div class="footer-menu--bottom-side-left">
+          <div class="footer-copi">
+            <div class="footer-copi--text">
+              <span>®</span> Location Genie. Made in Dubai
+            </div>
+            <span class="footer-copi--icon icon-ic_california hide"></span>
+          </div>
+          <a
+            class="footer-menu-bottom-side--link footer-menu-bottom-side--link__terms"
+            routerLink="/terms"
+            >Terms</a
+          >
+          <a class="footer-menu-bottom-side--link" routerLink="/privacy"
+            >Privacy</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

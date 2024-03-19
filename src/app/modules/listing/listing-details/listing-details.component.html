@@ -1,0 +1,1619 @@
+<div
+  class="location-details-page animate__animated animate__fadeIn animate__faster"
+  *ngIf="!isGalleryOpen && !isMessaging"
+>
+  <!-- gallery section starts -->
+  <div class="ld-slider-wrap ld-slider-wrap-js">
+    <div
+      *ngIf="listingImages[3]"
+      class="gal-btn-for-open gal-btn-for-open-js"
+      (click)="isGalleryOpen = true"
+    >
+      <mat-icon>perm_media</mat-icon> Show all photos
+    </div>
+    <div
+      class="location-additional-controls location-additional-controls__slider parent-fav-js"
+    >
+      <div
+        *ngIf="!isPreview"
+        class="location-additional-control location-additional-control__favorite fav-btn-js"
+        (click)="getProjects()"
+        [matMenuTriggerFor]="projectMenu"
+      >
+        <!-- <div
+          class="location-additional-control--icon location-additional-control--icon__favorite bookmarks-close-js"
+          aria-label="Open bookmarks popover"
+        ></div> -->
+        <i
+          class="listing-heart"
+          [ngClass]="
+            selectedProjectListings.includes(descryptedListingId)
+              ? 'fas fa-heart'
+              : 'far fa-heart'
+          "
+        ></i>
+        Favorite
+      </div>
+      <div class="bookmarks-container-js">
+        <mat-menu #projectMenu="matMenu">
+          <div *ngIf="isLoading">
+            <app-spinner [spinnerColor]="'#016670'"></app-spinner>
+          </div>
+          <ng-container
+            *ngIf="(!projects || projects.length <= 0) && !isLoading"
+          >
+            <div><small>No projects found.</small></div>
+          </ng-container>
+          <ng-container *ngIf="projects">
+            <button mat-menu-item *ngFor="let project of projects">
+              <div
+                role="button"
+                class="d-flex align-items-center project-menu"
+                (click)="
+                  onAddLocationToProject(
+                    project.id,
+                    project.listingIds &&
+                      project.listingIds.includes(descryptedListingId)
+                      ? false
+                      : true,
+                    list
+                  )
+                "
+              >
+                <img
+                  width="40"
+                  height="40"
+                  [src]="
+                    project.imageFullPath ? project.imageFullPath : dummyImage
+                  "
+                  [alt]="project.title"
+                />
+                <div class="ml-2">{{ project.title }}</div>
+                <i
+                  class="p-absolute ml-2"
+                  [ngClass]="
+                    project.listingIds &&
+                    project.listingIds.includes(descryptedListingId)
+                      ? 'fas fa-heart'
+                      : 'far fa-heart'
+                  "
+                ></i>
+              </div>
+            </button>
+          </ng-container>
+        </mat-menu>
+      </div>
+
+      <!-- <button
+        *ngIf="!isPreview"
+        type="button"
+        class="location-additional-control share-button-js"
+      >
+        <i class="fas fa-upload"></i>
+        Share
+      </button> -->
+      <!-- <div
+        id="popover-add-to-favorite-js"
+        class="popover favorite-popover favorite-popover-js"
+        data-mere-popover-interactive
+      ></div> -->
+    </div>
+    <div class="ld-main-gallery">
+      <div class="ld-main-gallery--cont">
+        <div class="ld-main-gallery--l">
+          <div
+            class="ld-main-gallery--big-pic main-gallery-item-js"
+            data-main-gallery-item="0"
+          >
+            <img
+              [src]="
+                coverImage
+                  ? coverImage
+                  : 'assets/images/dummy/default_image.png'
+              "
+              alt="Bright Gastown Studio Photo 1"
+              sizes="(max-width: 768px) 100vw, (max-width: 999px) 65vw, 50vw"
+              width="1080"
+              height="810"
+              #cvrImg
+              (error)="cvrImg.src = 'assets/images/dummy/default_image.png'"
+            />
+          </div>
+        </div>
+        <div class="ld-main-gallery--r" *ngIf="listingImages">
+          <div
+            class="ld-main-gallery--small-pic main-gallery-item-js"
+            data-main-gallery-item="1"
+          >
+            <picture>
+              <img
+                [src]="
+                  listingImages[0]
+                    ? listingImages[0]
+                    : 'assets/images/dummy/default_image.png'
+                "
+                alt="Bright Gastown Studio Photo 2"
+                width="720"
+                height="540"
+                #Img1
+                (error)="Img1.src = 'assets/images/dummy/default_image.png'"
+              />
+            </picture>
+          </div>
+          <div
+            class="ld-main-gallery--small-pic main-gallery-item-js"
+            data-main-gallery-item="2"
+          >
+            <picture>
+              <img
+                [src]="
+                  listingImages[1]
+                    ? listingImages[1]
+                    : 'assets/images/dummy/default_image.png'
+                "
+                alt="Bright Gastown Studio Photo 3"
+                width="720"
+                height="540"
+                #Img2
+                (error)="Img2.src = 'assets/images/dummy/default_image.png'"
+              />
+            </picture>
+          </div>
+          <div
+            class="ld-main-gallery--small-pic main-gallery-item-js"
+            data-main-gallery-item="3"
+          >
+            <picture>
+              <img
+                [src]="
+                  listingImages[2]
+                    ? listingImages[2]
+                    : 'assets/images/dummy/default_image.png'
+                "
+                alt="Bright Gastown Studio Photo 4"
+                width="720"
+                height="540"
+                #Img3
+                (error)="Img3.src = 'assets/images/dummy/default_image.png'"
+              />
+            </picture>
+          </div>
+          <div
+            class="ld-main-gallery--small-pic main-gallery-item-js"
+            data-main-gallery-item="4"
+          >
+            <picture>
+              <img
+                [src]="
+                  listingImages[3]
+                    ? listingImages[3]
+                    : 'assets/images/dummy/default_image.png'
+                "
+                alt="Plant + bench"
+                width="720"
+                height="540"
+                #Img4
+                (error)="Img4.src = 'assets/images/dummy/default_image.png'"
+              />
+            </picture>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- gallery section ends -->
+
+  <!-- studio section starts -->
+  <section class="studio" *ngIf="listingDetails">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="left-content">
+            <h1>
+              {{
+                listingDetails.listingLocationInfos?.locationTitle
+                  ? listingDetails.listingLocationInfos?.locationTitle
+                  : "Title"
+              }}
+            </h1>
+            <small
+              >{{ listingDetails.listingAddress.city }},
+              {{ listingDetails.listingAddress.country }}</small
+            >
+            <!-- <div class="main-events d-flex align-items-center">
+              <div class="event-box">
+                <img src="assets/images/time.png" class="img-fluid" />
+                <p>1 hr min</p>
+              </div>
+              <div class="event-box">
+                <img src="assets/images/people.png" class="img-fluid" />
+                <p>40 people</p>
+              </div>
+              <div class="event-box">
+                <img src="assets/images/sq.png" class="img-fluid" />
+                <p>2450 sq/ft</p>
+              </div>
+              <div class="event-box">
+                <img
+                  src="assets/images/production.png"
+                  class="img-fluid"
+                />
+                <p>Production</p>
+              </div>
+              <div class="event-box">
+                <img src="assets/images/event.png" class="img-fluid" />
+                <p>Event</p>
+              </div>
+              <div class="event-box">
+                <img src="assets/images/meeting.png" class="img-fluid" />
+                <p>Meeting</p>
+              </div>
+            </div> -->
+
+            <owl-carousel-o
+              [options]="customOptions"
+              class="main-events d-flex align-items-center"
+            >
+              <ng-container>
+                <ng-template carouselSlide>
+                  <div class="event-box">
+                    <img src="assets/images/time.png" class="img-fluid" />
+                    <p>
+                      {{ listingDetails.listingPrice?.minimumHours }} hr minimum
+                    </p>
+                  </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="event-box">
+                    <img src="assets/images/people.png" class="img-fluid" />
+                    <p>
+                      {{
+                        numberOfAttendees.split("-")[1]
+                          ? numberOfAttendees.split("-")[1]
+                          : numberOfAttendees.split("-")[0]
+                      }}
+                    </p>
+                  </div>
+                </ng-template>
+                <ng-template
+                  carouselSlide
+                  *ngIf="listingDetails.listingLocationInfos?.propertySize"
+                >
+                  <div class="event-box">
+                    <img src="assets/images/sq.png" class="img-fluid" />
+                    <p>
+                      {{ listingDetails.listingLocationInfos?.propertySize }}
+                      sq/ft
+                    </p>
+                  </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div
+                    class="event-box"
+                    [ngClass]="
+                      listingDetails.listingActivityAttendees?.isProduction
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    <img src="assets/images/production.png" class="img-fluid" />
+                    <p>Production</p>
+                  </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div
+                    class="event-box"
+                    [ngClass]="
+                      listingDetails.listingActivityAttendees?.isEvent
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    <img src="assets/images/event.png" class="img-fluid" />
+                    <p>Event</p>
+                  </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div
+                    class="event-box"
+                    [ngClass]="
+                      listingDetails.listingActivityAttendees?.isMeeting
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    <img src="assets/images/meeting.png" class="img-fluid" />
+                    <p>Meeting</p>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </owl-carousel-o>
+
+            <!-- <p class="studio mt-2">
+              Our spacious loft is
+              {{ listingDetails.listingLocationInfos?.propertySize }} SF, you
+              are able to use the whole space. Corner Studio West Facing.
+              Incredible, spacious, and just listed! The space has been designed
+              with tasteful iconic mid- century furniture.
+            </p> -->
+            <p class="studio mt-2">
+              {{ listingDetails.listingLocationInfos?.locationDescription }}
+            </p>
+            <div class="categories">
+              <div class="category-box d-flex" *ngIf="categories.length > 0">
+                <div class="category-key">
+                  <p>Categories</p>
+                </div>
+                <div class="category-value">
+                  <p>
+                    <span>
+                      <span>{{ categories.join(", ") }} </span>
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div class="category-box d-flex" *ngIf="styles.length > 0">
+                <div class="category-key">
+                  <p>Styles</p>
+                </div>
+                <div class="category-value">
+                  <p>
+                    <span>{{ styles.join(", ") }} </span>
+                  </p>
+                </div>
+              </div>
+              <div class="category-box d-flex">
+                <div class="category-key mt-4">
+                  <p>Parking</p>
+                </div>
+                <div class="category-value mt-4">
+                  <div
+                    class="mb-1"
+                    *ngIf="listingDetails.listingLocationInfos?.carParkingSpace"
+                  >
+                    Parking for
+                    {{ listingDetails.listingLocationInfos?.carParkingSpace }}
+                    cars
+                  </div>
+                  <div
+                    class="mb-1"
+                    *ngIf="
+                      listingDetails.listingLocationInfos &&
+                      listingDetails.listingLocationInfos
+                        .truckMotarHomeParkingSerialized &&
+                      listingDetails.listingLocationInfos
+                        .truckMotarHomeParkingSerialized.length > 0
+                    "
+                  >
+                    Truck / motorhome on site parking:
+                    <span
+                      *ngFor="
+                        let data of listingDetails.listingLocationInfos
+                          ?.truckMotarHomeParkingSerialized
+                      "
+                    >
+                      <span class="text-capitalize">{{ data }}, </span></span
+                    >
+                  </div>
+                  <div
+                    class="mb-4"
+                    *ngIf="listingDetails.listingLocationInfos?.parkingNearby"
+                  >
+                    Available parking lot or parking structure nearby
+                  </div>
+                </div>
+              </div>
+              <div class="category-box d-flex" *ngIf="amenities.length > 0">
+                <div class="category-key mt-4">
+                  <p>Amenities</p>
+                </div>
+                <div class="category-value mt-4">
+                  <span *ngFor="let amenty of amenities; let i = index">
+                    <span class="text-capitalize">{{ amenty }}</span
+                    ><span *ngIf="amenities.length > i + 1">, </span>
+                  </span>
+                </div>
+              </div>
+              <div class="category-box d-flex" *ngIf="crewAccess.length > 0">
+                <div class="category-key mt-4">
+                  <p>Crew access</p>
+                </div>
+                <div class="category-value mt-4">
+                  <span *ngFor="let access of crewAccess; let i = index">
+                    <span class="text-capitalize">{{ access }}</span
+                    ><span *ngIf="crewAccess.length > i + 1">, </span>
+                  </span>
+                </div>
+              </div>
+              <div class="category-box d-flex" *ngIf="features.length > 0">
+                <div class="category-key mt-4">
+                  <p>Features</p>
+                </div>
+                <div class="category-value mt-4 row">
+                  <div
+                    class="col-6 mb-1"
+                    *ngFor="
+                      let feature of showMoreFeatures
+                        ? features.slice(0, 6)
+                        : features
+                    "
+                  >
+                    <span class="text-capitalize">{{ feature }}</span>
+                  </div>
+                  <a
+                    class="col-12 mb-1 show-more"
+                    (click)="showMoreFeatures = false"
+                    *ngIf="features.length > 6 && showMoreFeatures"
+                    >Show more</a
+                  >
+                  <a
+                    class="col-12 mb-1 show-more"
+                    (click)="showMoreFeatures = true"
+                    *ngIf="features.length > 6 && !showMoreFeatures"
+                    >Show less</a
+                  >
+                </div>
+              </div>
+              <!-- for interiors -->
+              <div class="category-box d-flex" *ngIf="interiors.length > 0">
+                <div class="category-key mt-4">
+                  <p>Interiors</p>
+                </div>
+                <div class="category-value mt-4 row">
+                  <div
+                    class="col-6 mb-1"
+                    *ngFor="
+                      let interior of showMoreInteriors
+                        ? interiors.slice(0, 6)
+                        : interiors
+                    "
+                  >
+                    <span class="text-capitalize">{{ interior }}</span>
+                  </div>
+                  <a
+                    class="col-12 mb-1 show-more"
+                    (click)="showMoreInteriors = false"
+                    *ngIf="interiors.length > 6 && showMoreInteriors"
+                    >Show more</a
+                  >
+                  <a
+                    class="col-12 mb-1 show-more"
+                    (click)="showMoreInteriors = true"
+                    *ngIf="interiors.length > 6 && !showMoreInteriors"
+                    >Show less</a
+                  >
+                </div>
+              </div>
+              <div
+                class="category-box d-flex"
+                *ngIf="listingDetails.listingLocationInfos?.propertySize"
+              >
+                <div class="category-key mt-4">
+                  <p>Location details</p>
+                </div>
+                <div class="category-value mt-4 row">
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="listingDetails.listingLocationInfos?.noOfBedRooms"
+                  >
+                    Bedrooms:
+                    <span class="text-bold">{{
+                      listingDetails.listingLocationInfos?.noOfBedRooms
+                    }}</span>
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="listingDetails.listingLocationInfos?.noOfBathRooms"
+                  >
+                    Bathrooms:
+                    <span class="text-bold">{{
+                      listingDetails.listingLocationInfos?.noOfBathRooms
+                    }}</span>
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="listingDetails.listingLocationInfos?.propertySize"
+                  >
+                    Property size (sq ft):
+                    <span class="text-bold"
+                      >{{
+                        listingDetails.listingLocationInfos?.propertySize
+                      }}
+                      sq ft</span
+                    >
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="listingDetails.listingLocationInfos?.lotSize"
+                  >
+                    Lot size (sq ft):
+                    <span class="text-bold"
+                      >{{ listingDetails.listingLocationInfos?.lotSize }} sq
+                      ft</span
+                    >
+                  </div>
+                  <div
+                    class="col-6 mb-4"
+                    *ngIf="listingDetails.listingLocationInfos?.mainFloorNumber"
+                  >
+                    Main floor number:
+                    <span class="text-bold">{{
+                      listingDetails.listingLocationInfos?.mainFloorNumber
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="category-box d-flex"
+                *ngIf="addtionalRules.length > 0 || locationRules.length > 0"
+              >
+                <div class="category-key mt-4">
+                  <p>Location Rules</p>
+                </div>
+                <div class="category-value mt-4">
+                  <div class="mb-1" *ngIf="locationRules.length > 0">
+                    <div *ngFor="let rule of locationRules; let i = index">
+                      {{ rule.name }}
+                    </div>
+                  </div>
+                  <div class="mb-1" *ngIf="addtionalRules.length > 0">
+                    <div *ngFor="let rule of addtionalRules; let i = index">
+                      {{ rule }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="category-box d-flex mt-4 w-100">
+                <div class="category-key open-hours">
+                  <p>Opening hours</p>
+                </div>
+                <div class="row w-100">
+                  <div
+                    class="col-6 mb-1"
+                    [ngClass]="
+                      listingDetails.listingLocationOpeningHours?.isOpenSunday
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    Sunday
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="
+                      listingDetails.listingLocationOpeningHours?.isOpenSunday
+                    "
+                  >
+                    {{
+                      getStartTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.sundayOpenTime
+                      )?.name
+                    }}
+                    -
+                    {{
+                      getEndTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.sundayOpenTime
+                      )?.name
+                    }}
+                  </div>
+                  <div
+                    class="col-6 mb-1 disabledcheckbox"
+                    *ngIf="
+                      !listingDetails.listingLocationOpeningHours?.isOpenSunday
+                    "
+                  >
+                    Closed
+                  </div>
+
+                  <div
+                    class="col-6 mb-1"
+                    [ngClass]="
+                      listingDetails.listingLocationOpeningHours?.isOpenMonday
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    Monday
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="
+                      listingDetails.listingLocationOpeningHours?.isOpenMonday
+                    "
+                  >
+                    {{
+                      getStartTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.mondayOpenTime
+                      )?.name
+                    }}
+                    -
+                    {{
+                      getEndTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.mondayOpenTime
+                      )?.name
+                    }}
+                  </div>
+                  <div
+                    class="col-6 mb-1 disabledcheckbox"
+                    *ngIf="
+                      !listingDetails.listingLocationOpeningHours?.isOpenMonday
+                    "
+                  >
+                    Closed
+                  </div>
+
+                  <div
+                    class="col-6 mb-1"
+                    [ngClass]="
+                      listingDetails.listingLocationOpeningHours?.isOpenTuesday
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    Tuesday
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="
+                      listingDetails.listingLocationOpeningHours?.isOpenTuesday
+                    "
+                  >
+                    {{
+                      getStartTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.tuesdayOpenTime
+                      )?.name
+                    }}
+                    -
+                    {{
+                      getEndTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.tuesdayOpenTime
+                      )?.name
+                    }}
+                  </div>
+                  <div
+                    class="col-6 mb-1 disabledcheckbox"
+                    *ngIf="
+                      !listingDetails.listingLocationOpeningHours?.isOpenTuesday
+                    "
+                  >
+                    Closed
+                  </div>
+
+                  <div
+                    class="col-6 mb-1"
+                    [ngClass]="
+                      listingDetails.listingLocationOpeningHours
+                        ?.isOpenWednesday
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    Wednesday
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="
+                      listingDetails.listingLocationOpeningHours
+                        ?.isOpenWednesday
+                    "
+                  >
+                    {{
+                      getStartTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.wednesdayOpenTime
+                      )?.name
+                    }}
+                    -
+                    {{
+                      getEndTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.wednesdayOpenTime
+                      )?.name
+                    }}
+                  </div>
+                  <div
+                    class="col-6 mb-1 disabledcheckbox"
+                    *ngIf="
+                      !listingDetails.listingLocationOpeningHours
+                        ?.isOpenWednesday
+                    "
+                  >
+                    Closed
+                  </div>
+
+                  <div
+                    class="col-6 mb-1"
+                    [ngClass]="
+                      listingDetails.listingLocationOpeningHours?.isOpenThursday
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    Thursday
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="
+                      listingDetails.listingLocationOpeningHours?.isOpenThursday
+                    "
+                  >
+                    {{
+                      getStartTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.thursdayOpenTime
+                      )?.name
+                    }}
+                    -
+                    {{
+                      getEndTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.thursdayOpenTime
+                      )?.name
+                    }}
+                  </div>
+                  <div
+                    class="col-6 mb-1 disabledcheckbox"
+                    *ngIf="
+                      !listingDetails.listingLocationOpeningHours
+                        ?.isOpenThursday
+                    "
+                  >
+                    Closed
+                  </div>
+
+                  <div
+                    class="col-6 mb-1"
+                    [ngClass]="
+                      listingDetails.listingLocationOpeningHours?.isOpenFriday
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    Friday
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="
+                      listingDetails.listingLocationOpeningHours?.isOpenFriday
+                    "
+                  >
+                    {{
+                      getStartTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.fridayOpenTime
+                      )?.name
+                    }}
+                    -
+                    {{
+                      getEndTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.fridayOpenTime
+                      )?.name
+                    }}
+                  </div>
+                  <div
+                    class="col-6 mb-1 disabledcheckbox"
+                    *ngIf="
+                      !listingDetails.listingLocationOpeningHours?.isOpenFriday
+                    "
+                  >
+                    Closed
+                  </div>
+
+                  <div
+                    class="col-6 mb-1"
+                    [ngClass]="
+                      listingDetails.listingLocationOpeningHours?.isOpenSaturday
+                        ? ''
+                        : 'disabledcheckbox'
+                    "
+                  >
+                    Saturday
+                  </div>
+                  <div
+                    class="col-6 mb-1"
+                    *ngIf="
+                      listingDetails.listingLocationOpeningHours?.isOpenSaturday
+                    "
+                  >
+                    {{
+                      getStartTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.saturdayOpenTime
+                      )?.name
+                    }}
+                    -
+                    {{
+                      getEndTime(
+                        listingDetails.listingLocationOpeningHours
+                          ?.saturdayOpenTime
+                      )?.name
+                    }}
+                  </div>
+                  <div
+                    class="col-6 mb-1 disabledcheckbox"
+                    *ngIf="
+                      !listingDetails.listingLocationOpeningHours
+                        ?.isOpenSaturday
+                    "
+                  >
+                    Closed
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="show text-center" *ngIf="locationRules.length > 3">
+              <a href>Show More</a>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-5 right-content">
+          <div class="right-content-first">
+            <form
+              *ngIf="bookingForm"
+              [formGroup]="bookingForm"
+              (ngSubmit)="onSubmitForm()"
+            >
+              <div class="aed">
+                <div class="aed-heading">
+                  <p>
+                    {{
+                      selectedAttendies.charges
+                        | currency : currency + " " : "symbol-narrow" : "1.0-0"
+                    }}<small>/hr</small>
+                  </p>
+                </div>
+                <div class="time">
+                  <p>
+                    {{ listingDetails.listingPrice?.minimumHours }} hr. minimum
+                  </p>
+                </div>
+              </div>
+
+              <div formArrayName="bookings">
+                <div
+                  class="time"
+                  *ngFor="let bookingCtrl of bookingControls; let i = index"
+                  [formGroupName]="i"
+                >
+                  <div class="pick-date">
+                    <input
+                      [ngClass]="{
+                        'is-invalid': !bookingCtrl.value.date && isSubmitted
+                      }"
+                      matInput
+                      [matDatepicker]="basicDatepicker"
+                      formControlName="date"
+                      placeholder="Pick a date"
+                      class="form-control date-control"
+                      (dateChange)="onDateChange($event, i)"
+                      [min]="today"
+                      [max]="maxDate"
+                      (click)="basicDatepicker.open()"
+                      [matDatepickerFilter]="disableDates"
+                    />
+                    <mat-datepicker
+                      #basicDatepicker
+                      [dateClass]="dateClassCallback"
+                      (closed)="this.isTimeSlotsCreated = false"
+                    >
+                    </mat-datepicker>
+                  </div>
+                  <div class="start-time">
+                    <div
+                      class="select-native-parent app-validation-message-blink"
+                      [class.app-validation-message-blink]="
+                        !bookingCtrl.value.startTime &&
+                        isSubmitted &&
+                        isBlinking
+                      "
+                    >
+                      <select
+                        [ngClass]="{
+                          'is-invalid':
+                            !bookingCtrl.value.startTime && isSubmitted
+                        }"
+                        (change)="enableEndTime(i, $event)"
+                        class="booking-dates-row--select select-time-js select-native start-time-js"
+                        formControlName="startTime"
+                      >
+                        <option [value]="null" hidden selected>
+                          Start time
+                        </option>
+                        <option
+                          *ngFor="let time of bookingCtrl.value.startTimeSlots"
+                          [value]="time.value"
+                          [disabled]="time.disabled"
+                        >
+                          {{ time.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="end-time">
+                    <div class="select-native-parent" [class.app-validation-message-blink]="
+                    !bookingCtrl.value.startTime &&
+                    isSubmitted &&
+                    isBlinking
+                  ">
+                      <select
+                        [ngClass]="{
+                          'is-invalid':
+                            !bookingCtrl.value.endTime && isSubmitted
+                        }"
+                        (change)="onSetTotalHours(i)"
+                        class="booking-dates-row--select select-time-js select-native finish-time-js"
+                        formControlName="endTime"
+                      >
+                        <option [value]="null" hidden selected>End time</option>
+                        <option
+                          *ngFor="
+                            let time of bookingCtrl.value.availableEndTimeSlots
+                          "
+                          [value]="time.value"
+                        >
+                          {{ time.name }}
+                        </option>
+                        <option
+                          value="separator"
+                          *ngIf="showNextDayTimeSlots"
+                          disabled
+                        >
+                          Next day
+                        </option>
+                        <ng-container *ngIf="showNextDayTimeSlots">
+                          <option
+                            *ngFor="
+                              let time of bookingCtrl.value.nextDayTimeSlots
+                            "
+                            [value]="time.value"
+                          >
+                            {{ time.name }}
+                          </option>
+                        </ng-container>
+                      </select>
+                      <div class="booking-dates-row--select-overlay"></div>
+                    </div>
+                  </div>
+                  <a
+                    class="remove-js"
+                    (click)="onDeleteBooking(i)"
+                    *ngIf="i > 0"
+                    ><i class="fas fa-times"></i
+                  ></a>
+                  <a class="remove-js" *ngIf="i <= 0"
+                    ><i class="fas fa-neos"></i
+                  ></a>
+                </div>
+                <div
+                  class="booking-dates-row--info next-day-js"
+                  *ngIf="isBookedForNextDay"
+                >
+                  <small>Booking ends the next day</small>
+                </div>
+              </div>
+
+              <div class="action-details">
+                <div class="add-day">
+                  <a class="add-day-button" (click)="onAddBooking()"
+                    >Add a day</a
+                  >
+                </div>
+                <div class="hours">
+                  <p *ngIf="totalHours.toString() !== 'NaN'">
+                    Total hours: {{ totalHours }}
+                  </p>
+                </div>
+              </div>
+
+              <app-validation-message
+                *ngIf="totalHours < minimumHours"
+                [message]="
+                  '<div class=minimum-validation>' +
+                  listingDetails.listingPrice?.minimumHours +
+                  ' hr. minimum </div> You can\'t submit a request that is less than the hourly minimum'
+                "
+              ></app-validation-message>
+
+              <app-attendies-dropdown
+                [attendiesDropdown]="attendiesDropdown"
+                [currency]="currency"
+                [selectedAttendies]="selectedAttendies"
+                (selectedAttendiesEmitter)="selectedAttendies = $event"
+              ></app-attendies-dropdown>
+
+              <div class="book-button" *ngIf="!isPreview">
+                <button class="btn btn-success total-width" type="submit">
+                  {{ isInstantBooking ? "Instant Book" : "Request Booking" }}
+                </button>
+              </div>
+              <app-validation-message
+                class="validationMsg"
+                [message]="
+                  !isInstantBooking
+                    ? 'A booking request will be sent to host and payment will be deducted after host accepts the request.'
+                    : 'Booking will happen instantly and payment will be deducted immediately.'
+                "
+              ></app-validation-message>
+
+              <div class="book-cancel" *ngIf="!isPreview">
+                <a
+                  class="cancel-link"
+                  matTooltip="All bookings adhere to Location Genie's Grace Period policy which allows a full refund for bookings cancelled within 24 hours of confirmation with the exception of bookings that are confirmed within 48 hours of the start time."
+                  >Cancel for free within 24 Hours
+                  <!-- <span class="host-price--qwe mere-tooltip"></span> -->
+                  <i class="far fa-question-circle"></i>
+                </a>
+              </div>
+              <div *ngIf="totalHours">
+                <div class="d-flex justify-content-between mb-2">
+                  <span
+                    >{{
+                      selectedAttendies.charges
+                        | currency : currency + " " : "symbol-narrow" : "1.0-0"
+                    }}
+                    x {{ totalHours }} hours</span
+                  >
+                  <span>{{
+                    +selectedAttendies.charges * +totalHours
+                      | currency : currency + " " : "symbol-narrow" : "1.0-0"
+                  }}</span>
+                </div>
+                <!-- <div class="d-flex justify-content-between mb-2">
+                  <span>Site rep</span>
+                  <span>{{
+                    siteRep | currency : currency+ " " : "symbol-narrow" : "1.0-0"
+                  }}</span>
+                </div> -->
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Processing fee</span>
+                  <span>{{
+                    processingFee
+                      | currency : currency + " " : "symbol-narrow" : "1.0-0"
+                  }}</span>
+                </div>
+                <hr class="hr" />
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="text-bold">Total {{ currency }}</span>
+                  <span class="text-bold">{{
+                    processingFee + selectedAttendies.charges * totalHours
+                      | currency : currency + " " : "symbol-narrow" : "1.0-0"
+                  }}</span>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="right-content-second">
+            <div class="host-controller-main--cont" *ngIf="!isPreview">
+              <div class="host-controller-main-host-info">
+                <div class="host-controller-main-host-info--l">
+                  <div class="host-controller-main-host-info--name">
+                    <a
+                      *ngIf="userData"
+                      class="host-controller-main-host-info--name-text ellipsis"
+                    >
+                      {{ userData.firstName }} {{ userData.lastName }}
+                    </a>
+                    <div
+                      class="host-controller-main-host-info--superhost mere-tooltip"
+                      *ngIf="isSuperHost"
+                    >
+                      <!-- <div id="superHostInfo"
+                                            class="mere-tooltip-inner host-controller-main-host-info-tooltip">
+                                            <div
+                                                class="mere-tooltip-inner--arr">
+                                            </div>
+                                            <div
+                                                class="mere-tooltip-inner--cont">
+                                                <div
+                                                    class="mere-tooltip-inner--text">
+                                                    When you book with a
+                                                    Superhost you can trust
+                                                    that you will be getting
+                                                    a top notch experience.
+                                                    <a
+                                                        class="mere-tooltip-inner--link link">
+                                                        Learn more
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                    </div>
+                  </div>
+                  <div class="host-controller-main-host-info--response">
+                    <div class="host-controller-main-host-info--response-title">
+                      Response rating:
+                    </div>
+                    <div class="host-controller-main-host-info--response-val">
+                      Excellent
+                    </div>
+                  </div>
+                  <div class="host-controller-main-host-info--response">
+                    <div class="host-controller-main-host-info--response-title">
+                      Response time:
+                    </div>
+                    <div class="host-controller-main-host-info--response-val">
+                      Within an hour
+                    </div>
+                  </div>
+                </div>
+                <div class="host-controller-main-host-info--r">
+                  <a>
+                    <img
+                      [src]="
+                        userData.profile
+                          ? userData.profile.profilePic
+                          : 'assets/images/dummy/dummy-user.jpg'
+                      "
+                      class="host-controller-main-host-info--avatar"
+                      alt="Bright Gastown Studio Photo 4"
+                      #userImg
+                      (error)="
+                        userImg.src = 'assets/images/dummy/dummy-user.jpg'
+                      "
+                    />
+                  </a>
+                </div>
+              </div>
+              <button
+                class="btn btn__bold btn-default btn-default__green total-width btn-lg_size_lg btn-font-size-16 message-host-js"
+                (click)="addContactToChat()"
+              >
+                Message Host
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- studio section ends -->
+
+  <!-- questions section starts -->
+  <section class="studio pt-0">
+    <div class="container">
+      <h2 class="question-title">Questions</h2>
+      <ul class="question-list">
+        <li class="question-item">
+          <p class="question-row">
+            <span class="question-label">Q:</span>
+            <span class="question-text question-text__q"
+              >What's the maximum attendees I can have at this location?</span
+            >
+          </p>
+          <p class="question-row">
+            <span class="question-label">A:</span>
+            <span class="question-text question-text__a">
+              {{ userData.firstName }} allows
+              {{
+                numberOfAttendees.split(" ")[0].split("-")[1]
+                  ? numberOfAttendees.split(" ")[0].split("-")[1]
+                  : numberOfAttendees.split(" ")[0].split("-")[0]
+              }}
+              attendees on location
+            </span>
+          </p>
+        </li>
+        <li class="question-item">
+          <p class="question-row">
+            <span class="question-label">Q:</span>
+            <span class="question-text question-text__q"
+              >What types of activities are allowed at this location?</span
+            >
+          </p>
+          <p class="question-row">
+            <span class="question-label">A:</span>
+            <span class="question-text question-text__a">
+              {{ userData.firstName }} allows
+              {{
+                listingDetails.listingActivityAttendees?.isProduction
+                  ? "Production" +
+                    (listingDetails.listingActivityAttendees?.isEvent ||
+                    listingDetails.listingActivityAttendees?.isMeeting
+                      ? ", "
+                      : "")
+                  : ""
+              }}
+              {{
+                listingDetails.listingActivityAttendees?.isEvent
+                  ? "Event" +
+                    (listingDetails.listingActivityAttendees?.isMeeting
+                      ? ", "
+                      : "")
+                  : ""
+              }}{{
+                listingDetails.listingActivityAttendees?.isMeeting
+                  ? "Meeting"
+                  : ""
+              }}
+            </span>
+          </p>
+        </li>
+        <li
+          class="question-item"
+          *ngIf="listingDetails.listingLocationInfos?.propertySize"
+        >
+          <p class="question-row">
+            <span class="question-label">Q:</span>
+            <span class="question-text question-text__q"
+              >How many square feet is the location?</span
+            >
+          </p>
+          <p class="question-row">
+            <span class="question-label">A:</span>
+            <span class="question-text question-text__a">
+              {{
+                listingDetails.listingLocationInfos?.locationTitle
+                  ? listingDetails.listingLocationInfos?.locationTitle
+                  : "Title"
+              }}
+              is {{ listingDetails.listingLocationInfos?.propertySize }} sq/ft
+            </span>
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <!-- questions section ends -->
+
+  <div class="container" *ngIf="!reviews || reviews.length <= 0">
+    <div class="row">
+      <div class="col-12 review mb-5">
+        <div class="d-flex align-items-center">
+          <h3 class="review-title mb-4 m-auto">No ratings</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="reviews && reviews.length">
+    <div class="row">
+      <div class="col-12 review mb-5">
+        <div class="d-flex align-items-center">
+          <h3
+            class="review-title mb-4"
+            [matTooltip]="exactAverageRating.toString()"
+          >
+            Featured Reviews
+            <small class="review-rating-average">
+              ({{ reviewsTotolCount }})
+            </small>
+          </h3>
+          <div
+            class="review-rating ml-3 mb-4 d-flex align-items-center"
+            [matTooltip]="exactAverageRating.toString()"
+          >
+            <div class="review-rating__star-ratings">
+              <div
+                class="fill-ratings"
+                [style.width]="(exactAverageRating * 100) / 5 + '%'"
+              >
+                <span>★★★★★</span>
+              </div>
+              <div class="empty-ratings">
+                <span>★★★★★</span>
+              </div>
+            </div>
+            <small class="d-inline-block mt-1"
+              >({{ exactAverageRating.toString() }} ratings)</small
+            >
+          </div>
+        </div>
+        <div
+          class="review-content mt-3"
+          *ngFor="let review of reviews; let i = index"
+        >
+          <div class="review-content__item d-flex">
+            <div class="review-content__item--image">
+              <img
+                #reviewUserImg
+                [src]="review.userImg"
+                [alt]="
+                  review.firstName
+                    ? review.firstName + ' ' + review.lastName
+                    : review.email
+                "
+                (error)="
+                  reviewUserImg.src = 'assets/images/dummy/dummy-user.jpg'
+                "
+              />
+            </div>
+
+            <div class="review-content__item--details">
+              <div class="d-flex">
+                <a class="review-content__item--details-name">{{
+                  review.firstName
+                    ? review.firstName + " " + review.lastName
+                    : review.email
+                }}</a>
+                <div class="d-flex align-items-center ml-2">
+                  <div class="review-content__item--details-rating">
+                    <mat-icon
+                      *ngFor="
+                        let rating of [
+                          reviews[i].rating,
+                          reviews[i].rating,
+                          reviews[i].rating,
+                          reviews[i].rating,
+                          reviews[i].rating
+                        ];
+                        let ratingIdx = index
+                      "
+                    >
+                      {{
+                        rating > ratingIdx ? "star" : "star_border"
+                      }}</mat-icon
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="review-content__item--details-comment">
+                <div class="review-content__item--details-comment__time">
+                  {{
+                    commonService
+                      .calculateTimeAgo(review.createdDate)
+                      .charAt(0) === "-"
+                      ? commonService
+                          .calculateTimeAgo(review.createdDate)
+                          .slice(1)
+                      : commonService.calculateTimeAgo(review.createdDate)
+                  }}
+                </div>
+                <div class="review-content__item--details-comment__text">
+                  <p>
+                    {{
+                      !review.showMore
+                        ? review.commentText.slice(0, 100) +
+                          (review.commentText.length > 100 ? "..." : "")
+                        : review.commentText
+                    }}
+                  </p>
+                  <small
+                    class="review-content__item--show-more"
+                    *ngIf="review.commentText.length > 100"
+                    role="button"
+                    color="primary"
+                    (click)="review.showMore = !review.showMore"
+                    >{{ !review.showMore ? "Show more" : "Show less" }}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="review-load-more"
+          role="button"
+          (click)="loadMoreReviews()"
+          *ngIf="reviewsTotolCount > reviews.length"
+        >
+          <small>Load more reviews</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- similar listing section starts -->
+  <section
+    class="container mt-4"
+    *ngIf="!similarLocations || similarLocations.length <= 0"
+  >
+    <div class="row">
+      <div class="col-12 text-center mt-4">
+        <h2 class="mt-4">No similar listings</h2>
+      </div>
+    </div>
+  </section>
+  <section
+    class="similar-listings"
+    [ngClass]="listingImages ? 'listing-grid' : ''"
+    *ngIf="!isPreview && similarLocations && similarLocations.length > 0"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="content">
+            <h1 class="heading">Similar listings</h1>
+            <owl-carousel-o [options]="similarLocationOptions">
+              <ng-container *ngFor="let location of similarLocations">
+                <ng-template carouselSlide>
+                  <app-popular-location
+                    [class]="'grid-1'"
+                    [height]="'100%'"
+                    [className]="'similar-location image_wrap'"
+                    [locationData]="location"
+                    [selectedProjectListings]="selectedProjectListings"
+                  ></app-popular-location>
+                </ng-template>
+              </ng-container>
+            </owl-carousel-o>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- similar listing section ends -->
+</div>
+
+<!-- <div
+  class="location-details-page message-content container animate__animated animate__fadeInUp animate__faster"
+  *ngIf="isMessaging"
+>
+  <div class="row">
+    <div class="close-parent">
+      <mat-icon class="close" (click)="onToggleMessage()">close</mat-icon>
+    </div>
+    <div class="col-md-6 col-sm-12 m-auto">
+      Message Host
+
+      <div class="right-content">
+        <div class="right-content-first">
+          <form
+            *ngIf="bookingForm"
+            [formGroup]="bookingForm"
+            (ngSubmit)="onSubmitForm()"
+          >
+            <div formArrayName="bookings">
+              <div
+                class="time"
+                *ngFor="let bookingCtrl of bookingControls; let i = index"
+                [formGroupName]="i"
+              >
+                <div class="pick-date">
+                  <input
+                    [ngClass]="{
+                      'is-invalid': !bookingCtrl.value.date && isSubmitted
+                    }"
+                    matInput
+                    [matDatepicker]="basicDatepicker"
+                    formControlName="date"
+                    placeholder="Pick a date"
+                    class="form-control date-control"
+                    (dateChange)="onDateChange($event, i)"
+                    [min]="today"
+                    [max]="maxDate"
+                    (click)="basicDatepicker.open()"
+                    [matDatepickerFilter]="disableDates"
+                  />
+                  <mat-datepicker
+                    #basicDatepicker
+                    [dateClass]="dateClassCallback"
+                    (closed)="this.isTimeSlotsCreated = false"
+                  >
+                  </mat-datepicker>
+                </div>
+                <div class="start-time">
+                  <div class="select-native-parent">
+                    <select
+                      [ngClass]="{
+                        'is-invalid':
+                          !bookingCtrl.value.startTime && isSubmitted
+                      }"
+                      (change)="enableEndTime(i, $event)"
+                      class="booking-dates-row--select select-time-js select-native start-time-js"
+                      formControlName="startTime"
+                    >
+                      <option [value]="null" hidden selected>Start time</option>
+                      <option
+                        *ngFor="let time of bookingCtrl.value.startTimeSlots"
+                        [value]="time.value"
+                        [disabled]="time.disabled"
+                      >
+                        {{ time.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="end-time">
+                  <div class="select-native-parent">
+                    <select
+                      [ngClass]="{
+                        'is-invalid': !bookingCtrl.value.endTime && isSubmitted
+                      }"
+                      (change)="onSetTotalHours(i)"
+                      class="booking-dates-row--select select-time-js select-native finish-time-js"
+                      formControlName="endTime"
+                    >
+                      <option [value]="null" hidden selected>End time</option>
+                      <option
+                        *ngFor="
+                          let time of bookingCtrl.value.availableEndTimeSlots
+                        "
+                        [value]="time.value"
+                      >
+                        {{ time.name }}
+                      </option>
+                      <option
+                        value="separator"
+                        *ngIf="showNextDayTimeSlots"
+                        disabled
+                      >
+                        Next day
+                      </option>
+                      <ng-container *ngIf="showNextDayTimeSlots">
+                        <option
+                          *ngFor="
+                            let time of bookingCtrl.value.nextDayTimeSlots
+                          "
+                          [value]="time.value"
+                        >
+                          {{ time.name }}
+                        </option>
+                      </ng-container>
+                    </select>
+                    <div class="booking-dates-row--select-overlay"></div>
+                  </div>
+                </div>
+                <a class="remove-js" (click)="onDeleteBooking(i)" *ngIf="i > 0"
+                  ><i class="fas fa-times"></i
+                ></a>
+                <a class="remove-js" *ngIf="i <= 0"
+                  ><i class="fas fa-neos"></i
+                ></a>
+              </div>
+              <div
+                class="booking-dates-row--info next-day-js"
+                *ngIf="isBookedForNextDay"
+              >
+                <small>Booking ends the next day</small>
+              </div>
+            </div>
+
+            <div class="action-details">
+              <div class="add-day">
+                <a class="add-day-button" (click)="onAddBooking()">Add a day</a>
+              </div>
+              <div class="hours">
+                <p *ngIf="totalHours.toString() !== 'NaN'">
+                  Total hours: {{ totalHours }}
+                </p>
+              </div>
+            </div>
+
+            <label for="Cast & Crew" class="mb-0">Cast & Crew</label>
+            <app-attendies-dropdown
+              [attendiesDropdown]="attendiesDropdown"
+              [currency]="currency"
+              [selectedAttendies]="selectedAttendies"
+              (selectedAttendiesEmitter)="selectedAttendies = $event"
+            ></app-attendies-dropdown>
+
+            <div class="mt-4 mb-4">
+              <label for="Company">Activity</label>
+              <app-input-select
+                [eventsList]="eventsList"
+                (dataEmitter)="onChangeActivity($event)"
+              ></app-input-select>
+            </div>
+
+            <div class="book-button">
+              <button
+                class="btn btn-success total-width"
+                type="button"
+                (click)="addContactToChat()"
+              >
+                Send a message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<app-square-spinner
+  class="spinner animate__animated animate__fadeIn animate__faster"
+  *ngIf="isInitiatingMsg"
+></app-square-spinner>
+
+<app-gallery-model
+  *ngIf="isGalleryOpen"
+  [images]="galleryImages"
+  (closeGallery)="isGalleryOpen = $event"
+></app-gallery-model>

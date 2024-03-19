@@ -1,0 +1,58 @@
+<a class="pa-slide--link">
+  <i
+    *ngIf="isEditingData && data.id"
+    class="fas fa-pen fa-md"
+    (click)="onEditSpace(data)"
+  ></i>
+  <i
+    *ngIf="isEditingData && data.id"
+    class="fas fa-trash fa-md text-danger"
+    (click)="onDeleteSpace(data.id)"
+  ></i>
+  <figure
+    class="pa-slide--figure"
+    style="min-height: 270px; background-color: rgb(0, 0, 0, 0.5)"
+  >
+    <a [href]="getRoute(data)" target="_blank" *ngIf="data.id">
+      <picture *ngIf="data.imageUrl">
+        <source type="image/webp" [srcset]="data.imageUrl" sizes="180px" />
+        <img
+          class="pa-slide--img"
+          loading="lazy"
+          [src]="data.imageUrl"
+          [srcset]="data.imageUrl"
+          sizes="180px"
+          width="180"
+          height="240"
+          alt="Performance spaces"
+        />
+      </picture>
+    </a>
+    <a [href]="getRoute(data)" target="_blank" *ngIf="data.id">
+      <figcaption class="pa-slide--caption">
+        <p class="pa-slide--caption-text" [innerHTML]="data.text"></p>
+      </figcaption>
+    </a>
+
+    <a target="_blank" *ngIf="!data.id">
+      <picture *ngIf="data.imageUrl">
+        <source type="image/webp" [srcset]="data.imageUrl" sizes="180px" />
+        <img
+          class="pa-slide--img"
+          loading="lazy"
+          [src]="data.imageUrl"
+          [srcset]="data.imageUrl"
+          sizes="180px"
+          width="180"
+          height="240"
+          alt="Performance spaces"
+        />
+      </picture>
+    </a>
+    <a target="_blank" *ngIf="!data.id">
+      <figcaption class="pa-slide--caption">
+        <div class="pa-slide--caption-text" [innerHTML]="data.text"></div>
+      </figcaption>
+    </a>
+  </figure>
+</a>

@@ -1,0 +1,14 @@
+<div
+  class="full-page wrapper"
+  [ngClass]="removeOverflow ? 'wrapper_message' : ''"
+>
+  <router-outlet></router-outlet>
+</div>
+
+<div class="overlay" *ngIf="isLoading">
+  <div class="spinner">
+    <app-square-spinner></app-square-spinner>
+  </div>
+</div>
+
+<ng-progress [thick]="true"></ng-progress>

@@ -1,0 +1,461 @@
+<div class="container stript_card">
+  <div class="dialog-header d-flex justify-content-between">
+    <h3 class="heading m-auto" mat-dialog-title>Add new card</h3>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="dialog-content py-1">
+    <div class="col-12">
+      <!-- (!cards || cards.length <= 0) &&  -->
+      <!-- <div class="card-add-text">
+          Add new card
+        </div> -->
+      <div ngxStripeCardGroup>
+        <label for="exampleInput3" class="mt-2">Card number</label>
+        <div
+          class="stripe-card-control"
+          [ngClass]="
+            (!cardNumberValidations.isCardNumberComplete &&
+              isSubmittedStripeForm) ||
+            (!cardNumberValidations.isCardNumberEmpty &&
+              !cardNumberValidations.isCardNumberComplete &&
+              isSubmittedStripeForm)
+              ? 'invalid is-invalid'
+              : ''
+          "
+        >
+          <ngx-stripe-card-number
+            [options]="cardOptions"
+            (paste)="$event.preventDefault()"
+          ></ngx-stripe-card-number>
+        </div>
+        <small
+          class="d-block has-error--text"
+          *ngIf="
+            cardNumberValidations.isCardNumberEmpty && isSubmittedStripeForm
+          "
+          >Card number is required</small
+        >
+        <small
+          class="d-block has-error--text"
+          *ngIf="
+            !cardNumberValidations.isCardNumberComplete &&
+            !cardNumberValidations.isCardNumberEmpty &&
+            isSubmittedStripeForm
+          "
+          >Card number is not valid</small
+        >
+
+        <label for="exampleInput3" class="mt-2">CVC</label>
+        <div
+          class="stripe-card-control"
+          [ngClass]="
+            (!cardCvcValidations.isCardCvcComplete && isSubmittedStripeForm) ||
+            (!cardCvcValidations.isCardCvcEmpty &&
+              !cardCvcValidations.isCardCvcComplete &&
+              isSubmittedStripeForm)
+              ? 'invalid is-invalid'
+              : ''
+          "
+        >
+          <ngx-stripe-card-cvc [options]="cardOptions"></ngx-stripe-card-cvc>
+        </div>
+        <small
+          class="d-block has-error--text"
+          *ngIf="cardCvcValidations.isCardCvcEmpty && isSubmittedStripeForm"
+          >CVC is required</small
+        >
+        <small
+          class="d-block has-error--text"
+          *ngIf="
+            !cardCvcValidations.isCardCvcComplete &&
+            !cardCvcValidations.isCardCvcEmpty &&
+            isSubmittedStripeForm
+          "
+          >Enter a valid CVC</small
+        >
+        <label for="exampleInput3" class="mt-2">Expiry Month/Year</label>
+        <div
+          class="stripe-card-control"
+          [ngClass]="
+            (!cardExpiryValidations.isCardExpiryComplete &&
+              isSubmittedStripeForm) ||
+            (!cardExpiryValidations.isCardExpiryEmpty &&
+              !cardExpiryValidations.isCardExpiryComplete &&
+              isSubmittedStripeForm)
+              ? 'invalid is-invalid'
+              : ''
+          "
+        >
+          <ngx-stripe-card-expiry
+            [options]="cardOptions"
+          ></ngx-stripe-card-expiry>
+        </div>
+        <small
+          class="d-block has-error--text"
+          *ngIf="
+            cardExpiryValidations.isCardExpiryEmpty && isSubmittedStripeForm
+          "
+          >Expiry date is required</small
+        >
+        <small
+          class="d-block has-error--text"
+          *ngIf="
+            !cardExpiryValidations.isCardExpiryComplete &&
+            !cardExpiryValidations.isCardExpiryEmpty &&
+            isSubmittedStripeForm
+          "
+          >Enter a future date</small
+        >
+      </div>
+      <ng-container *ngIf="!isLoading">
+        <form *ngIf="stripeForm" [formGroup]="stripeForm">
+          <div class="form-row">
+            <!-- <div ngxStripeCardGroup>
+                      <label for="exampleInput3" class="mt-2">Card number</label>
+                      <ngx-stripe-card-number
+                        [options]="cardOptions"
+                      ></ngx-stripe-card-number>
+                      <label for="exampleInput3" class="mt-2">CVC</label>
+                      <ngx-stripe-card-cvc
+                        [options]="cardOptions"
+                      ></ngx-stripe-card-cvc>
+                      <label for="exampleInput3" class="mt-2">Expiry Month/Year</label>
+                      <ngx-stripe-card-expiry
+                        [options]="cardOptions"
+                      ></ngx-stripe-card-expiry>
+                    </div> -->
+            <!-- <div class="form-group col-lg-6 col-md-12">
+                      <ngx-stripe-card-number
+                        [options]="cardOptions"
+                      ></ngx-stripe-card-number>
+                      <label for="exampleInput3" class="mt-2">Card number</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInput3"
+                        formControlName="card"
+                        maxlength="19"
+                        (focus)="isCardFocused = true"
+                        (blur)="isCardFocused = false"
+                        placeholder="1234 1234 1234 1234"
+                        [mask]="
+                          c['card'].value &&
+                          c['card'].value.length === 15 &&
+                          !isCardFocused
+                            ? '0000 000000 00000'
+                            : '0000 0000 0000 0000'
+                        "
+                        (keypress)="commonService.numberOnly($event)"
+                        (blur)="
+                          c['card'].value?.length === 15
+                            ? (maxlengthCVC = 4)
+                            : (maxlengthCVC = 3)
+                        "
+                        [ngClass]="
+                          cardInvalid ||
+                          (c['card'].hasError('required') && c['card'].touched) ||
+                          (c['card'].hasError('required') && isSubmittedStripeForm)
+                            ? 'invalid is-invalid'
+                            : ''
+                        "
+                      />
+                      <small class="has-error--text" *ngIf="cardInvalid"
+                        >Your card number is invalid.</small
+                      >
+                      <small
+                        class="has-error--text"
+                        *ngIf="
+                          (c['card'].hasError('required') && c['card'].touched) ||
+                          (c['card'].hasError('required') && isSubmittedStripeForm)
+                            ? 'invalid is-invalid'
+                            : ''
+                        "
+                        >Card number is required</small
+                      >
+                    </div> -->
+            <!-- <div class="form-group col-lg-6 col-md-12">
+                      <label for="exampleInput3" class="mt-2">Expiry Month/Year</label>
+                      <ngx-stripe-card-cvc
+                        [options]="cardOptions"
+                      ></ngx-stripe-card-cvc>
+                      <input
+                        type="text"
+                        class="form-control-card"
+                        id="exampleInput3"
+                        formControlName="monthYear"
+                        maxlength="5"
+                        minlength="3"
+                        mask="00/00"
+                        placeholder="MM / YY"
+                        (keypress)="commonService.numberOnly($event)"
+                        (keyup)="updateMonthValidation($event)"
+                        [ngClass]="
+                          (c['monthYear'].value && !isFutureDate) ||
+                          (c['monthYear'].hasError('required') &&
+                            c['monthYear'].touched) ||
+                          (c['monthYear'].hasError('required') && isSubmittedStripeForm)
+                            ? 'invalid is-invalid'
+                            : ''
+                        "
+                      />
+                      <small
+                        class="has-error--text"
+                        *ngIf="c['monthYear'].value && !isFutureDate"
+                        >Enter a future value.</small
+                      >
+                      <small
+                        class="has-error--text"
+                        *ngIf="
+                          (c['monthYear'].hasError('required') &&
+                            c['monthYear'].touched) ||
+                          (c['monthYear'].hasError('required') && isSubmittedStripeForm)
+                        "
+                        >Expiry is required</small
+                      >
+                    </div> -->
+            <!-- <div class="form-group col-lg-6 col-md-12">
+                      <label for="exampleInput3" class="mt-2">CVC</label>
+                      <ngx-stripe-card-expiry
+                        [options]="cardOptions"
+                      ></ngx-stripe-card-expiry>
+                      <input
+                        type="text"
+                        class="form-control-card"
+                        id="exampleInput3"
+                        formControlName="cvc"
+                        [maxlength]="maxlengthCVC"
+                        placeholder="CVC"
+                        (keypress)="commonService.numberOnly($event)"
+                        [ngClass]="
+                          (c['cvc'].hasError('required') && c['cvc'].touched) ||
+                          (c['cvc'].hasError('required') && isSubmittedStripeForm)
+                            ? 'invalid is-invalid'
+                            : ''
+                        "
+                      />
+                      <small
+                        class="has-error--text"
+                        *ngIf="
+                          (c['cvc'].hasError('required') && c['cvc'].touched) ||
+                          (c['cvc'].hasError('required') && isSubmittedStripeForm)
+                        "
+                        >CVC is required</small
+                      >
+                    </div> -->
+
+            <div class="form-group col-lg-6 col-md-12">
+              <label for="exampleInput1" class="mt-2">Zip code</label>
+              <input
+                type="text"
+                class="form-control-card"
+                id="exampleInput1"
+                formControlName="zip"
+                maxlength="6"
+                placeholder="147102"
+                (keypress)="commonService.numberOnly($event)"
+                [ngClass]="
+                  (c['zip'].hasError('required') && c['zip'].touched) ||
+                  (c['zip'].hasError('required') && isSubmittedStripeForm)
+                    ? 'invalid is-invalid'
+                    : ''
+                "
+              />
+              <small
+                class="has-error--text"
+                *ngIf="
+                  (c['zip'].hasError('required') && c['zip'].touched) ||
+                  (c['zip'].hasError('required') && isSubmittedStripeForm)
+                "
+                >Zip is required</small
+              >
+            </div>
+            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+              <label for="exampleInput" class="mt-2">Name on card</label>
+              <input
+                type="text"
+                class="form-control-card"
+                id="exampleInput"
+                formControlName="name"
+                placeholder="John Doe"
+                (keypress)="commonService.charOnlyWithSpace($event)"
+                [ngClass]="
+                  (c['name'].hasError('required') && c['name'].touched) ||
+                  (c['name'].hasError('required') && isSubmittedStripeForm)
+                    ? 'invalid is-invalid'
+                    : ''
+                "
+              />
+              <small
+                class="has-error--text"
+                *ngIf="
+                  (c['name'].hasError('required') && c['name'].touched) ||
+                  (c['name'].hasError('required') && isSubmittedStripeForm)
+                "
+                >Name is required</small
+              >
+            </div>
+            <div class="form-group col-12">
+              <label for="exampleCountry" class="mt-2">Country</label>
+              <input
+                type="text"
+                class="form-control-card"
+                placeholder="Select country"
+                id="exampleCountry"
+                formControlName="countryName"
+                (keypress)="
+                  commonService.charOnlyWithSpace($event);
+                  onFilterCountry($event)
+                "
+                (keyup)="onFilterCountry($event)"
+                (focus)="onFocusCountry()"
+                (blur)="onBlurCountry()"
+                [ngClass]="
+                  (c['countryName'].hasError('required') &&
+                    c['countryName'].touched) ||
+                  (c['countryName'].hasError('required') &&
+                    isSubmittedStripeForm)
+                    ? 'invalid is-invalid'
+                    : ''
+                "
+              />
+              <span
+                ><span class="autocomplete-arrow-js autocomplete-arrow"
+                  ><i class="fas fa-angle-down"></i
+                ></span>
+                <div
+                  [ngClass]="showCountryList ? 'show' : ''"
+                  class="autocomplete-content autocomplete-content-js"
+                >
+                  <ul id="country-list" class="autocomplete-content-default">
+                    <li class="autocomplete-content-popular-wrapper-js">
+                      <ul class="autocomplete-content-items">
+                        <li
+                          class="autocomplete-content-item autocomplete-content-item-id"
+                          [ngClass]="
+                            country.name === defaultCountry.name
+                              ? 'active-list'
+                              : ''
+                          "
+                          *ngFor="let country of countriesList"
+                          data-index="25"
+                          (mousedown)="
+                            onSelectCountry(country.name, country.code)
+                          "
+                        >
+                          {{ country.name }}
+                          <i
+                            class="fas fa-check"
+                            *ngIf="country.name === defaultCountry.name"
+                          ></i>
+                        </li>
+                        <li
+                          class="autocomplete-content-item"
+                          *ngIf="
+                            (
+                              countriesList
+                              | filter : stripeForm.value?.countryName?.trim()
+                            )?.length === 0
+                          "
+                        >
+                          No results for
+                          <span class="autocomplete-content-empty--query"
+                            >“{{ stripeForm.value.countryName }}“</span
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                    <li
+                      class="autocomplete-content-start-typing-wrapper-js hidden"
+                    >
+                      <ul class="autocomplete-content-items">
+                        <li
+                          class="autocomplete-content-item-search search-more-activities-js"
+                        >
+                          <div
+                            class="autocomplete-content-item-search__back search-more-activities-back-js"
+                          ></div>
+                          <div class="autocomplete-content-item-search__typing">
+                            Start typing
+                            <svg
+                              class="autocomplete-content-item-search__emoji"
+                              width="25"
+                              height="25"
+                              viewBox="0 0 25 25"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              xmlns:xlink="http://www.w3.org/1999/xlink"
+                            >
+                              <path
+                                d="M0.5 24.68H24.5V0.68H0.5V24.68Z"
+                                fill="url(#pattern0)"
+                              ></path>
+                              <defs>
+                                <pattern
+                                  id="pattern0"
+                                  patternContentUnits="objectBoundingBox"
+                                  width="1"
+                                  height="1"
+                                >
+                                  <use
+                                    xlink:href="#image0_1261_33394"
+                                    transform="scale(0.00625)"
+                                  ></use>
+                                </pattern>
+                                <image
+                                  id="image0_1261_33394"
+                                  width="160"
+                                  height="160"
+                                  xlink:href="assets/images/download.png"
+                                ></image>
+                              </defs>
+                            </svg>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </span>
+              <small
+                class="has-error--text"
+                *ngIf="
+                  (c['countryName'].hasError('required') &&
+                    c['countryName'].touched) ||
+                  (c['countryName'].hasError('required') &&
+                    isSubmittedStripeForm)
+                "
+                >Country is required</small
+              >
+            </div>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button
+      *ngIf="showCancelBtn"
+      mat-button
+      (click)="dialogRef.close(null)"
+      class="cancel outlined"
+    >
+      Cancel
+    </button>
+    <button
+      cdkFocusInitial
+      mat-raised-button
+      color="primary"
+      (click)="createToken()"
+      class="text-white"
+    >
+      Add card
+    </button>
+  </div>
+</div>
+
+<app-square-spinner
+  class="spinner animate__animated animate__fadeIn animate__faster"
+  *ngIf="isLoading"
+></app-square-spinner>

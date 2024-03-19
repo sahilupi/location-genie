@@ -1,0 +1,55 @@
+.steps-header {
+  //   display: flex;
+  height: 71px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  //   justify-content: space-around;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+  background-color: #fff;
+  z-index: 1000;
+
+  &-logo {
+    margin-left: 28px;
+  }
+
+  &-step {
+    color: black;
+    font-size: 14px;
+    text-decoration: none;
+
+    @media (max-width: 991px) {
+      display: none;
+    }
+  }
+
+  &-btn {
+    font-size: 14px;
+    color: #016670;
+    text-decoration: none;
+
+    @media (max-width: 991px) {
+      text-align: end;
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .steps-header {
+    height: 60px;
+    padding: 0 10px;
+    img {
+      width: 129px;
+      margin: 4px 0 0 0;
+    }
+  }
+  ::ng-deep {
+    .container {
+      max-width: 90%;
+    }
+  }
+}

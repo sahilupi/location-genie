@@ -1,0 +1,78 @@
+<a
+  class="hp-img-content hp-img-content__for_pro hp-img-content__hovered"
+  rel="nofollow"
+>
+  <i
+    *ngIf="isEditingData && location.id"
+    class="fas fa-trash fa-md text-danger"
+    (click)="onDeleteLocation(location.id)"
+  ></i>
+  <figure
+    class="hp-img-content--figure hp-img-content--figure__for_pro aspect-ratio-content"
+  >
+    <a [href]="location.link" target="_blank" *ngIf="location.id">
+      <picture>
+        <source
+          type="image/webp"
+          data-srcset="{{ location.imageUrl }}"
+          [srcset]="location.imageUrl"
+        />
+        <img
+          class="hp-img-content--img loaded"
+          data-src="{{ location.imageUrl }}"
+          [alt]="location.title"
+          aria-hidden="true"
+          width="1100"
+          height="733"
+          [src]="location.imageUrl"
+        />
+      </picture>
+    </a>
+    <a [href]="getRoute(location)" target="_blank" *ngIf="location.id">
+      <figcaption
+        class="hp-img-content--caption hp-img-content--caption__for_pro"
+      >
+        <p class="hp-img-content--title hp-img-content--title__for_pro">
+          <span [innerHTML]="location.title"></span>
+        </p>
+        <div>
+          <p class="hp-img-content--more hp-img-content--more__explore">
+            {{ location.linkText }}
+          </p>
+        </div>
+      </figcaption>
+    </a>
+    <a [href]="location.link" target="_blank" *ngIf="!location.id">
+      <picture>
+        <source
+          type="image/webp"
+          data-srcset="{{ location.imageUrl }}"
+          [srcset]="location.imageUrl"
+        />
+        <img
+          class="hp-img-content--img loaded"
+          data-src="{{ location.imageUrl }}"
+          [alt]="location.title"
+          aria-hidden="true"
+          width="1100"
+          height="733"
+          [src]="location.imageUrl"
+        />
+      </picture>
+    </a>
+    <a target="_blank" *ngIf="!location.id">
+      <figcaption
+        class="hp-img-content--caption hp-img-content--caption__for_pro"
+      >
+        <p class="hp-img-content--title hp-img-content--title__for_pro">
+          <span [innerHTML]="location.title"></span>
+        </p>
+        <div>
+          <p class="hp-img-content--more hp-img-content--more__explore">
+            {{ location.linkText }}
+          </p>
+        </div>
+      </figcaption>
+    </a>
+  </figure>
+</a>

@@ -1,0 +1,221 @@
+<div class="container mb-lg-5">
+  <div class="row animate__animated animate__fadeIn">
+    <div class="col-md-6 col-12">
+      <div class="border" *ngIf="!isTutorialComplete">
+        <h3 class="text-bold mb-4">Great progress!</h3>
+        <div class="tutorial">
+          <h5 class="text-bold">Tutorial</h5>
+          <p>
+            Before we publish your location, please complete our Location Genie
+            tutorial. This sequence is only triggered on your first location
+            upload.
+          </p>
+          <button
+            mat-raised-button
+            color="primary"
+            class="text-white"
+            (click)="onStartHostingGuide()"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+      <div class="col-md-12 col-12 p-0">
+        <div class="content">
+          <p>
+            Your listing is
+            {{
+              !isStepOneCompleted &&
+              !isStepTwoCompleted &&
+              !isStepThreeCompleted
+                ? "1%"
+                : ""
+            }}
+            {{
+              isStepOneCompleted && !isStepTwoCompleted && !isStepThreeCompleted
+                ? "33%"
+                : ""
+            }}
+            {{
+              isStepOneCompleted && isStepTwoCompleted && !isStepThreeCompleted
+                ? "66%"
+                : ""
+            }}
+            {{
+              isStepOneCompleted && isStepTwoCompleted && isStepThreeCompleted
+                ? "100%"
+                : ""
+            }}
+            done!<br />
+
+            <span
+              *ngIf="
+                !isStepOneCompleted ||
+                !isStepTwoCompleted ||
+                !isStepThreeCompleted
+              "
+            >
+              Now let's get some details about your place so you can publish
+              your listing.
+            </span>
+          </p>
+          <div
+            class="host"
+            *ngIf="
+              isStepOneCompleted &&
+              isStepTwoCompleted &&
+              isStepThreeCompleted &&
+              listing &&
+              listing.listingStatus != 2 &&
+              listing.listingStatus != 3 &&
+              listing.listingStatus != 4
+            "
+          >
+            <div class="host--content p-3">
+              <div class="host--content__image-left">
+                <img width="150" style="max-height: 150px" [src]="coverImage" />
+              </div>
+              <div class="host--content__second-side">
+                <h6 class="host--content__second-side--questions">
+                  {{ listing.listingLocationInfos?.locationTitle }}
+                </h6>
+                <div class="host--content__second-side--country">
+                  {{ listing.listingAddress.city }},
+                  {{ listing.listingAddress.country }}
+                </div>
+                <div class="host--content__second-side--text">
+                  <!-- [disabled]="!isTutorialComplete" -->
+                  <button
+                    type="button"
+                    class="host--content__second-side--text__submit-button btn btn-success"
+                    [title]="
+                      !isTutorialComplete
+                        ? 'You need to complete hosting guide first'
+                        : ''
+                    "
+                    (click)="onPublishListing()"
+                    [disabled]="!isTutorialComplete"
+                  >
+                    Publish
+                  </button>
+
+                  <div class="host--content__second-side--text__updated">
+                    <a
+                      type="button"
+                      class="host--content__second-side--text__preview-button btn"
+                      routerLink="{{
+                        '/listing/preview/' + encryptedListingId
+                      }}"
+                      target="_blank"
+                    >
+                      Preview
+                    </a>
+                  </div>
+                </div>
+                <!-- <app-validation-message
+                  *ngIf="!isTutorialComplete"
+                  [message]="validationMsg"
+                ></app-validation-message> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3
+          *ngIf="listing && listing.listingStatus == 3 && listing.isActive"
+          class="heading d-flex align-items-center animate__animated animate__fadeIn"
+        >
+          <mat-icon color="primary" class="mr-1">check_circle_outline</mat-icon>
+          Your Listing is published
+        </h3>
+        <h3 *ngIf="listing && listing.listingStatus == 2" class="text-warning">
+          Your Listing is in review
+        </h3>
+        <h3 *ngIf="listing && listing.listingStatus == 4" class="text-danger">
+          Your Listing is rejected by Admin
+        </h3>
+        <h3 *ngIf="listing && !listing.isActive" class="text-danger">
+          Your Listing is deactivated
+        </h3>
+        <div class="border-top">
+          <h5 class="text-bold heading">The Basics</h5>
+          <div class="tutorial d-flex justify-content-between">
+            <p class="m-0">Amenities, logistic and more</p>
+            <P
+              class="m-0 edit"
+              [routerLink]="step1Route"
+              *ngIf="isStepOneCompleted"
+              >Edit</P
+            >
+            <button
+              mat-raised-button
+              color="primary"
+              class="text-white"
+              [routerLink]="step1Route"
+              *ngIf="!isStepOneCompleted"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-12 p-0">
+        <div class="border-top">
+          <h5 class="heading text-bold">Set the scene</h5>
+          <div class="tutorial d-flex justify-content-between">
+            <p class="m-0">Photos, short description, title</p>
+            <P
+              class="m-0 edit"
+              [routerLink]="step2Route"
+              *ngIf="isStepOneCompleted && isStepTwoCompleted"
+              >Edit</P
+            >
+            <button
+              mat-raised-button
+              color="primary"
+              class="text-white"
+              [routerLink]="step2Route"
+              *ngIf="isStepOneCompleted && !isStepTwoCompleted"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-12 p-0">
+        <div class="border-top">
+          <h5 class="heading text-bold">Get ready to shoot</h5>
+          <div class="tutorial d-flex justify-content-between">
+            <p class="">Pricing and calendar</p>
+            <P
+              class="m-0 edit"
+              [routerLink]="step3Route"
+              *ngIf="
+                isStepOneCompleted && isStepTwoCompleted && isStepThreeCompleted
+              "
+              >Edit</P
+            >
+            <button
+              mat-raised-button
+              color="primary"
+              class="text-white"
+              [routerLink]="step3Route"
+              *ngIf="
+                isStepOneCompleted &&
+                isStepTwoCompleted &&
+                !isStepThreeCompleted
+              "
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-12">
+      <div class="img-group">
+        <img src="assets/images/dummy/image1.1.png" />
+      </div>
+    </div>
+  </div>
+</div>

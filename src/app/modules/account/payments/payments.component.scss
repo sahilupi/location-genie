@@ -1,0 +1,113 @@
+.payment-card {
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 15px 2px rgba(187, 171, 171, 0.25);
+  border: 0;
+  padding: 20px;
+  h1 {
+    font-size: 20.92px;
+  }
+  .description {
+    color: #736f6f;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  form {
+    .form-control {
+      background: #f1f1f1;
+    }
+  }
+}
+
+.stripe-card {
+  margin: 30px 0 10px;
+  display: block;
+}
+
+.No-coupen {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  padding: 20px;
+  padding: 13px;
+  font-weight: 500;
+}
+.coupens-div {
+  border: 1px solid #dddddd;
+  padding: 15px 16px;
+  border-radius: 10px;
+}
+
+.autocomplete-content {
+  transform: translateY(-100px);
+  transition: all 0.3s ease-in-out;
+}
+
+.show.autocomplete-content {
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+}
+
+.autocomplete-content-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.autocomplete-arrow {
+  right: 21px;
+  top: 75%;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  background-color: #ffffff9e;
+  z-index: 10000;
+  padding: 200%;
+  border-radius: 38%;
+}
+
+.active-list {
+  background-color: #736f6f58;
+}
+
+.card-add-text {
+  border-bottom: 1px solid #016670;
+}
+
+.stripe-card-control {
+  width: 100%;
+  // height: calc(1.5em + 0.75rem + 2px);
+  padding: 0 0.75rem;
+  font-size: 1rem !important;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+::ng-deep.payment-form__element_root {
+  align-items: center;
+  display: flex;
+  padding: 0 16px;
+}
+
+/* Responsivenss */
+@media only screen and (max-width: 992px) {
+  .payment-card {
+    margin: 0 0 20px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .payment-card {
+    margin: 0;
+  }
+}

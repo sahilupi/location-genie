@@ -1,0 +1,126 @@
+<div class="container blurry_remove">
+  <div class="dialog-header d-flex justify-content-between">
+    <h1 mat-dialog-title class="heading">{{ heading }}</h1>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+  <!-- <i class="fas fa-times"></i> -->
+  <form
+    *ngIf="editSpaceForm"
+    [formGroup]="editSpaceForm"
+    (ngSubmit)="onSubmitForm()"
+  >
+    <div mat-dialog-content>
+      <mat-form-field appearance="outline" class="w-100 col-12 position_edit_win">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="text" />
+        <mat-error *ngIf="editSpaceForm.get('text')?.hasError('maxlength')">
+          <small>Maximum 30 characters allowed </small></mat-error
+        >
+        <mat-error *ngIf="editSpaceForm.get('text')?.hasError('required')"
+          ><small>Title is required</small></mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 col-lg-6 col-md-12 position_edit">
+        <mat-label>Activties</mat-label>
+        <mat-select id="activities" multiple formControlName="activities">
+          <mat-option
+            [value]="activity.id"
+            *ngFor="let activity of allActivities"
+          >
+            <p class="dropdown mb-0">{{ activity.name }}</p>
+          </mat-option>
+        </mat-select>
+        <mat-error><small>Select alteast one activity</small></mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 col-lg-6 col-md-12 position_edit">
+        <mat-label>Position</mat-label>
+        <input
+          matInput
+          formControlName="position"
+          (keypress)="commonService.numberOnly($event)"
+        />
+        <mat-error *ngIf="editSpaceForm.get('position')?.hasError('max')"
+          ><small>Position should be less than or equal to 10</small></mat-error
+        >
+        <mat-error *ngIf="editSpaceForm.get('position')?.hasError('min')"
+          ><small>Position should be greater than 0</small></mat-error
+        >
+        <mat-error *ngIf="editSpaceForm.get('position')?.hasError('required')"
+          ><small>Position is required</small></mat-error
+        >
+        <div
+          class="p-error-absolute"
+          *ngIf="
+            ocupiedPositions.includes(+editSpaceForm.value.position) &&
+            data.position !== +editSpaceForm.value.position
+          "
+        >
+          <mat-error><small>Position is already occupied</small></mat-error>
+        </div>
+      </mat-form-field>
+
+      <div class="col-12">
+        <button
+          type="button"
+          mat-raised-button
+          matPrefix
+          (click)="f_input.click()"
+        >
+          Select Image
+        </button>
+        <input
+          type="file"
+          hidden
+          (change)="onImageSelect($event)"
+          #f_input
+          accept="image/png, image/jpeg ,image/jpg"
+          [ngClass]="{
+            'has-error':
+              (c['imageUrl'].invalid && c['imageUrl'].touched) ||
+              (c['imageUrl'].invalid && isSubmitted)
+          }"
+        />
+        <div>
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['imageUrl'].hasError('required') && c['imageUrl'].touched) ||
+              (c['imageUrl'].hasError('required') && isSubmitted)
+            "
+            >Image is required</small
+          >
+        </div>
+
+        <div class="mt-2">
+          <img
+            *ngIf="spaceImgUrl"
+            [src]="spaceImgUrl"
+            width="100%"
+            height="100%"
+          />
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end">
+      <!-- <button
+        mat-stroked-button
+        type="button"
+        (click)="dialogRef.close(null)"
+        color="accent"
+      >
+        Cancel
+      </button> -->
+      <button
+        type="submit"
+        color="primary"
+        mat-raised-button
+        cdkFocusInitial
+        class="text-white"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>

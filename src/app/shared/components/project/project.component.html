@@ -1,0 +1,50 @@
+<div class="mb-4">
+  <div class="card projectCard">
+    <img
+      class="projectImg"
+      role="button"
+      [src]="project.imageFullPath ? project.imageFullPath : dummyImage"
+      [routerLink]="'/projects/project-detail/' + project.id + '/locations'"
+    />
+    <ng-container class="actions">
+      <mat-icon
+        (click)="shareProject(project)"
+        matTooltip="Share"
+        class="mr-1 project-share"
+        >share</mat-icon
+      >
+      <i
+        class="fas fa-pen fa-md"
+        matTooltip="Edit"
+        (click)="editProject(project)"
+        *ngIf="loggedInUserEmail === project.ownerEmail"
+      ></i>
+      <i
+        class="fas fa-trash fa-md text-danger"
+        matTooltip="Delete"
+        *ngIf="loggedInUserEmail === project.ownerEmail"
+        (click)="deleteProject(project.id)"
+      ></i>
+    </ng-container>
+    <h2
+      role="button"
+      [routerLink]="'/projects/project-detail/' + project.id + '/locations'"
+      class="text px-3 mb-0"
+    >
+      {{ project.title }}
+    </h2>
+
+    <div class="justify-content-between d-flex flex-row align-items-end px-3">
+      <p class="text-date m-0 py-3">
+        {{ project.startDate | date }} - {{ project.endDate | date }}
+      </p>
+      <p
+        class="m-0 py-3 pl-2 d-flex align-items-center"
+        style="border-left: 1px solid #dadada"
+      >
+        <span class="mr-2"> {{ project.privacy }}</span>
+        <img src="assets/images/project/Group 409.png" style="width: 13px" />
+      </p>
+    </div>
+  </div>
+</div>

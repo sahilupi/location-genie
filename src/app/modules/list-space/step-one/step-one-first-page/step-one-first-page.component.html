@@ -1,0 +1,105 @@
+<div class="step-one-main">
+  <app-list-space-header
+    [stepNumber]="1"
+    [stepName]="'The basics'"
+    (onSaveAndExit)="onSaveAddress('save')"
+  ></app-list-space-header>
+  <div class="step-one">
+    <div class="container stepper">
+      <div class="row">
+        <div
+          class="single-step col-lg-3 col-md-3 col-sm-12"
+          [ngClass]="i === 1 ? 'active' : ''"
+          *ngFor="let stepper of stepperData; let i = index"
+        >
+          <app-listing-stepper
+            class="w-100"
+            [stepperData]="stepper"
+            [activeIdx]="2"
+            [idx]="i"
+            [totalSteppers]="stepperData.length"
+          ></app-listing-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-fields">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2 class="title">Is the pin in the right place?</h2>
+          <h4 class="description">
+            If needed, you can adjust the map so the pin is in the right
+            location. Only confirmed guests will see this, so they know how to
+            get to your place.
+          </h4>
+          <small class="mb-2 d-inline-block"
+            >You can adjust your location by clicking on Adjust button and drag
+            the Pin location icon (Home icon)</small
+          >
+          <div class="google-maps" *ngIf="isLoaded">
+            <button
+              *ngIf="!options.options.draggable"
+              mat-raised-button
+              (click)="
+                updateOptions(marker.position.lat, marker.position.lng, true)
+              "
+              class="drag-btn"
+            >
+              Adjust
+            </button>
+            <button
+              *ngIf="options.options.draggable"
+              mat-raised-button
+              (click)="
+                updateOptions(marker.position.lat, marker.position.lng, false)
+              "
+              class="drag-btn"
+            >
+              Save
+            </button>
+            <google-map
+              [draggable]="false"
+              width="100%"
+              height="60vh"
+              [zoom]="zoom"
+              [center]="center"
+              [options]="{ draggable: mapDraggable }"
+            >
+              <map-marker
+                [position]="marker.position"
+                (mapDragend)="onMarkerDragEnd($event)"
+                [options]="options"
+              >
+              </map-marker>
+            </google-map>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <img
+        src="assets/images/list-space/step-1/bottom.png"
+        style="width: 240px"
+      />
+
+      <h2 class="title" style="font-size: 13px">
+        Your location address will not be displayed publicly. The exact location
+        of your location will only be shared with the production team once you
+        confirm the booking.
+      </h2>
+    </div>
+  </div>
+</div> -->
+
+  <app-list-space-buttons
+    [backBtnRoute]="backBtnRoute"
+    [progressValue]="40"
+    (nextBtnClick)="onSaveAddress()"
+  ></app-list-space-buttons>
+</div>

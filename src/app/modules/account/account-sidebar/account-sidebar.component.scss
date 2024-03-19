@@ -1,0 +1,141 @@
+.container {
+  margin-top: 91px;
+  .text-center {
+    button {
+      padding: 10px 0;
+      height: 44px;
+      font-weight: 600;
+    }
+  }
+  .list-group {
+    .customize {
+      color: #a09999;
+    }
+    .image {
+      margin: 30px 0;
+      img {
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+        object-fit: cover;
+      }
+    }
+    .list-group-item {
+      a {
+        color: #000;
+        font-weight: 500;
+        font-size: 15px;
+      }
+    }
+  }
+}
+h2.settings {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 3px 0;
+}
+.list-group-item.active {
+  background-color: #f6f6f6;
+  border: none;
+  border-left: 4px solid #016670;
+}
+.card {
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 15px 2px rgba(187, 171, 171, 0.25);
+  border: 0;
+  padding: 20px 20px 0 20px;
+  margin: 0 0 50px 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.close-parent {
+  position: fixed;
+  top: 20px;
+  left: 260px;
+  z-index: 1002;
+  display: none;
+  height: 24px;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1000;
+  // background-color: rgb(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 991px) {
+  .custom-container-width {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .custom-container-width {
+    margin-top: 75px;
+  }
+
+  .mobile-only {
+    display: block;
+    width: 30%;
+  }
+  .close-parent {
+    display: block;
+  }
+
+  .backdrop {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .show.backdrop {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .tab-hide {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 1001;
+    padding: 0;
+    transform: translateX(-300px);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    .card {
+      width: 300px;
+      height: 100vh;
+      border-radius: 0;
+      overflow: scroll;
+    }
+  }
+
+  .tab-open.tab-hide {
+    transform: translateX(0);
+    // border-radius: 0;
+    width: 100%;
+  }
+  .tab-full-width {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+}

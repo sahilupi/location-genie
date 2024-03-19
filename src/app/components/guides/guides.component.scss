@@ -1,0 +1,158 @@
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-top: 50px;
+}
+
+.gh-head {
+  background-color: #fff;
+}
+
+.gh-outer {
+  padding-left: 3.6rem;
+  padding-right: 3.6rem;
+}
+
+.gh-head-inner {
+  align-items: center;
+  -moz-column-gap: 2.8rem;
+  column-gap: 2.8rem;
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-template-columns: 1fr auto auto;
+  padding: 3.2rem 0;
+}
+
+.gh-head-logo {
+  font-weight: 600;
+  position: relative;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  line-height: 22px;
+}
+
+a {
+  color: #15171a;
+  text-decoration: none;
+}
+.gh-icon-btn {
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+  color: var(--darker-gray-color);
+  cursor: pointer;
+  display: inline-flex;
+  height: 30px;
+  justify-content: center;
+  outline: none;
+  padding: 0;
+  width: 30px;
+}
+
+.gh-search {
+  margin-left: -6px;
+  margin-right: -6px;
+}
+
+.gh-icon-btn svg {
+  height: 20px;
+  width: 20px;
+}
+
+.site-content {
+  flex-grow: 1;
+}
+
+.gh-canvas {
+  display: grid;
+  grid-template-columns:
+    minmax(var(--gap), auto) minmax(auto, 240px) min(
+      var(--content-width, 720px),
+      calc(100% - var(--gap) * 2)
+    )
+    minmax(auto, 240px px)
+    minmax(var(--gap), auto);
+}
+.post-header {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+}
+
+.gh-canvas > * {
+  grid-column: main-start/main-end;
+}
+.gh-content.gh-canvas {
+  h3{
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+
+.post-title {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.post-meta {
+  color: #aaa;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.post-excerpt {
+  font-size: 14px;
+}
+.post {
+  margin-bottom: 50px;
+}
+
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+  box-shadow: 0 0 1px 1px #d6d6d6;
+}
+
+::ng-deep .mat-content {
+  font-weight: 600;
+}
+.text-body-primary-color {
+  color: #1a1a1a;
+}
+.leading-10 {
+  line-height: 2.5rem;
+}
+.font-bold {
+  font-weight: 700;
+}
+.text-2xl {
+  font-size: 32px;
+}
+
+@media only screen and (max-width: 767px) {
+  .mat-expansion-panel-header {
+    padding: 30px 24px;
+  }
+  .all-collection ::ng-deep .mat-content {
+    font-size: 14px;
+  }
+  .mat-expansion-panel {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .gh-outer {
+    padding: 0 15px;
+  }
+  .gh-head-inner {
+    padding: 2.2rem 0;
+  }
+}
+.show-more {
+  text-decoration: none;
+  color: #016670 !important;
+  font-size: 14px;
+  padding: 5px;
+}

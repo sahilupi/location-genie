@@ -1,0 +1,53 @@
+<div class="container project mb-5">
+  <div class="row">
+    <div
+      class="col-12 project-parent-upper d-flex justify-content-between align-items-center"
+      [ngClass]="
+        projectOwnerEmail === loggedInUserEmail ? 'project-parent' : ''
+      "
+      *ngFor="let user of projectTeams"
+    >
+      <div class="d-flex align-items-center first">
+        <img
+          width="80"
+          #userImg
+          [src]="
+            user.profilePic ? user.profilePic : defaultUserImageUrl
+          "
+          [alt]="user.firstName + ' ' + user.lastName"
+          class="project-user_image mr-2"
+          (error)="userImg.src = defaultUserImageUrl"
+        />
+        <h5 class="project-user_name">
+          {{ user.firstName ? user.firstName : "Test" }}
+
+          {{ user.lastName ? user.lastName : "User" }}
+          <span *ngIf="user.isOwner">(Owner)</span>
+        </h5>
+      </div>
+
+      <div class="second">
+        <small>{{ user.email }}</small>
+      </div>
+
+      <div class="custom-flex third">
+        <mat-icon
+          color="primary"
+          class="project-status--pending__icon"
+          *ngIf="user.userStatus === 2 || user.isOwner"
+          >check_circle_outline</mat-icon
+        >
+        <span *ngIf="user.userStatus === 1" class="project-status--pending"
+          >Pending
+          <mat-icon class="project-status--pending__icon">sync</mat-icon></span
+        >
+        <i
+          *ngIf="projectOwnerEmail === loggedInUserEmail && !user.isOwner"
+          class="fas fa-trash text-danger"
+          matTooltip="Delete"
+          (click)="deleteTeamMember(user.id, user.email)"
+        ></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+.dialog-header {
+  border-bottom: 1px solid #e2e2e2;
+  .download-link {
+    color: #016670;
+    height: 28px;
+    width: 28px;
+    font-size: 28px;
+  }
+}
+.heading {
+  align-items: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
+.container {
+  margin-top: 15px;
+}
+.col-12.custom.px-0 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #676767;
+  text-align: center;
+  width: 100%;
+}
+.mat-mdc-dialog-content {
+  max-height: 80vh;
+}
+::ng-deep button.cancel span.mdc-button__label {
+  color: #016670;
+}
+.mat-mdc-dialog-actions.mdc-dialog__actions {
+  border-top: 1px solid #e2e2e2;
+  padding: 12px 0;
+}
+
+.dialog-header {
+  h3.heading {
+    width: 90%;
+    padding: 0 0 7px;
+
+    @media (max-width: 692px) {
+      width: 82%;
+    }
+  }
+}
+
+.image-wrapper {
+  min-height: 300px;
+}

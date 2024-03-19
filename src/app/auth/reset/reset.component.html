@@ -1,0 +1,68 @@
+<div id="forgot-js" class="request-new-password sign-up relative">
+  <div class="request-new-password-form-container sign-up--cont">
+    <form
+      name="forgotForm"
+      *ngIf="forgetPasswordForm"
+      [formGroup]="forgetPasswordForm"
+      class="login-form-js"
+    >
+      <p class="sign-up--title">Reset password</p>
+      <p class="sign-up--text02">
+        Enter the email address associated with your account, and we’ll email
+        you a link to reset your password.
+      </p>
+      <div class="form-group sign-up--reset-form">
+        <label class="form-label form-label__type_lite02">Email address</label>
+        <div class="relative">
+          <input
+            name="email"
+            class="request-newpassword-email request-newpassword-email-js form-control"
+            type="email"
+            formControlName="email"
+            [ngClass]="{
+              'has-error':
+                (c['email'].invalid && c['email'].touched) ||
+                (c['email'].invalid && isSubmitted)
+            }"
+          />
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['email'].hasError('required') && c['email'].touched) ||
+              (c['email'].hasError('required') && isSubmitted)
+            "
+            >Email is required</small
+          >
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['email'].hasError('pattern') && c['email'].touched) ||
+              (c['email'].hasError('pattern') && isSubmitted)
+            "
+            >Enter a valid email</small
+          >
+          <i class="fas fa-envelope"></i>
+        </div>
+
+        <div
+          class="has-error--text has-error--text__align_left error-js hidden"
+        ></div>
+      </div>
+      <div class="sign-up-btn-control">
+        <button class="sign-up-btn-control--btn-back" (click)="onToggle()">
+          <mat-icon class="mr-1">keyboard_backspace </mat-icon>
+          Back to Log in
+        </button>
+        <!-- <i class="fas fa-long-arrow-left"> Back to Log in</i> -->
+
+        <button
+          class="forgot-pass-btn btn btn__bold btn-font-size-16 btn-lg_size_48 btn-success"
+          type="button"
+          (click)="forgetPassword()"
+        >
+          Send reset link
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

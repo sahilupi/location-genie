@@ -1,0 +1,36 @@
+<div class="card-container">
+  <i
+    *ngIf="showDeleteBtn"
+    role="button"
+    class="fas fa-trash fa-md text-danger ml-1 float-right bg-transparent delete"
+    matTooltip="Delete card"
+    (click)="onDeleteCard(id)"
+  ></i>
+  <!-- <div class="card-header">
+    <div class="bank-name text-capitalize">{{ brand }}</div>
+    <div class="bank-logo">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png"
+      />
+    </div>
+  </div> -->
+  <!-- <div class="card-chip-container">
+    <div class="chip-logo">
+      <img
+        src="https://flyclipart.com/thumb2/chip-logo-png-transparent-vector-624520.png"
+      />
+    </div>
+    <div class="chip-logo">
+      <img
+        src="https://e7.pngegg.com/pngimages/276/392/png-clipart-contactless-payment-google-pay-contactless-smart-card-credit-card-credit-card-white-face.png"
+      />
+    </div>
+  </div> -->
+  <div class="card-number-container">**** **** **** {{ cardNum }}</div>
+  <div class="card-exp-holderName-container">
+    <div class="expr-date">
+      {{ expMonth > 9 ? expMonth : "0" + expMonth }} / {{ expYear }}
+    </div>
+    <div class="card-holder-name">{{ cardHolderName }}</div>
+  </div>
+</div>

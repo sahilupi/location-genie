@@ -1,0 +1,35 @@
+<div class="step-one">
+  <div class="container stepper">
+    <div class="row">
+      <div
+        class="single-step col-lg-3 col-md-3 col-sm-12"
+        [ngClass]="i === 3 ? 'active' : ''"
+        *ngFor="let stepper of stepperData; let i = index"
+      >
+        <app-listing-stepper
+          class="w-100"
+          [stepperData]="stepper"
+          [activeIdx]="4"
+          [idx]="i"
+          [totalSteppers]="stepperData.length"
+        ></app-listing-stepper>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-location-details-form [listingId]="listingId"></app-location-details-form>
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <img src="assets/images/Group 670.png" style="width: 240px" />
+
+      <h2 class="title" style="font-size: 13px">
+        If your location is associated with more than one category, please
+        select the one that fits best. When choosing a type, please select up to
+        two types only.
+      </h2>
+    </div>
+  </div>
+</div> -->

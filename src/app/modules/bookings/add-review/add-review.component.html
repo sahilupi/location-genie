@@ -1,0 +1,93 @@
+<div class="container blurry_remove">
+  <div class="dialog-header d-flex justify-content-between">
+    <h3 class="heading" mat-dialog-title>{{ title }} Review</h3>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="dialog">
+    <div class="dialog-content">
+      <div class="row mx-0">
+        <div class="col-12 custom p-0">
+          <form
+            *ngIf="reviewForm"
+            [formGroup]="reviewForm"
+            (ngSubmit)="onConfirm()"
+          >
+            <div mat-dialog-content class="scroll_bar-hidden">
+              <div class="col-12 p-0">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Your review</mat-label>
+                  <textarea
+                    matInput
+                    formControlName="commentText"
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="4"
+                    cdkAutosizeMaxRows="40"
+                  ></textarea>
+                </mat-form-field>
+                <mat-error
+                  *ngIf="
+                    isSubmitted &&
+                    (c['commentText'].hasError('required') ||
+                      !c['commentText'].value.trim())
+                  "
+                >
+                  <small class="error">Review text is required</small>
+                </mat-error>
+                <mat-error *ngIf="c['commentText'].hasError('maxlength')">
+                  <small class="error">Maximum 1000 characters allowed</small>
+                </mat-error>
+              </div>
+
+              <div class="col-12 mt-3 p-0">
+                <div class="stars">
+                  <mat-label class="mr-2">Ratings: </mat-label>
+                  <ng-container *ngFor="let star of stars; index as i">
+                    <svg
+                      class="star"
+                      (click)="setRating(star)"
+                      width="255"
+                      height="240"
+                      viewBox="0 0 51 48"
+                      [matTooltip]="(i + 1).toString()"
+                    >
+                      <path
+                        d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"
+                      />
+                    </svg>
+                  </ng-container>
+                  <mat-error
+                    *ngIf="isSubmitted && c['rating'].hasError('required')"
+                  >
+                    <small class="error">Please give ratings.</small></mat-error
+                  >
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close(null)" class="cancel outlined">
+      {{ "Cancel" }}
+    </button>
+    <button
+      cdkFocusInitial
+      mat-raised-button
+      color="primary"
+      (click)="onConfirm()"
+      class="text-white"
+    >
+      {{ confirmText }} Review
+    </button>
+  </div>
+</div>
+
+<app-square-spinner
+  class="spinner animate__animated animate__fadeIn animate__faster"
+  *ngIf="isLoading"
+></app-square-spinner>

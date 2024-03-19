@@ -1,0 +1,598 @@
+.step-three-main {
+  height: calc(100vh - 60px);
+  overflow: auto;
+}
+
+::ng-deep {
+  .calendar {
+    margin: 0 0 80px 0;
+    h2.heading {
+      font-weight: 600;
+      margin: 0 0 25px;
+    }
+    button.mat-mdc-menu-trigger {
+      border: 1px solid #00000014;
+      height: 48px;
+      margin: 33px 0 0;
+      span.mdc-button__label {
+        i {
+          padding: 0 0 0 5px !important;
+        }
+      }
+    }
+    .col-lg-4.m-auto {
+      margin: auto auto 0 !important;
+    }
+  }
+
+  .k-calendar .k-other-month {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.direct {
+  border-top: 1px solid rgba(200, 197, 197, 1);
+  border-bottom: 1px solid rgba(200, 197, 197, 1);
+  padding-bottom: 60px;
+  p {
+    font-weight: 500;
+    text-align: center;
+    max-width: 60%;
+    margin: auto;
+  }
+}
+.select-box-div {
+  padding: 40px 0 0 0;
+  select {
+    border-radius: 5px;
+    border: 1px solid #c8c5c5;
+    background: #fcfcfc;
+  }
+  .arrow-down {
+    width: 10px;
+    position: absolute;
+    right: 25px;
+    top: 20px;
+  }
+}
+
+::ng-deep.k-calendar {
+  width: 100%;
+  border: none;
+  .k-link {
+    border: 1px solid #00000014;
+    border-radius: 0;
+  }
+}
+
+::ng-deep.k-calendar-range .k-calendar-view {
+  width: 55%;
+  overflow: initial;
+  gap: 30px;
+}
+::ng-deep .k-calendar-table {
+  width: 100%;
+}
+::ng-deep.k-calendar .k-calendar-td.k-selected .k-link {
+  background-color: #016770c5;
+}
+
+::ng-deep.k-calendar
+  .k-calendar-td.k-calendar-td.k-disabled.k-selected
+  .k-link {
+  background-color: #016770c5;
+}
+
+::ng-deep.k-calendar .k-calendar-td.k-selected .k-link:hover {
+  background-color: #016670;
+}
+
+::ng-deep.k-calendar .k-calendar-td.k-disabled.k-selected .k-link:hover {
+  background-color: #016670;
+}
+
+::ng-deep.k-calendar .k-range-mid {
+  background-color: #01677044;
+}
+
+::ng-deep.k-calendar .k-disabled.k-range-mid {
+  background-color: #01677044;
+}
+
+::ng-deep.k-calendar .k-range-mid.k-disabled {
+  background-color: #01677089;
+}
+
+::ng-deep.k-button-flat-primary {
+  color: #016670;
+}
+
+::ng-deep.k-calendar-header .k-calendar-title {
+  pointer-events: none;
+}
+
+.more {
+  margin-bottom: 0 !important;
+}
+
+::ng-deep {
+  .k-calendar-nav-prev {
+    @media (min-width: 991px) {
+      position: absolute;
+      left: 35%;
+    }
+  }
+  .k-calendar-nav-next {
+    @media (min-width: 991px) {
+      position: absolute;
+      right: 35%;
+    }
+  }
+  .k-calendar-nav-today {
+    display: none;
+  }
+
+  .k-calendar-header .k-calendar-title {
+    @media (min-width: 762px) {
+      margin: 0 0 0 36%;
+    }
+  }
+}
+
+::ng-deep.mat-button-toggle-appearance-standard
+  .mat-button-toggle-label-content {
+  padding: 0 20px !important;
+}
+
+::ng-deep.toggle-yes.mat-button-toggle-checked {
+  background-color: #016670 !important;
+  color: white !important;
+}
+
+::ng-deep.toggle-no.mat-button-toggle-checked {
+  background-color: #8f8e94;
+  color: white !important;
+}
+
+::ng-deep.k-calendar-td.k-disabled {
+  background-color: #8f8e9430;
+}
+
+::ng-deep.k-disabled,
+::ng-deep.k-disabled .k-link {
+  cursor: pointer !important;
+  pointer-events: all !important;
+}
+
+::ng-deep.k-link {
+  padding: 0 !important;
+}
+
+::ng-deep.k-link .past-date {
+  color: #9e9d9d;
+  cursor: not-allowed !important;
+  // pointer-events: none !important;
+  background: #f6f6f6;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  padding-top: 7px;
+}
+
+// ::ng-deep.k-calendar-td.k-weekend.k-disabled:after {
+//   content: "";
+//   display: block;
+//   border-width: 0 0 31px 28px;
+//   border-color: transparent transparent #f6f6f6;
+//   width: 0;
+//   height: 0;
+//   border-style: solid;
+//   margin: 0;
+//   z-index: 1;
+//   position: absolute;
+//   top: 0;
+//   left: 1px;
+// }
+
+// ::ng-deep.k-calendar-td.k-weekend.k-disabled:before {
+//   content: "";
+//   display: block;
+//   border-width: 0 0 31px 29px;
+//   border-color: transparent transparent #868686;
+//   width: 0;
+//   height: 0;
+//   border-style: solid;
+//   margin: 0;
+//   top: -1px;
+//   position: absolute;
+// }
+
+.sync-group {
+  gap: 45px;
+  margin: 30px 0;
+  button.sync {
+    background: #3caa9f;
+    border: none;
+    height: 55px;
+    padding: 0 35px;
+  }
+  .d-flex {
+    gap: 25px;
+  }
+}
+
+::ng-deep {
+  .k-input-solid {
+    padding: 9px 0px;
+    border: none;
+  }
+  .k-input-solid:focus {
+    border: none !important;
+  }
+  .k-floating-label-container {
+    padding: 0;
+  }
+  .k-daterangepicker {
+    border: 1px solid #00000014;
+    border-radius: 5px;
+    gap: 0px;
+    position: relative;
+    &:before {
+      position: absolute;
+      z-index: 1;
+      content: "—";
+      color: #000;
+      left: 40%;
+      top: 13px;
+    }
+  }
+  .k-dateinput:focus,
+  .k-input-inner:focus {
+    box-shadow: none !important;
+  }
+  .k-input-solid.k-focus {
+    box-shadow: none !important;
+  }
+  .k-dateinput {
+    width: auto !important;
+  }
+  .k-calendar-header {
+    max-width: 85%;
+    justify-content: space-around;
+    // .k-calendar-title {
+    //   margin: 0 0 0 30px;
+    // }
+  }
+  .k-spacer {
+    display: none !important;
+  }
+  // .k-calendar-view {
+  //   .k-calendar-table {
+  //     &:first-child {
+  //       // position: absolute;
+  //       // left: 30px;
+  //     }
+  //     &:last-child {
+  //       // position: absolute;
+  //       // right: 120px;
+  //     }
+  //   }
+  // }
+  .k-calendar-td {
+    width: 37.5px !important;
+    height: 38px !important;
+  }
+  .k-calendar-td.k-disabled {
+    .k-link {
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -17px;
+        left: 20px;
+        border: 1px solid rgba(187, 180, 180, 0.6196078431);
+        height: 65px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+//Responsive
+@media screen and (max-width: 1200px) {
+  .step-one {
+    .single-step {
+      width: 18%;
+    }
+    .row {
+      justify-content: center;
+    }
+  }
+  ::ng-deep {
+    .k-calendar-nav-next {
+      position: absolute;
+      right: 33%;
+    }
+  }
+  .k-daterangepicker:before {
+    position: absolute;
+    left: 45%;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  ::ng-deep {
+    .k-calendar-view {
+      width: 100% !important;
+      // .k-calendar-table {
+      //   &:first-child {
+      //     // position: absolute;
+      //     // left: 70px;
+      //   }
+      //   &:last-child {
+      //     // position: absolute;
+      //     // right: 75px;
+      //   }
+      // }
+    }
+  }
+  .calendar {
+    button.mat-mdc-menu-trigger {
+      float: right;
+    }
+    .col-md-10 {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+  }
+  ::ng-deep {
+    .k-calendar-td.k-disabled {
+      .k-link:after {
+        top: -13px;
+        left: 20px;
+        transform: rotate(53deg);
+      }
+    }
+    button.k-calendar-nav-prev {
+      position: absolute;
+      left: 30%;
+    }
+    .k-calendar-nav-next {
+      position: absolute;
+      right: 24%;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      .box {
+        min-height: auto;
+        padding: 6px 8px 1px 8px;
+        h5.description {
+          min-height: auto;
+        }
+      }
+      .step {
+        width: 80px;
+        height: 45px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  ::ng-deep {
+    .k-calendar-view {
+      width: 100% !important;
+      flex-direction: column;
+      // .k-calendar-table {
+      //   &:first-child {
+      //     // position: absolute;
+      //     // left: 0;
+      //   }
+      //   &:last-child {
+      //     // position: absolute;
+      //     // right: 0;
+      //     // display: none;
+      //   }
+      // }
+    }
+  }
+  .calendar {
+    button.mat-mdc-menu-trigger {
+      float: initial;
+    }
+    h2.heading {
+      font-size: 26px;
+      margin-top: 0px !important;
+    }
+    h2.heading.directsync {
+      margin-top: 30px !important;
+    }
+  }
+  ::ng-deep {
+    .k-calendar {
+      width: 517px;
+    }
+    .k-calendar-header {
+      max-width: 100% !important;
+      justify-content: center;
+    }
+    button.k-calendar-nav-prev {
+      position: absolute;
+      left: 20%;
+    }
+    .k-calendar-nav-next {
+      position: absolute;
+      right: 20%;
+    }
+    .k-daterangepicker:before {
+      position: absolute;
+      left: 30% !important;
+    }
+    .k-calendar-td.k-disabled {
+      .k-link:after {
+        top: -62px;
+        left: 6px;
+        transform: rotate(64deg);
+        height: 190px;
+      }
+    }
+    .calendar {
+      .col-md-10 {
+        text-align: center;
+      }
+    }
+  }
+  .select-box-div {
+    padding: 40px 0 100px;
+  }
+  .k-daterangepicker:before {
+    left: 150px !important;
+  }
+  .col-lg-4.col-md-4.col-sm-12.m-auto.availability {
+    margin: 33px 0 0 !important;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .container.stepper,
+  .container {
+    width: calc(100% - 30px);
+  }
+  ::ng-deep {
+    .k-calendar-header {
+      position: relative !important;
+      justify-content: center !important;
+      .k-calendar-nav {
+        .k-button-md.k-icon-button:first-child {
+          position: absolute !important;
+          left: 0px !important;
+          width: 20px !important;
+          height: 20px !important;
+        }
+        .k-button-flat-primary {
+          display: none !important;
+        }
+        .k-button-md.k-icon-button:last-child {
+          position: absolute !important;
+          right: 0px !important;
+          width: 20px !important;
+          height: 20px !important;
+        }
+      }
+      .k-calendar-title {
+        margin: 0;
+        font-size: 13px;
+      }
+    }
+  }
+  ::ng-deep {
+    .k-daterangepicker:before {
+      position: absolute;
+      left: 150px !important;
+    }
+  }
+  .calendar {
+    h2.heading {
+      font-size: 22px;
+    }
+    h2.heading.directsync {
+      font-size: 20px;
+    }
+  }
+  .sync-group {
+    flex-direction: column;
+    .d-flex {
+      img {
+        width: 40px;
+      }
+    }
+    button.sync {
+      height: 40px;
+      padding: 0 20px;
+    }
+  }
+  .direct {
+    p {
+      max-width: 80%;
+    }
+  }
+  .k-calendar {
+    width: 275px;
+  }
+  ::ng-deep {
+    .k-calendar-td.k-disabled {
+      .k-link:after {
+        top: -66px;
+        left: 6px;
+        transform: rotate(48deg);
+        height: 190px;
+      }
+    }
+  }
+  .k-daterangepicker {
+    width: 275px;
+    &:before {
+      left: 128px !important;
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  ::ng-deep {
+    .k-daterangepicker:before {
+      position: absolute;
+      left: 135px !important;
+    }
+  }
+}
+@media screen and (max-width: 350px) {
+  ::ng-deep {
+    .k-calendar-view {
+      width: 98% !important;
+    }
+    .k-daterangepicker:before {
+      position: absolute;
+      left: 124px !important;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: #ffffff8a;
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

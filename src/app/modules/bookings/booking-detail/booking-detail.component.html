@@ -1,0 +1,423 @@
+<div class="box" *ngIf="isBookingSuccess">
+  <div class="success alert">
+    <div class="alert-body">
+      {{
+        isHost
+          ? "Booking accepted !"
+          : type && type === "instant"
+          ? "Booking confirmed !"
+          : "Booking Requested !"
+      }}
+    </div>
+  </div>
+  <!-- <div class="error alert">
+    <div class="alert-body">Error !</div>
+  </div> -->
+</div>
+
+<div
+  class="m-auto text-center animate__animated animate__fadeIn"
+  *ngIf="isBookingSuccess && type"
+>
+  <app-validation-message
+    [message]="
+      type === 'request'
+        ? 'Your request to book this location is sent to the Host. Host will review it and will respond accordingly'
+        : 'You successfully booked this location !'
+    "
+  >
+  </app-validation-message>
+</div>
+
+<section
+  class="studio booking-details-container animate__animated animate__fadeIn"
+  *ngIf="aboutProject"
+  [style.marginTop]="isBookingSuccess ? '0' : '71px'"
+>
+  <div class="text-center p-2 booking-title" *ngIf="isBookingSuccess">
+    <a class="btn btn-success" role="link" href="/bookings"> Go to bookings </a>
+    <small class="mb-0 d-block mt-4">or view Booking Details below</small>
+  </div>
+
+  <div class="container mt-3" id="content-download">
+    <div class="text-center p-2 booking-title d-flex justify-content-between">
+      <h3>
+        <span>Booking ID :</span>
+        {{ aboutProject.id }}
+      </h3>
+      <button
+        data-html2canvas-ignore="true"
+        class="download"
+        (click)="onDownloadPdf(aboutProject)"
+        matTooltip="Download"
+        matTooltipPosition="above"
+      >
+        <i class="fas fa-download"></i>
+      </button>
+    </div>
+    <div class="row mx-0">
+      <div class="col-xl-9 pl-0">
+        <div class="left-content">
+          <div class="single-detail">
+            <h1 *ngIf="aboutProject.projectName">
+              {{ aboutProject.projectName }}
+            </h1>
+            <div class="row">
+              <div class="col-md-6">
+                <p *ngIf="aboutProject.aboutProject">
+                  <b>Renter/Company : </b>{{ aboutProject.renterOrCompany }}
+                </p>
+                <p class="studio mt-2" *ngIf="aboutProject.aboutProject">
+                  <b>About Project : </b>{{ aboutProject.aboutProject }}
+                </p>
+                <p *ngIf="activityName">
+                  <b>Activity : </b> {{ activityName }}
+                </p>
+              </div>
+
+              <div class="col-md-6">
+                <p *ngIf="castAndCrew">
+                  <b>Cast & Crew : </b>{{ castAndCrew }}
+                </p>
+                <!-- <p>
+                  <b>Last Updated : </b
+                  >{{
+                    aboutProject.lastModifiedDate
+                      ? (aboutProject.lastModifiedDate | date)
+                      : (aboutProject.createdDate | date)
+                  }}
+                </p> -->
+                <p>
+                  <b>Booking Status : </b>
+                  <span
+                    class="btn_div"
+                    [ngClass]="
+                      statusCheck === 'Completed'
+                        ? 'green'
+                        : statusCheck === 'Booked'
+                        ? 'upcoming '
+                        : 'cancelled'
+                    "
+                  >
+                    <ng-container *ngIf="statusCheck">{{
+                      statusCheck
+                    }}</ng-container>
+                  </span>
+                </p>
+                <p
+                  *ngIf="
+                    aboutProject.status === 5 &&
+                    aboutProject.bookingRejectionReason
+                  "
+                >
+                  <b>Reason : </b
+                  ><span>{{ aboutProject.bookingRejectionReason }}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="listing-div">
+              <!-- <div class="">
+                <h3 class="mb-1">Listing</h3>
+                
+              </div> -->
+              <a
+                matTooltip="View Location"
+                [href]="'/listing/' + encryptedListingId"
+                target="_blank"
+              >
+                {{
+                  aboutProject.listing ? aboutProject.listing.locationTitle : ""
+                }}
+              </a>
+              <p class="mb-0">
+                {{
+                  aboutProject.listing
+                    ? aboutProject.listing.listingAddress.city
+                    : ""
+                }},
+                {{
+                  aboutProject.listing
+                    ? aboutProject.listing.listingAddress.country
+                    : ""
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="booking-details-container">
+          <div class="booking-details">
+            <div class="booking-info" *ngIf="hostDetails">
+              <h3 class="host-details">Host Details</h3>
+              <ul>
+                <li *ngIf="hostDetails.firstName">
+                  <strong>Host Name: </strong> {{ hostDetails.firstName }}
+                  {{ hostDetails.lastName }}
+                </li>
+                <li *ngIf="hostDetails.email">
+                  <strong>Email: </strong>
+                  <a
+                    class="ellipsis_css"
+                    href="mailto:{{ hostDetails.email }}"
+                    >{{ hostDetails.email }}</a
+                  >
+                </li>
+                <li *ngIf="hostDetails.phoneNumber">
+                  <strong>Contact: </strong>
+                  <a href="tel:{{ hostDetails.phoneNumber }}">{{
+                    hostDetails.phoneNumber
+                  }}</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="booking-info" *ngIf="renterDetails">
+              <h3 class="Renter-details">Renter Details</h3>
+              <ul>
+                <li *ngIf="renterDetails.firstName">
+                  <strong>Renter Name: </strong>
+                  {{ renterDetails.firstName }} {{ renterDetails.lastName }}
+                </li>
+                <li *ngIf="renterDetails.email">
+                  <strong>Email: </strong>
+                  <a
+                    class="ellipsis_css"
+                    href="mailto:{{ renterDetails.email }}"
+                    >{{ renterDetails.email }}</a
+                  >
+                </li>
+                <li *ngIf="renterDetails.phoneNumber">
+                  <strong>Contact: </strong>
+                  <a href="tel:{{ renterDetails.phoneNumber }}">{{
+                    renterDetails.phoneNumber
+                  }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 right-side-data">
+        <h5>SUMMARY</h5>
+        <div class="mobile_flx">
+          <div class="sngle-date-save">
+            <table>
+              <thead>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+              </thead>
+            </table>
+          </div>
+
+          <div class="sngle-date-save">
+            <table>
+              <tbody>
+                <tr *ngFor="let dateTime of bookedDays">
+                  <td>{{ dateTime.date | date : "mediumDate" }}</td>
+                  <td>{{ dateTime.startTime }}</td>
+                  <td>{{ dateTime.endTime }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sngle-date-save mt-4">
+          <div class="d-flex justify-content-between">
+            <label>Total Hours</label>
+            <h3>{{ aboutProject.totalHours }} hr</h3>
+          </div>
+          <div class="d-flex justify-content-between">
+            <label> Amount per hour </label>
+            <h3>
+              {{
+                aboutProject.amountPerHour
+                  | currency
+                    : aboutProject.currency?.currencySymbol
+                    : "symbol-narrow"
+                    : "1.0-0"
+              }}
+            </h3>
+          </div>
+          <div
+            class="d-flex justify-content-between"
+            *ngIf="aboutProject.cleaningFee"
+          >
+            <label>Cleaning Fee</label>
+            <h3 *ngIf="aboutProject.cleaningFee">
+              {{
+                aboutProject.cleaningFee
+                  | currency
+                    : aboutProject.priceCurrency
+                    : "symbol-narrow"
+                    : "1.0-0"
+              }}
+            </h3>
+            <h3 *ngIf="!aboutProject.cleaningFee">0</h3>
+          </div>
+          <div
+            class="d-flex justify-content-between"
+            *ngIf="aboutProject.processingFee"
+          >
+            <label>Processing Fee</label>
+            <h3 *ngIf="aboutProject.processingFee">
+              {{
+                aboutProject.processingFee
+                  | currency
+                    : aboutProject.currency?.currencySymbol
+                    : "symbol-narrow"
+                    : "1.0-0"
+              }}
+            </h3>
+            <h3 *ngIf="!aboutProject.processingFee">0</h3>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between">
+            <label class="text-bold total-amount">Total Amount</label>
+            <h3 class="text-bold">
+              {{
+                aboutProject.totalAmount
+                  | currency
+                    : aboutProject.currency?.currencySymbol
+                    : "symbol-narrow"
+                    : "1.0-0"
+              }}
+            </h3>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            bookingStatus === 4 &&
+            listingId &&
+            !isSelf &&
+            (!reviews || reviews.length < 1)
+          "
+        >
+          <button
+            mat-raised-button
+            color="primary"
+            class="text-white"
+            (click)="onAddUpdateReview(listingId, false)"
+          >
+            <mat-icon> rate_review</mat-icon>Add review
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="reviews && reviews.length">
+    <div class="row mx-0">
+      <div class="col-12 review mb-5">
+        <div class="d-flex align-items-center review_flex">
+          <h3 class="review-title mb-4">
+            Your reviews on this Listing
+            <small>({{ reviewsTotolCount }})</small>
+          </h3>
+          <div
+            class="review-rating ml-3 mb-4"
+            [matTooltip]="exactAverageRating.toString()"
+          >
+            <div class="review-rating__star-ratings">
+              <div
+                class="fill-ratings"
+                [style.width]="(exactAverageRating * 100) / 5 + '%'"
+              >
+                <span>★★★★★</span>
+              </div>
+              <div class="empty-ratings">
+                <span>★★★★★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="review-content mt-3"
+          *ngFor="let review of reviews; let i = index"
+        >
+          <div class="review-content__item d-flex">
+            <div class="review-content__item--image">
+              <img
+                #reviewUserImg
+                [src]="review.userImg"
+                [alt]="
+                  review.firstName
+                    ? review.firstName + ' ' + review.lastName
+                    : 'User name'
+                "
+                (error)="
+                  reviewUserImg.src = 'assets/images/dummy/dummy-user.jpg'
+                "
+              />
+            </div>
+
+            <div class="review-content__item--details">
+              <div class="d-flex">
+                <a class="review-content__item--details-name">{{
+                  review.firstName
+                    ? review.firstName + " " + review.lastName
+                    : review.email
+                }}</a>
+                <div class="d-flex align-items-center ml-2">
+                  <div class="review-content__item--details-rating">
+                    <mat-icon
+                      *ngFor="
+                        let rating of [
+                          reviews[i].rating,
+                          reviews[i].rating,
+                          reviews[i].rating,
+                          reviews[i].rating,
+                          reviews[i].rating
+                        ];
+                        let ratingIdx = index
+                      "
+                    >
+                      {{
+                        rating > ratingIdx ? "star" : "star_border"
+                      }}</mat-icon
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="review-content__item--details-comment">
+                <div class="review-content__item--details-comment__time">
+                  {{
+                    commonService
+                      .calculateTimeAgo(review.createdDate)
+                      .charAt(0) === "-"
+                      ? commonService
+                          .calculateTimeAgo(review.createdDate)
+                          .slice(1)
+                      : commonService.calculateTimeAgo(review.createdDate)
+                  }}
+                </div>
+                <div class="review-content__item--details-comment__text">
+                  <p>
+                    {{ review.commentText }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <i
+              class="review-content__item--edit fas fa-pen fa-md"
+              (click)="onAddUpdateReview(listingId, true, review.id)"
+            ></i>
+            <!-- <i
+              class="review-content__item--trash fas fa-trash fa-md"
+              (click)="onDeleteReview(review.id)"
+            ></i> -->
+          </div>
+        </div>
+        <div
+          class="review-load-more"
+          role="button"
+          (click)="loadMoreReviews()"
+          *ngIf="reviewsTotolCount > reviews.length"
+        >
+          <small>Load more reviews</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

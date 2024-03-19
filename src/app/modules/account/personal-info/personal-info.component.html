@@ -1,0 +1,153 @@
+<div class="card personal-card">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-bold heading">Personal Info</h1>
+      <div class="description">
+        Providing more information about yourself will increase the number of
+        inquiries and responses from other Location genie users.
+      </div>
+      <form
+        *ngIf="personalInfoForm"
+        [formGroup]="personalInfoForm"
+        (ngSubmit)="onSubmitForm()"
+      >
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="exampleInputFirstName">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputFirstName"
+              formControlName="firstName"
+            />
+            <small
+              class="has-error--text"
+              *ngIf="
+                (f['firstName'].hasError('required') &&
+                  f['firstName'].touched) ||
+                (isSubmitted && f['firstName'].hasError('required'))
+              "
+              >First Name is required</small
+            >
+            <small
+              class="has-error--text"
+              *ngIf="
+                (f['firstName'].hasError('maxlength') &&
+                  f['firstName'].touched) ||
+                (isSubmitted && f['firstName'].hasError('maxlength'))
+              "
+              >Maximum 30 characters allowed</small
+            >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="exampleInputLastName">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputLastName"
+              formControlName="lastName"
+            />
+            <small
+              class="has-error--text"
+              *ngIf="
+                (f['lastName'].hasError('required') && f['lastName'].touched) ||
+                (isSubmitted && f['lastName'].hasError('required'))
+              "
+              >Last Name is required</small
+            >
+
+            <small
+              class="has-error--text"
+              *ngIf="
+                (f['lastName'].hasError('maxlength') &&
+                  f['lastName'].touched) ||
+                (isSubmitted && f['lastName'].hasError('maxlength'))
+              "
+              >Maximum 30 characters allowed</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group listing col-md-6">
+            <label for="exampleInputEmail1">Email</label>
+            <span
+              *ngIf="!isEmailVerified && !isExternalLogin"
+              class="not-verify"
+              >Not verified</span
+            >
+            <span *ngIf="isEmailVerified || isExternalLogin" class="verified"
+              >Verified</span
+            >
+            <input
+              type="email"
+              class="form-control disabled"
+              id="exampleInputEmail1"
+              formControlName="email"
+              readonly
+            />
+            <mat-icon *ngIf="isEmailVerified || isExternalLogin"
+              >check_circle_outline</mat-icon
+            >
+            <mat-icon
+              *ngIf="!isEmailVerified && !isExternalLogin"
+              style="color: #ffa616"
+              >report_problem</mat-icon
+            >
+            <a
+              *ngIf="!isExternalLogin"
+              class="update_link"
+              (click)="onUpdateEmail()"
+              >Change email address</a
+            >
+            <a
+              *ngIf="!isExternalLogin && !isEmailVerified"
+              class="update_link"
+              (click)="onConfirmEmail()"
+              >Send me confirmation email</a
+            >
+          </div>
+          <div class="form-group listing col-md-6">
+            <label for="exampleInputMobile">Phone Number</label>
+            <span *ngIf="!isPhoneVerified" class="not-verify"
+              >Not verified</span
+            >
+            <span *ngIf="isPhoneVerified" class="verified">Verified</span>
+            <input
+              type="text"
+              class="form-control disabled"
+              id="exampleInputLastName"
+              formControlName="phoneNumber"
+              placeholder="1489237420"
+              readonly
+            />
+            <mat-icon *ngIf="isPhoneVerified">check_circle_outline</mat-icon>
+            <mat-icon *ngIf="!isPhoneVerified" style="color: #ffa616"
+              >report_problem</mat-icon
+            >
+            <a class="update_link" (click)="onUpdatePhone()">{{
+              personalInfoForm.value.phoneNumber ? "Update Phone" : "Add Phone"
+            }}</a>
+            <a
+              *ngIf="personalInfoForm.value.phoneNumber && !isPhoneVerified"
+              class="update_link"
+              (click)="onVerifyPhoneNumber()"
+              >Verify Phone</a
+            >
+          </div>
+        </div>
+
+        <div class="text-center button">
+          <button
+            mat-raised-button
+            color="primary"
+            class="text-white"
+            type="submit"
+            [disabled]="!personalInfoForm.valid || !personalInfoForm.dirty"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

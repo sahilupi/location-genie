@@ -1,0 +1,196 @@
+<div class="step-three-main">
+  <app-list-space-header
+    [stepNumber]="3"
+    [stepName]="'Get ready to shoot'"
+    (onSaveAndExit)="onSaveAndExit()"
+  ></app-list-space-header>
+
+  <div class="step-one">
+    <div class="container stepper">
+      <div class="row" style="gap: 6px">
+        <div
+          class="single-step single-step-in-third"
+          [ngClass]="i === 4 ? 'active' : ''"
+          *ngFor="let stepper of stepperData; let i = index"
+        >
+          <app-listing-stepper
+            [stepperData]="stepper"
+            [activeIdx]="5"
+            [idx]="i"
+            [totalSteppers]="stepperData.length"
+          ></app-listing-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about">
+    <div class="container">
+      <div class="row activity-head">
+        <div class="hp-top-info">
+          <h2>Select Activities</h2>
+          <div class="hp-search">
+            <form
+              *ngIf="activities"
+              class="hp-search--form hp-search--form-js"
+              [formGroup]="searchForm"
+            >
+              <ul class="hp-search--fields-list p-0">
+                <li class="hp-search--field">
+                  <label
+                    class="hp-search--label form-label form-label__type_lite"
+                    for="hp-search--activity"
+                  >
+                    Select Yours Activities
+                  </label>
+                  <div
+                    class="hp-activities-v2-js autocomplete-root"
+                    [ngClass]="showEventList ? 'autocomplete-root__open' : ''"
+                  >
+                    <div class="hp-search--dropdown-btn">
+                      <input
+                        id="hp-search--activity"
+                        class="hp-search--dropdown hp-search--dropdown-activities autocomplete-input-js"
+                        placeholder="Start typing to pick an activity"
+                        (focus)="onFocusEvent(); preventCloseOnClick()"
+                        formControlName="event"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <span
+                      ><span class="autocomplete-arrow-js autocomplete-arrow"
+                        ><i class="fas fa-angle-down"></i
+                      ></span>
+                      <div
+                        class="autocomplete-content auto_height autocomplete-content-js"
+                      >
+                        <ul class="autocomplete-content-default">
+                          <div
+                            class="activity-category"
+                            role="button"
+                            (click)="preventCloseOnClick()"
+                          >
+                            <a
+                              class="select-category mr-4"
+                              [class.active]="!showAllActivities"
+                              (click)="showAllActivities = false"
+                              >Popular<span
+                                >({{ tempPopularActivities.length }})</span
+                              ></a
+                            >
+                            <a
+                              class="select-category"
+                              [class.active]="showAllActivities"
+                              (click)="showAllActivities = true"
+                              >All Activities<span
+                                >({{ tempActivities.length }})</span
+                              >
+                            </a>
+                          </div>
+                          <li
+                            class="autocomplete-content-popular-wrapper-js mt-2"
+                          >
+                            <ul class="autocomplete-content-items">
+                              <ng-container *ngIf="showAllActivities">
+                                <mat-option
+                                  *ngFor="let data of activities; let i = index"
+                                  (click)="
+                                    preventCloseOnClick();
+                                    toggleSelection(data, data.id)
+                                  "
+                                >
+                                  <mat-checkbox
+                                    color="primary"
+                                    [checked]="data.checked"
+                                  >
+                                    {{ data.name }}
+                                  </mat-checkbox>
+                                </mat-option>
+                                <li
+                                  class="autocomplete-content-item"
+                                  *ngIf="activities.length === 0"
+                                >
+                                  No results
+                                </li>
+                              </ng-container>
+                              <ng-container *ngIf="!showAllActivities">
+                                <mat-option
+                                  *ngFor="
+                                    let data of popularActivities;
+                                    let i = index
+                                  "
+                                  (click)="
+                                    preventCloseOnClick();
+                                    toggleSelection(data, data.id)
+                                  "
+                                >
+                                  <mat-checkbox
+                                    color="primary"
+                                    [checked]="data.checked"
+                                  >
+                                    {{ data.name }}
+                                  </mat-checkbox>
+                                </mat-option>
+                                <li
+                                  class="autocomplete-content-item"
+                                  *ngIf="popularActivities.length === 0"
+                                >
+                                  No results
+                                </li>
+                              </ng-container>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+        <div class="activity-top-info" #activityWrapper>
+          <h2>Selected Activities</h2>
+          <div class="hp-search">
+            <ul
+              class="hp-search--fields-list p-0"
+              *ngIf="checkedActivities.length > 0"
+            >
+              <li
+                class="hp-search--field"
+                *ngFor="let activity of checkedActivities"
+              >
+                <label
+                  class="hp-search--label form-label form-label__type_lite"
+                  for="hp-search--activity"
+                >
+                  {{ activity.name }}
+                </label>
+              </li>
+            </ul>
+            <ul
+              class="hp-search--fields-list p-0"
+              *ngIf="checkedActivities.length === 0"
+            >
+              <li class="hp-search--field">
+                <label
+                  class="hp-search--label form-label form-label__type_lite"
+                  for="hp-search--activity"
+                >
+                  No Activities Selected.
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-list-space-buttons
+    [backBtnRoute]="backBtnRoute"
+    (nextBtnClick)="onSubmit()"
+    [progressValue]="90"
+    [nextBtnText]="'Next'"
+  ></app-list-space-buttons>
+</div>

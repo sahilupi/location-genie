@@ -1,0 +1,672 @@
+<div class="message animate__animated animate__fadeIn">
+  <div class="row h-100 mx-0">
+    <div
+      class="col-lg-3 col-sm-12 left-side users px-0"
+      [ngClass]="showChatList ? 'show-left' : ''"
+    >
+      <!-- <div class="search-bar">
+        <input
+          type="text"
+          matInput
+          class="form-control"
+          placeholder="Search for new users here..."
+          (blur)="getUsersByEmail($event)"
+          [(ngModel)]="search"
+        />
+        <div class="search-btn">
+          <mat-icon color="primary">search</mat-icon>
+        </div>
+      </div> -->
+      <div class="total-users">
+        <ul class="list-unstyled mb-0">
+          <li
+            class="clearfix"
+            role="button"
+            *ngFor="let user of searchedUsersList"
+            (click)="addContactToChat(currentUserId, user.id)"
+            [ngClass]="user.id === recieverId ? 'active' : ''"
+          >
+            <img class="user-img" [src]="avatar" alt="avatar" />
+            <div class="about-user">
+              <div class="name text-bold">
+                <p>{{ user.firstName ? user.firstName : user.email }}</p>
+                <p>{{ user.lastName }}</p>
+
+                <div
+                  class="online"
+                  *ngIf="onlineUsers.includes(user.id)"
+                  title="Online"
+                ></div>
+
+                <div
+                  class="offline"
+                  title="Offline"
+                  *ngIf="!onlineUsers.includes(user.id)"
+                ></div>
+              </div>
+              <div class="status" *ngIf="user.firstName">
+                <small>{{ user.userName }}</small>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <ul class="list-unstyled mb-0">
+          <li
+            class="clearfix user-li"
+            role="button"
+            *ngFor="let user of usersList"
+            (click)="
+              getChatHistory(currentUserId, user.userId, user); onToggleChat()
+            "
+            [ngClass]="user.userId === recieverId ? 'active' : ''"
+          >
+            <div>
+              <img
+                class="user-img"
+                [src]="user.profilePicture ? user.profilePicture : avatar"
+                alt="avatar"
+              />
+              <div
+                class="online"
+                *ngIf="onlineUsers.includes(user.userId)"
+                title="Online"
+              ></div>
+              <div
+                class="offline"
+                title="Offline"
+                *ngIf="!onlineUsers.includes(user.userId)"
+              ></div>
+            </div>
+            <div class="about-user">
+              <div class="name text-bold">
+                <p
+                  class="mb-0"
+                  [matTooltip]="
+                    user.firstName
+                      ? user.firstName + ' ' + user.lastName
+                      : user.email
+                  "
+                >
+                  {{
+                    user.firstName
+                      ? user.firstName + " " + user.lastName
+                      : user.email
+                  }}
+                </p>
+                <!-- <p class="mb-0">{{ user.lastName }}</p> -->
+                <small
+                  *ngIf="currentUserId === user.userId"
+                  class="you"
+                  title="Online"
+                  >you</small
+                >
+              </div>
+              <div class="status">
+                <small
+                  *ngIf="
+                    user.lastMessage &&
+                    (user.lastMessage.messageType === 'text' ||
+                      !user.lastMessage.messageType)
+                  "
+                  [ngClass]="
+                    user.lastMessage &&
+                    (user.lastMessage.messageType === 'text' ||
+                      !user.lastMessage.messageType) &&
+                    user.lastMessage.isUnread &&
+                    user.lastMessage.senderId !== currentUserId
+                      ? 'unread-message'
+                      : ''
+                  "
+                  matTooltip="{{
+                    user.lastMessage ? user.lastMessage.message : ''
+                  }}"
+                >
+                  {{ user.lastMessage ? user.lastMessage.message : "" }}
+                </small>
+                <small
+                  *ngIf="
+                    user.lastMessage && user.lastMessage.messageType !== 'text'
+                  "
+                  [ngClass]="
+                    user.lastMessage &&
+                    user.lastMessage.isUnread &&
+                    user.lastMessage.senderId !== currentUserId
+                      ? 'unread-message'
+                      : ''
+                  "
+                  matTooltip="Sent an attachment"
+                  >Sent an attachment</small
+                >
+                <!-- <img
+                  *ngIf="
+                    user.lastMessage && user.lastMessage.messageType === 'img'
+                  "
+                  class="last-message-img"
+                  width="40"
+                  [ngClass]="
+                    user.lastMessage &&
+                    user.lastMessage.isUnread &&
+                    user.lastMessage.senderId !== currentUserId
+                      ? 'unread-message'
+                      : ''
+                  "
+                  [src]="user.lastMessage.message"
+                /> -->
+
+                <div
+                  *ngIf="
+                    user.lastMessage &&
+                    user.lastMessage.isUnread &&
+                    user.lastMessage.senderId !== currentUserId
+                  "
+                  class="unread-message-notification"
+                >
+                  <small>New</small>
+                </div>
+                <span
+                  *ngIf="
+                    user.lastMessage &&
+                    today !== getDate(user.lastMessage.createdDate)
+                  "
+                  class="chat-time"
+                  >{{
+                    user.lastMessage && user.lastMessage.createdDate
+                      | date : "MMM dd,  hh:mm a"
+                  }}</span
+                >
+                <span
+                  *ngIf="
+                    user.lastMessage &&
+                    today === getDate(user.lastMessage.createdDate)
+                  "
+                  class="chat-time"
+                  >Today,
+                  {{ user.lastMessage.createdDate | date : "hh:mm a" }}</span
+                >
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="col-lg-9 col-sm-12 right-side p-0 center-chat"
+      [ngClass]="showChatList ? '' : 'show-center'"
+    >
+      <span class="back-btn" *ngIf="chatMessages && chatMessages.length > 0"
+        ><mat-icon (click)="onToggleChat()">arrow_back</mat-icon
+        ><img
+          [src]="recieverImg"
+          class="reciever-img"
+          width="30"
+          alt="reciever-img"
+        />
+        <div class="reciever-name">
+          <small>{{ recieverName }}</small>
+        </div>
+        <small *ngIf="onlineUsers.includes(recieverId)" class="active-now"
+          ><div title="Online"></div>
+          Active now</small
+        >
+        <small *ngIf="!onlineUsers.includes(recieverId)" class="offline-now"
+          ><div title="Online"></div>
+          Offline</small
+        >
+      </span>
+
+      <div class="card">
+        <div class="chat-list" #chatListContainer>
+          <ng-container
+            *ngIf="!chatMessages || (chatMessages.length <= 0 && !isLoading)"
+          >
+            <div class="animate__animated animate__fadeIn animate__faster">
+              <div class="d-flex align-items-center justify-content-center">
+                <img
+                  width="300"
+                  src="assets/images/dummy/no-msg.png"
+                  alt="no messages"
+                />
+              </div>
+              <div class="d-flex align-items-center justify-content-center">
+                <h5>No messages</h5>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngFor="let chat of chatMessages; let i = index">
+            <div
+              class="chat-head-date mt-4 mb-2"
+              *ngIf="
+                (i === 0 && today !== getDate(chatMessages[i].createdDate)) ||
+                (today !== getDate(chatMessages[i].createdDate) &&
+                  chatMessages[i - 1] &&
+                  getDateMonth(chatMessages[i].createdDate) !==
+                    getDateMonth(chatMessages[i - 1].createdDate))
+              "
+            >
+              {{ chat.createdDate | date : "MMM dd, yyyy" }}
+            </div>
+            <div
+              class="chat-head-date mt-2 mb-2"
+              *ngIf="
+                (today === getDate(chatMessages[i].createdDate) &&
+                  chatMessages[i - 1] &&
+                  getDateMonth(chatMessages[i].createdDate) !==
+                    getDateMonth(chatMessages[i - 1].createdDate)) ||
+                (today === getDate(chatMessages[i].createdDate) && i == 0)
+              "
+            >
+              Today
+            </div>
+            <div
+              *ngIf="currentUserId !== recieverId"
+              class="chat-item animate__animated animate__fadeIn animate__faster"
+              [ngClass]="{
+                right: currentUserId != chat.recieverId,
+                left: currentUserId == chat.recieverId
+              }"
+            >
+              <!-- Edit delete actions -->
+              <ng-container *ngIf="currentUserId != chat.recieverId">
+                <mat-icon
+                  class="more-btn dots"
+                  [matMenuTriggerFor]="editMsgMenu"
+                  >more_vert</mat-icon
+                >
+                <mat-menu #editMsgMenu="matMenu">
+                  <button
+                    mat-menu-item
+                    *ngIf="chat.messageType === 'text' || !chat.messageType"
+                    (click)="onEditMessage(chat.message, chat.id)"
+                  >
+                    <mat-icon>edit</mat-icon>Edit
+                  </button>
+                  <button
+                    mat-menu-item
+                    *ngIf="chat.messageType !== 'text' || !chat.messageType"
+                    (click)="
+                      downloadImage(
+                        chat.message,
+                        chat.messageType === 'img' ? false : true
+                      )
+                    "
+                  >
+                    <mat-icon>cloud_download</mat-icon>Download
+                  </button>
+                  <button
+                    mat-menu-item
+                    (click)="
+                      onDeleteMessage(
+                        chat.senderId,
+                        chat.recieverId,
+                        i,
+                        chat.id
+                      )
+                    "
+                  >
+                    <mat-icon>delete</mat-icon>Delete
+                  </button>
+                </mat-menu>
+              </ng-container>
+
+              <div class="position-relative more-content">
+                <img
+                  id="avatar"
+                  [src]="
+                    currentUserId != chat.recieverId
+                      ? currentUserImg
+                      : recieverImg
+                  "
+                />
+
+                <p
+                  *ngIf="chat.messageType === 'text' || !chat.messageType"
+                  id="message-body"
+                >
+                  {{ chat.message }}
+                </p>
+              </div>
+
+              <a *ngIf="chat.messageType === 'img' && !chat.isSent">
+                <img
+                  class="chat-item__message--img"
+                  [src]="chat.message"
+                  [alt]="chat.message"
+                  width="150"
+                  (click)="
+                    imagePreview(
+                      chat.message,
+                      chat.message,
+                      false,
+                      chat.messageType
+                    )
+                  "
+                />
+              </a>
+              <ng-container
+                *ngIf="
+                  chat.messageType !== 'img' &&
+                  chat.messageType !== 'text' &&
+                  chat.messageType !== undefined
+                "
+                class="hide-scrollbar"
+                style="width: 100%; height: 200px"
+              >
+                <ng-container *ngIf="chat.messageType.toLowerCase() === 'mov'">
+                  <video [src]="chat.message" height="200" width="200%"></video>
+                  <a
+                    (click)="
+                      imagePreview(
+                        chat.message,
+                        chat.message,
+                        true,
+                        chat.messageType
+                      )
+                    "
+                    class="chat-item__doc-download mov"
+                    [ngClass]="{
+                      'chat-item__doc-download--right':
+                        currentUserId != chat.recieverId,
+                      'chat-item__doc-download--left':
+                        currentUserId == chat.recieverId
+                    }"
+                  >
+                    <mat-icon>visibility</mat-icon>
+                  </a>
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    chat.messageType.toLowerCase() !== 'mov' &&
+                    chat.messageType.toLowerCase() !== 'doc' &&
+                    chat.messageType.toLowerCase() !== 'docx' &&
+                    chat.messageType.toLowerCase() !== 'docs'
+                  "
+                >
+                  <ngx-doc-viewer
+                    [url]="chat.message"
+                    [viewerUrl]="chat.message"
+                    viewer="url"
+                    style="width: 100%; height: 200px; overflow: hidden"
+                  ></ngx-doc-viewer>
+
+                  <a
+                    (click)="
+                      imagePreview(
+                        chat.message,
+                        chat.message,
+                        true,
+                        chat.messageType
+                      )
+                    "
+                    class="chat-item__doc-download"
+                    [ngClass]="{
+                      'chat-item__doc-download--right':
+                        currentUserId != chat.recieverId,
+                      'chat-item__doc-download--left':
+                        currentUserId == chat.recieverId
+                    }"
+                  >
+                    <mat-icon>visibility</mat-icon>
+                  </a>
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    chat.messageType.toLowerCase() !== 'mov' &&
+                    (chat.messageType.toLowerCase() === 'doc' ||
+                      chat.messageType.toLowerCase() === 'docx' ||
+                      chat.messageType.toLowerCase() === 'docs')
+                  "
+                >
+                  <div class="chat-item__doc-preview">
+                    <mat-icon style="margin-bottom: -6px">
+                      attach_file</mat-icon
+                    >
+                    Document Attachment
+                  </div>
+                  <a
+                    (click)="downloadDocument(chat.message)"
+                    class="chat-item__doc-download"
+                    [ngClass]="{
+                      'chat-item__doc-download--right chat-item__doc-download--right_docx':
+                        currentUserId != chat.recieverId,
+                      'chat-item__doc-download--left chat-item__doc-download--left_docx':
+                        currentUserId == chat.recieverId
+                    }"
+                  >
+                    <mat-icon>cloud_download</mat-icon>
+                  </a>
+                </ng-container>
+              </ng-container>
+            </div>
+            <small
+              class="d-block right"
+              *ngIf="
+                chatMessages.length === i + 1 &&
+                chat.senderId === currentUserId &&
+                !chat.isUnread
+              "
+              >Seen</small
+            >
+
+            <!-- for self -->
+            <div
+              *ngIf="currentUserId === recieverId"
+              class="chat-item animate__animated animate__fadeIn animate__faster right"
+            >
+              <img
+                id="avatar"
+                [src]="
+                  currentUserId != chat.recieverId
+                    ? currentUserImg
+                    : recieverImg
+                "
+              />
+              <p id="message-body">{{ chat.message }}</p>
+            </div>
+          </ng-container>
+        </div>
+        <div class="footerChat_fixed">
+          <form
+            class="chat-footer"
+            *ngIf="chatForm && currentUserId && recieverId"
+            [formGroup]="chatForm"
+            (ngSubmit)="
+              imageUrl || docUrl ? onSendMessagesWithFile() : onSendMessage()
+            "
+          >
+            <div class="w-100 chat-wrapper" #chatWrapper>
+              <ng-container
+                *ngIf="imageUrl"
+                class="animate__animated animate__fadeIn"
+              >
+                <div class="d-flex chat-img-wrapper">
+                  <img
+                    class="chat-upload-img"
+                    [src]="imageUrl"
+                    alt="upload-img"
+                  />
+                  <i
+                    (click)="imageUrl = ''; fileUpload.value = ''; docUrl = ''"
+                    matTooltip="Remove file"
+                    class="fas fa-times"
+                  ></i>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  docUrl &&
+                  !docUrl.includes('video') &&
+                  docUrl.includes('image')
+                "
+                class="animate__animated animate__fadeIn"
+              >
+                <div class="d-flex chat-img-wrapper">
+                  <img
+                    [src]="imageUrl"
+                    width="100"
+                    height="200"
+                    alt="image preview"
+                  />
+                  <i
+                    (click)="imageUrl = ''; fileUpload.value = ''; docUrl = ''"
+                    matTooltip="Remove file"
+                    class="fas fa-times"
+                  ></i>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="docUrl && !docUrl.includes('video')"
+                class="animate__animated animate__fadeIn"
+              >
+                <div class="d-flex chat-img-wrapper">
+                  <ngx-doc-viewer
+                    *ngIf="
+                      fileType !== 'doc' &&
+                      fileType !== 'docx' &&
+                      fileType !== 'docs'
+                    "
+                    [url]="docUrl"
+                    viewer="url"
+                    [viewerUrl]="docUrl"
+                    style="width: 100px; height: 100px"
+                  ></ngx-doc-viewer>
+
+                  <div
+                    *ngIf="
+                      fileType === 'doc' ||
+                      fileType === 'docx' ||
+                      fileType === 'docs'
+                    "
+                    class="mt-4"
+                  >
+                    <mat-icon style="margin-bottom: -6px">
+                      attach_file</mat-icon
+                    >
+                    Document
+                  </div>
+
+                  <i
+                    (click)="imageUrl = ''; fileUpload.value = ''; docUrl = ''"
+                    matTooltip="Remove file"
+                    class="fas fa-times"
+                  ></i>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="docUrl && docUrl.includes('video')"
+                class="animate__animated animate__fadeIn"
+              >
+                <div
+                  class="d-flex chat-img-wrapper"
+                  *ngIf="fileType && fileType.toLowerCase() !== 'mov'"
+                >
+                  <video
+                    [src]="docUrl"
+                    height="100"
+                    width="100"
+                    autoplay
+                  ></video>
+                  <i
+                    (click)="imageUrl = ''; fileUpload.value = ''; docUrl = ''"
+                    matTooltip="Remove file"
+                    class="fas fa-times"
+                  ></i>
+                </div>
+                <div
+                  class="d-flex chat-img-wrapper"
+                  *ngIf="fileType && fileType.toLowerCase() === 'mov'"
+                >
+                  <!-- <video [src]="docUrl" height="100" width="100"></video> -->
+                  <p class="d-flex"><mat-icon>videocam</mat-icon> Video</p>
+
+                  <i
+                    (click)="imageUrl = ''; fileUpload.value = ''; docUrl = ''"
+                    matTooltip="Remove file"
+                    class="fas fa-times"
+                  ></i>
+                </div>
+              </ng-container>
+              <div class="mb-4 d-flex" *ngIf="isEditing">
+                <small
+                  >Editing message (
+                  <span class="text-bold">{{ editingMsg }}</span> )</small
+                >
+                <mat-icon
+                  class="cancel-edit-icon ml-2"
+                  (click)="cancelMsgEditing()"
+                  matTooltip="Cancel editing"
+                  >close</mat-icon
+                >
+              </div>
+
+              <input
+                *ngIf="
+                  (!imageUrl || imageUrl.trim() === '') &&
+                  (!docUrl || docUrl.trim() === '')
+                "
+                matInput
+                id="chat-textarea"
+                placeholder="Type message here..."
+                formControlName="chatMessage"
+                required
+                contenteditable="true"
+                autocomplete="off"
+                [readonly]="imageUrl !== ''"
+                #chatMsg
+              />
+              <emoji-mart
+                (click)="preventCloseOnClick()"
+                *ngIf="showEmojiPicker"
+                (blur)="showEmojiPicker = false"
+                class="emoji-mart animate__animated animate__fadeInUp"
+                (emojiSelect)="addEmoji($event)"
+                title="Pick your emoji…"
+              ></emoji-mart>
+              <div
+                class="emoji-btn"
+                *ngIf="
+                  (!imageUrl || imageUrl.trim() === '') &&
+                  (!docUrl || docUrl.trim() === '')
+                "
+              >
+                <button
+                  (click)="toggleEmojiPicker(); preventCloseOnClick()"
+                  type="button"
+                >
+                  😀
+                </button>
+              </div>
+              <div
+                (click)="fileUpload.click()"
+                *ngIf="!chatForm.value.chatMessage"
+              >
+                <mat-icon matTooltip="Attach any file" class="attach-file">
+                  attach_file</mat-icon
+                >
+                <input
+                  type="file"
+                  #fileUpload
+                  style="display: none"
+                  (change)="fileChangeEvent($event)"
+                />
+              </div>
+              <button
+                mat-mini-fab
+                color="primary"
+                id="send-button"
+                type="submit"
+                [disabled]="
+                  (!c['chatMessage'].value ||
+                    c['chatMessage'].value.trim() === '') &&
+                  !imageUrl &&
+                  !docUrl
+                "
+              >
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+section.host {
+  margin: 71px 0 0;
+  padding: 70px 0 25px;
+  .heading {
+    h1 {
+      font-size: 30px;
+      font-weight: 600;
+    }
+    p {
+      color: #c8c5c5;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+.button {
+  text-align: center;
+  margin: 80px 0 80px 0;
+  a {
+    border-radius: 5px;
+    background: #016670;
+    color: #fff;
+    padding: 15px 35px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+
+.top {
+  img {
+    object-fit: contain;
+  }
+}
+
+//Responsive
+@media only screen and (max-width: 1200px) {
+  .button {
+    margin: 50px 0 80px 0;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  section.host {
+    padding: 30px 0;
+    .heading {
+      h1 {
+        font-size: 18px;
+      }
+      p {
+        font-weight: 500;
+        font-size: 15px;
+      }
+    }
+  }
+  .col-md-12 {
+    .col-md-12 {
+      padding: 0 !important;
+    }
+  }
+  .button {
+    padding: 10px 25px;
+    margin: 30px 0;
+    a {
+      padding: 10px 25px;
+      font-size: 14px;
+    }
+  }
+}
+
+.stepCount {
+  text-align: end;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+}

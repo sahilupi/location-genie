@@ -1,0 +1,222 @@
+.heading-box {
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.step {
+  span {
+    &:last-child {
+      display: none;
+    }
+  }
+}
+
+//Responsive
+
+@media screen and (max-width: 991px) {
+  .step {
+    width: 35px;
+    height: 35px;
+    font-size: 15px;
+  }
+  .heading-box {
+    min-height: auto;
+    padding: 2px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .step-one {
+    .single-step {
+      display: none;
+      &:after {
+        display: none;
+      }
+    }
+    .single-step.active {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      .box {
+        min-height: auto;
+      }
+      .step {
+        width: 80px;
+        height: 49px;
+        display: flex;
+        gap: 4px;
+      }
+      .step.active {
+        span {
+          font-size: 13px;
+          &:last-child {
+            display: block;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .heading-box {
+    min-height: auto;
+  }
+  .main-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .step {
+    width: auto;
+    height: auto;
+    padding: 20px 13px;
+    display: flex;
+    gap: 4px;
+    font-size: 13px;
+    span {
+      white-space: nowrap;
+      &:last-child {
+        display: block;
+      }
+    }
+  }
+  .progress-ring {
+    width: auto;
+    height: auto;
+    border: none;
+    border-radius: 50%;
+    position: relative;
+  }
+  .progress-circle {
+    width: 100%;
+    height: 100%;
+    border: 3px solid #ccc;
+    border-radius: 50%;
+    position: absolute;
+    clip: rect(0px, 100px, 200px, 0px);
+    animation: progress-animation 2s linear infinite;
+  }
+
+  // @keyframes progress-animation {
+  //     0% {
+  //         transform: translate(-50%, -50%) rotate(0deg);
+  //     }
+  //     100% {
+  //         transform: translate(-50%, -50%) rotate(360deg);
+  //     }
+  // }
+  // .progress-circle.p2 .value-bar {
+  //     transform: rotate(7deg);
+  //     position: absolute;
+  //     clip: rect(0, 2.5em, 5em, 0);
+  //     width: 5em;
+  //     height: 5em;
+  //     border-radius: 50%;
+  //     border: 0.45em solid #53777A;
+  //     box-sizing: border-box;
+  //   }
+  //   .progress-circle.over50 .first50-bar {
+  //     position: absolute;
+  //     clip: rect(0, 5em, 5em, 2.5em);
+  //     background-color: #53777A;
+  //     border-radius: 50%;
+  //     width: 5em;
+  //     height: 5em;
+  //   }
+  //   .progress-circle:not(.over50) .first50-bar {
+  //     display: none;
+  //   }
+
+  //   .progress-circle.over50 .left-half-clipper {
+  //     clip: rect(auto, auto, auto, auto);
+  //   }
+  //   .left-half-clipper {
+  //     border-radius: 50%;
+  //     width: 5em;
+  //     height: 5em;
+  //     position: absolute;
+  //     clip: rect(0, 5em, 5em, 2.5em);
+  //   }
+  //   .progress-circle {
+  //     font-size: 20px;
+  //     margin: 20px;
+  //     position: relative;
+  //     padding: 0;
+  //     width: 5em;
+  //     height: 5em;
+  //     background-color: #F2E9E1;
+  //     border-radius: 50%;
+  //     line-height: 5em;
+  //   }
+
+  //   .progress-circle:after {
+  //     border: none;
+  //     position: absolute;
+  //     top: 0.35em;
+  //     left: 0.35em;
+  //     text-align: center;
+  //     display: block;
+  //     border-radius: 50%;
+  //     width: 4.3em;
+  //     height: 4.3em;
+  //     background-color: white;
+  //     content: " ";
+  //   }
+
+  .circle {
+    position: relative;
+    min-height: 112px;
+    min-width: 112px;
+    margin: 0;
+    border-radius: 50%;
+    background: #ffcdb2;
+    overflow: hidden;
+  }
+  .circle.per-20 {
+    background-image: conic-gradient(#016670 20%, #e2e1e1fc 0);
+  }
+  .circle .inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 86%;
+    height: 94px;
+    background: #fff;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .step {
+    border: none !important;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .circle {
+    min-height: 112px;
+    min-width: 112px;
+    .inner {
+      width: 86%;
+      height: 96px;
+      font-size: 14px;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .circle {
+    min-height: 70px;
+    min-width: 70px;
+    .inner {
+      font-size: 14px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+}

@@ -1,0 +1,133 @@
+.project {
+  &-parent {
+    border-bottom: 1px solid #eee;
+    padding: 10px 20px;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:first-child {
+      padding-top: 0;
+    }
+    &-upper {
+      border-bottom: 1px solid #eee;
+      padding: 10px 20px;
+      &:last-child {
+        border-bottom: 0;
+      }
+      &:first-child {
+        padding-top: 0;
+      }
+    }
+  }
+
+  &-user {
+    &_image {
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
+    }
+
+    &_name {
+      font-weight: 500;
+      font-size: 15px;
+      margin: 0;
+    }
+  }
+
+  &-status {
+    &--pending {
+      font-weight: 400;
+      font-size: 14px;
+      visibility: visible;
+      opacity: 1;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      &__icon {
+        font-weight: 300;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  .fa-trash {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    padding: 8px 8.5px;
+    cursor: pointer;
+    border-radius: 50%;
+    background: #ffd3d7 !important;
+    font-size: 14px;
+    visibility: hidden;
+    opacity: 0;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &-parent:hover {
+    .fa-trash {
+      visibility: visible;
+      opacity: 1;
+    }
+    .project-status--pending {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+}
+
+.first {
+  width: 40%;
+}
+.second {
+  width: 40%;
+}
+// @media (max-width: 767px) {
+//   .project-parent {
+//     flex-direction: column;
+//     align-items: flex-start !important;
+//   } 
+// }
+@media (max-width: 767px) {
+  .project-parent {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  .project-status--pending__icon {
+    transform: none;
+    position: initial;
+  }
+  .project .fa-trash {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    position: initial;
+  }
+  .custom-flex {
+    display: flex;
+    margin: 10px 0 0 0;
+    gap: 4px;
+    align-items: center;
+  }
+  .first {
+    width: 100%;
+    text-align: center;
+    justify-content: flex-start;
+  }
+  .second {
+    width: 100%;
+    text-align: left;
+    margin: 10px 0 0 0;
+  }
+  .project-status--pending {
+    position: initial;
+    transform: none;
+    display: flex;
+    align-items: center;
+  }
+}

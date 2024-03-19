@@ -1,0 +1,111 @@
+section.referral--banner {
+  position: relative;
+}
+.referral {
+  margin-top: 71px;
+  &--banner {
+    &__img {
+      width: 100%;
+    }
+    &__content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgb(153 153 153 / 24%);
+      padding: 25px;
+      border-radius: 8px;
+      border: 1.5px solid #fff;
+
+      @media (max-width: 992px) {
+        position: initial;
+        transform: none;
+        width: 80%;
+        margin: auto;
+        background-color: rgb(0 0 0 / 85%);
+      }
+
+      @media (max-width: 600px) {
+        width: 100%;
+      }
+
+      &__heading {
+        color: #fff;
+        font-weight: 500;
+        font-size: 21px;
+      }
+      &__summary {
+        color: #c9c7c7;
+        font-size: 14px;
+        &--ul {
+          padding-left: 15px;
+        }
+        &--li {
+          color: #c9c7c7;
+        }
+      }
+
+      &__input {
+        form {
+          input {
+            width: 100%;
+            background: #c5c5c52e;
+            border: 1px solid #016670;
+            outline: none;
+            border-radius: 4px;
+            height: 45px;
+            padding-left: 20px;
+            color: #fff;
+            font-size: 14px;
+          }
+        }
+      }
+
+      &--actions {
+        display: flex;
+        justify-content: space-between;
+        .btn {
+          margin-top: 20px;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+        .social-links {
+          color: #fff;
+          margin: auto 0;
+          display: flex;
+          p {
+            margin: auto 4px auto 0;
+          }
+
+          img {
+            height: 15px;
+            width: 15px;
+            margin: auto 4px;
+          }
+        }
+      }
+    }
+  }
+
+  &--coupons {
+    margin: 30px 0;
+    &__para {
+      color: #736f6f;
+      font-weight: 400;
+    }
+    &__heading {
+      color: #000;
+      font-weight: 600;
+    }
+    &__terms {
+      color: #000;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 30px;
+      a {
+        color: #016670;
+      }
+    }
+  }
+}

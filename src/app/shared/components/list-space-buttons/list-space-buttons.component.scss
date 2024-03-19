@@ -1,0 +1,67 @@
+.main {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 15px 0 11px;
+  background-color: #fff;
+  height: 62px;
+
+  .mat-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .back-btn {
+    position: absolute;
+    left: 200px;
+  }
+
+  .next-btn {
+    margin-right: 200px;
+    position: absolute;
+    right: 0;
+
+    @media (max-width: 767px) {
+      bottom: 0;
+    }
+  }
+}
+
+button.mdc-button.mat-primary.mat-mdc-button-base {
+  height: 36px;
+  width: 70px;
+}
+
+::ng-deep.mdc-linear-progress__bar {
+  transition: none !important;
+}
+
+@media screen and (max-width: 767px) {
+  .main {
+    height: 50px;
+    padding: 0;
+    .back-btn {
+      position: absolute;
+      left: 0;
+      width: 50%;
+      button {
+        height: 50px;
+        width: 100%;
+        border-radius: 0px;
+      }
+    }
+    .next-btn {
+      margin-right: 0px;
+      width: 50%;
+      button {
+        height: 46px;
+        width: 100%;
+        border-radius: 0px;
+      }
+    }
+  }
+}

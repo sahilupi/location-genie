@@ -1,0 +1,56 @@
+<app-overlay *ngIf="isLoadingData"></app-overlay>
+<section class="home-banner-wrapper" [class.animate]="!isLoadingData">
+  <app-banner
+    [bannerData]="bannerData"
+    [isEditingData]="isEditingData"
+    [allActivities]="allActivities"
+    [popularActivities]="popularActivities"
+  ></app-banner>
+</section>
+
+<div class="container activity">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="activity-title">
+        Top
+        <span *ngIf="spaceName !== 'cities'" class="text-capitalize"
+          >{{ currentRoute }}
+          {{ !currentRoute.includes(spaceName) ? spaceName : "" }}</span
+        >
+        <span *ngIf="spaceName === 'cities'" class="text-capitalize">
+          Locations in {{ currentRoute }}</span
+        >
+      </h2>
+
+      <section
+        class="container mt-4"
+        *ngIf="(!locations || locations.length <= 0) && !isLoadingData"
+      >
+        <div class="row">
+          <div class="col-12 text-center mt-4">
+            <h4 class="mt-4">No Locations Found.</h4>
+            <div class="col-sm-12 mt-4">
+              <button
+                type="button"
+                class="ml-3 mb-4 text-white"
+                color="primary"
+                mat-stroked-button
+                routerLink="/"
+              >
+                Go to Homepage
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <app-popular-location
+        *ngFor="let location of locations; let i = index"
+        [locationData]="location"
+        [class]="'grid-4'"
+        [height]="'100%'"
+        [className]="'similar-location image_wrap'"
+        [selectedProjectListings]="selectedProjectListings"
+      ></app-popular-location>
+    </div>
+  </div>
+</div>

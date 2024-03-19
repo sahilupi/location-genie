@@ -1,0 +1,326 @@
+<app-list-space-header
+  [stepNumber]="2"
+  [stepName]="'Set the scene'"
+  (onSaveAndExit)="updateSelectedKeyFeatures('save')"
+></app-list-space-header>
+
+<div class="step-one">
+  <div class="container stepper">
+    <div class="row" style="gap: 14px">
+      <div
+        *ngFor="let stepper of stepperData; let i = index"
+        class="single-step"
+        [ngClass]="i === 1 ? 'active' : ''"
+      >
+        <app-listing-stepper
+          [stepperData]="stepper"
+          [activeIdx]="2"
+          [idx]="i"
+          [totalSteppers]="stepperData.length"
+        ></app-listing-stepper>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container steptwosecondpage">
+  <div class="data-table">
+    <div class="row justify-content-between" style="gap: 2%">
+      <div
+        class="card animate__animated animate__fadeIn"
+        *ngIf="keyFeatures && keyFeatures.length > 0"
+      >
+        <h5>What key features does your location have?</h5>
+        <!-- *ngIf="
+                categoryType === 1 ||
+                (categoryType === 2 &&
+                  (selectedValues?.includes('Concert/Entertainment Venue') ||
+                    selectedValues?.includes('Sports Venue')) &&
+                  feature.keyFeatureName == 'Pool') ||
+                (categoryType === 2 &&
+                  ((selectedValues?.includes('Bar/Club') &&
+                    feature.keyFeatureName === 'Pool') ||
+                    (selectedValues?.includes('Bar/Club') &&
+                      feature.keyFeatureName === 'View'))) ||
+                (categoryType === 3 &&
+                  selectedValues?.includes('Loft Studio') &&
+                  feature.keyFeatureName === 'View') ||
+                (categoryType === 2 &&
+                  selectedValues?.includes('Church/Temple') &&
+                  feature.keyFeatureName === 'Elevator') ||
+                (selectedValues?.includes('Church/Temple') &&
+                  feature.keyFeatureName === 'Garden/Yard') ||
+                (selectedValues?.includes('Church/Temple') &&
+                  feature.keyFeatureName === 'Pool') ||
+                (selectedValues?.includes('Church/Temple') &&
+                  feature.keyFeatureName === 'Stairs') ||
+                (selectedValues?.includes('Event Space') &&
+                  feature.keyFeatureName === 'Pool') ||
+                (selectedValues?.includes('Event Space') &&
+                  feature.keyFeatureName === 'View') ||
+                (selectedValues?.includes('Farm/Ranch') &&
+                  feature.keyFeatureName === 'Pool') ||
+                (selectedValues?.includes('Farm/Ranch') &&
+                  feature.keyFeatureName === 'View') ||
+                (selectedValues?.includes('Dance/Fitness/Gym') &&
+                  feature.keyFeatureName === 'Pool') ||
+                (selectedValues?.includes('Hotel/Motel') &&
+                  feature.keyFeatureName === 'Elevator') ||
+                (selectedValues?.includes('Hotel/Motel') &&
+                  feature.keyFeatureName === 'Pool') ||
+                (selectedValues?.includes('Hotel/Motel') &&
+                  feature.keyFeatureName === 'Fireplace') ||
+                (selectedValues?.includes('Hotel/Motel') &&
+                  feature.keyFeatureName === 'Stairs') ||
+                (selectedValues?.includes('Office') &&
+                  feature.keyFeatureName === 'View') ||
+                (selectedValues?.includes('Restaurant/Cafe') &&
+                  feature.keyFeatureName === 'Fireplace') ||
+                (selectedValues?.includes('Restaurant/Cafe') &&
+                  feature.keyFeatureName === 'Pool') ||
+                (selectedValues?.includes('Restaurant/Cafe') &&
+                  feature.keyFeatureName === 'View') ||
+                (selectedValues?.includes('School/University/Dormitory') &&
+                  feature.keyFeatureName === 'Pool') ||
+                (selectedValues?.includes('Winery') &&
+                  feature.keyFeatureName === 'Driveway') ||
+                (selectedValues?.includes('Winery') &&
+                  feature.keyFeatureName === 'Elevator') ||
+                (selectedValues?.includes('Winery') &&
+                  feature.keyFeatureName === 'Fireplace') ||
+                (selectedValues?.includes('Winery') &&
+                  feature.keyFeatureName === 'Garden/Yard') ||
+                (selectedValues?.includes('Winery') &&
+                  feature.keyFeatureName === 'Pool') ||
+                (selectedValues?.includes('Winery') &&
+                  feature.keyFeatureName === 'Porch') ||
+                (selectedValues?.includes('Winery') &&
+                  feature.keyFeatureName === 'Stairs') ||
+                (selectedValues?.includes('Winery') &&
+                  feature.keyFeatureName === 'View')
+              " -->
+        <div class="row">
+          <div *ngFor="let feature of keyFeatures" class="features">
+            <div class="col-md-3 customcheckbox">
+              <div class="custom-checkbox">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  (click)="toggleFeatures(feature)"
+                  [(ngModel)]="feature.checked"
+                  [id]="'key-feature-' + feature.id"
+                  >{{ feature.keyFeatureName }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+
+      <div
+        class="card animate__animated animate__fadeIn"
+        *ngFor="let filteredKF of filteredkeyFeatureDetails"
+      >
+        <h5>What type of {{ filteredKF.title }} do you have?</h5>
+        <div class="row driveaway longtext labelfix">
+          <div
+            *ngIf="
+              !filteredKF.keyFeatureDetails ||
+              filteredKF.keyFeatureDetails.length <= 0
+            "
+            class="m-auto"
+          >
+            <h5>No {{ filteredKF.title }} found.</h5>
+          </div>
+          <div
+            class="col-md-4 p-2 check_boxx"
+            *ngFor="let feature of filteredKF.keyFeatureDetails"
+          >
+            <div class="customcheckbox">
+              <div class="custom-checkbox">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  [(ngModel)]="feature.checked"
+                  [id]="'key-feature-details-' + feature.id"
+                  >{{ feature.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+
+      <!-- <div
+        class="card animate__animated animate__fadeIn"
+        *ngIf="isElevatorChecked && elevators && elevators.length > 0"
+      >
+        <h5>What type of elevator do you have?</h5>
+        <div class="row driveaway">
+          <div class="col-md-3" *ngFor="let feature of elevators">
+            <div class="customcheckbox">
+              <div class="custom-checkbox">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  [(ngModel)]="feature.checked"
+                  [id]="'feature-' + feature.id"
+                  >{{ feature.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="card animate__animated animate__fadeIn"
+        *ngIf="isFireplaceChecked && fireplaces && fireplaces.length > 0"
+      >
+        <h5>What type of fireplace do you have?</h5>
+        <div class="row driveaway">
+          <div class="col-md-3" *ngFor="let feature of fireplaces">
+            <div class="customcheckbox">
+              <div class="custom-checkbox">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  [(ngModel)]="feature.checked"
+                  [id]="'feature-' + feature.id"
+                  >{{ feature.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="card animate__animated animate__fadeIn"
+        *ngIf="isGardenYardChecked && gardenYards && gardenYards.length > 0"
+      >
+        <h5>What type of garden/yard do you have?</h5>
+        <div class="row driveaway break">
+          <div class="col-md-3" *ngFor="let feature of gardenYards">
+            <div class="customcheckbox">
+              <div class="custom-checkbox">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  [(ngModel)]="feature.checked"
+                  [id]="'feature-' + feature.id"
+                  >{{ feature.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="card animate__animated animate__fadeIn"
+        *ngIf="isPoolChecked && pools && pools.length > 0"
+      >
+        <h5>What type of pool do you have?</h5>
+        <div class="row driveaway">
+          <div class="col-md-3" *ngFor="let feature of pools">
+            <div class="customcheckbox">
+              <div class="custom-checkbox">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  [(ngModel)]="feature.checked"
+                  [id]="'feature-' + feature.id"
+                  >{{ feature.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="card animate__animated animate__fadeIn"
+        *ngIf="isPorchChecked && porches && porches.length > 0"
+      >
+        <h5>What type of porch do you have?</h5>
+        <div class="row driveaway porch">
+          <div class="col-md-3" *ngFor="let feature of porches">
+            <div class="customcheckbox">
+              <div class="custom-checkbox">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  [(ngModel)]="feature.checked"
+                  [id]="'feature-' + feature.id"
+                  >{{ feature.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="card animate__animated animate__fadeIn"
+        *ngIf="isStairChecked && stairs && stairs.length > 0"
+      >
+        <h5>What type of stairs do you have?</h5>
+        <div class="row driveaway">
+          <div class="col-md-6" *ngFor="let feature of stairs">
+            <div class="customcheckbox">
+              <div class="custom-checkbox setlabels">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  [(ngModel)]="feature.checked"
+                  [id]="'feature-' + feature.id"
+                  >{{ feature.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="card animate__animated animate__fadeIn"
+        *ngIf="isViewChecked && views && views.length > 0"
+      >
+        <h5>What type of view do you have?</h5>
+        <div class="row view-sec driveaway">
+          <div class="col-md-3 p-0 view" *ngFor="let feature of views">
+            <div class="customcheckbox setwidthbox">
+              <div class="custom-checkbox viewwidth">
+                <mat-checkbox
+                  class="example-margin"
+                  color="primary"
+                  class="text-white"
+                  [(ngModel)]="feature.checked"
+                  [id]="'feature-' + feature.id"
+                  >{{ feature.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<app-list-space-buttons
+  [backBtnRoute]="backBtnRoute"
+  (nextBtnClick)="updateSelectedKeyFeatures()"
+  [progressValue]="25"
+></app-list-space-buttons>

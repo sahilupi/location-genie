@@ -1,0 +1,406 @@
+<div class="search animate__animated animate__fadeIn">
+  <div class="new_top">
+    <div class="row search-part no-gutters new_design">
+      <div [class]="showGoogleMaps ? 'col-8' : 'col-12'">
+        <div class="row">
+          <div
+            [ngClass]="
+              showGoogleMaps && locations && locations.length > 0
+                ? 'col-md-6'
+                : 'col-md-7'
+            "
+          >
+            <form [formGroup]="titleSearch" (ngSubmit)="onSearchByTitle()">
+              <div class="search">
+                <i class="fas fa-search"></i>
+                <input
+                  type="search"
+                  placeholder="Search for location names..."
+                  formControlName="locationTitle"
+                  (keyup)="checkIfToSearch()"
+                />
+                <mat-icon class="clear-search" (click)="clearTitleName()"
+                  >clear</mat-icon
+                >
+              </div>
+            </form>
+          </div>
+          <div class="col-md-2 px-0">
+            <div class="location">
+              <div class="location-group">
+                <i class="fas fa-map-marker-alt"></i>
+                <input
+                  [(ngModel)]="location"
+                  type="text"
+                  class="location-city"
+                  (focus)="showCitiesList = true"
+                  (blur)="showCitiesList = false; location = tempLocation"
+                  (keyup)="onFilterCity($event)"
+                />
+                <ul class="cities" *ngIf="showCitiesList">
+                  <li
+                    *ngFor="let city of cities"
+                    [class.checked]="
+                      location.toLowerCase() === city.name.toLowerCase()
+                    "
+                    (mousedown)="onSelectCity(city)"
+                  >
+                    {{ city.name }}
+                    <i
+                      *ngIf="location.toLowerCase() === city.name.toLowerCase()"
+                      class="fas fa-check"
+                    ></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 px-0">
+            <div class="location">
+              <div class="location-group ml-md-3">
+                <i class="fas fa-calendar"></i>
+                <input
+                  [(ngModel)]="type ? type : event"
+                  type="text"
+                  class="location-city"
+                  (focus)="showEventList = true; allActivities = tempActivities"
+                  (blur)="
+                    showEventList = false; event = tempEvent; type = tempType
+                  "
+                  (keyup)="onFilterEvent($event)"
+                />
+                <ul class="cities" *ngIf="showEventList">
+                  <li
+                    *ngFor="let activity of allActivities"
+                    [class.checked]="
+                      event.toLowerCase() === activity.name.toLowerCase() ||
+                      activity.name.toLowerCase() === type.toLowerCase()
+                    "
+                    (mousedown)="onSelectActivity(activity)"
+                  >
+                    {{ activity.name }}
+                    <i
+                      *ngIf="
+                        event.toLowerCase() === activity.name.toLowerCase() ||
+                        activity.name.toLowerCase() === type.toLowerCase()
+                      "
+                      class="fas fa-check"
+                    ></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            [ngClass]="
+              showGoogleMaps && locations && locations.length > 0
+                ? 'col-md-2'
+                : 'col-md-1'
+            "
+          >
+            <div class="filter-dropdown">
+              <div
+                class="form-group filter_responsiveness mb-0 position-relative"
+              >
+                <div
+                  role="button"
+                  class="filter-btn"
+                  (click)="toggleFilterOptions(); preventCloseOnClick()"
+                >
+                  <small>Filters</small>
+                  <div role="button" class="icon_filter">
+                    <i
+                      class="fa fa-chevron-down"
+                      [ngClass]="showFilterOptions ? 'toggle-down' : ''"
+                      aria-hidden="true"
+                    ></i>
+                  </div>
+                </div>
+                <div
+                  class="filter-content animate__animated animate__fadeIn animate__faster"
+                  *ngIf="!isLoading && showFilterOptions"
+                  (click)="preventCloseOnClick()"
+                >
+                  <div class="close-parent float-right">
+                    <mat-icon
+                      class="close"
+                      matTooltip="Close filters"
+                      (click)="showFilterOptions = false"
+                      >close</mat-icon
+                    >
+                  </div>
+                  <small
+                    role="button"
+                    class="float-right text-danger mr-2 ml-2 clear-filters"
+                    (click)="clearAllFilters()"
+                    >Clear filters</small
+                  >
+                  <div class="price-filters">
+                    <small><b>Price</b></small>
+                    <div class="d-flex justify-content-between">
+                      <small
+                        >from <b>د.إ {{ fromPrice }}</b></small
+                      >
+                      <small
+                        >to
+                        <b
+                          >د.إ {{ toPrice }}
+                          <span *ngIf="+toPrice > 999">+</span>
+                        </b></small
+                      >
+                    </div>
+                    <mat-slider
+                      (change)="
+                        searchLocations(
+                          location,
+                          event,
+                          type,
+                          noOfAttendees,
+                          minimumHoursSliderValue.toString(),
+                          locationAllows,
+                          fromPrice,
+                          toPrice,
+                          locationTitle
+                        )
+                      "
+                      class="mat-slider"
+                      min="0"
+                      max="1000"
+                      step="50"
+                    >
+                      <input [(ngModel)]="fromPrice" matSliderStartThumb />
+                      <input [(ngModel)]="toPrice" matSliderEndThumb />
+                    </mat-slider>
+                  </div>
+
+                  <div class="mt-4">
+                    <small><b>Attendees</b></small>
+                    <div class="row p-2">
+                      <mat-radio-group
+                        name="attendies"
+                        aria-label="Select an option"
+                        [(ngModel)]="noOfAttendees"
+                      >
+                        <mat-radio-button
+                          *ngFor="let attendy of attendies"
+                          role="button"
+                          color="primary"
+                          class="col-6 mt-2 c-pointer booking-desc booking-desc-instant"
+                          [value]="attendy.value"
+                          (change)="
+                            searchLocations(
+                              location,
+                              event,
+                              type,
+                              attendy.value,
+                              minimumHoursSliderValue.toString(),
+                              locationAllows,
+                              fromPrice,
+                              toPrice,
+                              locationTitle
+                            )
+                          "
+                          >{{ attendy.text }}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <small><b>Minimum Hours</b></small>
+                    <div class="d-flex justify-content-between">
+                      <small>from <b>0</b></small>
+                      <small
+                        >to <b>{{ minimumHoursSliderValue }}</b></small
+                      >
+                    </div>
+                    <mat-slider class="mat-slider" min="1" max="12" step="1">
+                      <input
+                        [(ngModel)]="minimumHoursSliderValue"
+                        matSliderThumb
+                        (change)="
+                          searchLocations(
+                            location,
+                            event,
+                            type,
+                            noOfAttendees,
+                            minimumHoursSliderValue.toString(),
+                            locationAllows,
+                            fromPrice,
+                            toPrice,
+                            locationTitle
+                          );
+                          minimumHours = minimumHoursSliderValue
+                        "
+                      />
+                    </mat-slider>
+                  </div>
+                  <div class="mt-4">
+                    <small><b>Location Allows</b></small>
+                    <div class="col-12" *ngFor="let rule of locationsRules">
+                      <mat-checkbox
+                        class="custom-control-input"
+                        color="primary"
+                        [id]="rule.id + ''"
+                        class="text-white"
+                        [checked]="rule.checked"
+                        [(ngModel)]="rule.checked"
+                        (change)="onCheckRules(rule.name, rule.checked)"
+                      >
+                        {{ rule.name }}
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mx-0">
+      <div
+        [class]="
+          showGoogleMaps && locations && locations.length > 0
+            ? 'col-lg-8 p-0'
+            : 'col-lg-12 p-0'
+        "
+      >
+        <div class="toggle_sectn">
+          <p
+            class="showing-results"
+            [class.invisible]="!locations || locations.length <= 0"
+          >
+            Showing
+            {{ (pagination.pageNumber - 1) * pagination.pageSize + 1 }}
+            to
+            {{
+              pagination.pageNumber * pagination.pageSize <= totalCount
+                ? pagination.pageNumber * pagination.pageSize
+                : totalCount
+            }}
+            of {{ totalCount }} {{ tempEvent || tempType }} locations near
+            {{ location }}
+          </p>
+          <div
+            *ngIf="locations && locations.length > 0"
+            class="toggle"
+            role="button"
+            (click)="toggleMaps()"
+          >
+            <small class="mr-2">{{
+              showGoogleMaps ? "Hide map" : "Show map"
+            }}</small>
+            <mat-slide-toggle
+              color="primary"
+              [checked]="showGoogleMaps"
+            ></mat-slide-toggle>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <section
+        class="container mt-4"
+        *ngIf="(!locations || locations.length <= 0) && !isLoading"
+      >
+        <div class="row">
+          <div class="col-12 text-center mt-4">
+            <img
+              class="mb-4 img-logo"
+              src="assets/images/location-logo.png"
+              alt="logo"
+              width="300"
+            />
+            <h4 class="mt-4">No exact matches</h4>
+            <h6 class="mt-4">Try changing or removing some of your filters.</h6>
+            <button
+              mat-stroked-button
+              class="btn btn-success text-white mb-4 mt-4"
+              (click)="clearAllFilters()"
+            >
+              Reset all filters
+            </button>
+          </div>
+        </div>
+      </section>
+      <section class="container mt-4" *ngIf="isLoading">
+        <div class="row">
+          <div class="col-12 text-center mt-4">
+            <img
+              class="mb-4 img-logo"
+              src="assets/images/location-logo.png"
+              alt="logo"
+              width="300"
+            />
+            <h6 class="mt-4 mt-4">Hang on! Loading content</h6>
+          </div>
+        </div>
+      </section>
+      <div class="row">
+        <div
+          [ngClass]="
+            showGoogleMaps && locations && locations.length > 0
+              ? 'col-lg-8'
+              : 'col-lg-12'
+          "
+        >
+          <app-popular-location
+            *ngFor="let location of locations"
+            [locationData]="location"
+            [selectedProjectListings]="selectedProjectListings"
+            [class]="
+              showGoogleMaps && locations && locations.length > 0
+                ? 'grid-3'
+                : 'grid-4'
+            "
+          ></app-popular-location>
+          <mat-paginator
+            *ngIf="totalCount > 24"
+            [length]="totalCount"
+            [pageIndex]="pagination.pageNumber - 1"
+            [pageSize]="pagination.pageSize"
+            [pageSizeOptions]="[10, 20, 50, 100]"
+            showFirstLastButtons
+            (page)="onPageChange($event)"
+          ></mat-paginator>
+        </div>
+        <!-- google maps -->
+        <div
+          class="col-lg-4 col-md-12 p-0 google-maps"
+          *ngIf="
+            showGoogleMaps && locations && locations.length > 0 && !isLoadingMap
+          "
+        >
+          <div
+            class="close-parent"
+            role="button"
+            (click)="showGoogleMaps = false"
+          >
+            <mat-icon class="close-google-maps">close</mat-icon>
+          </div>
+          <google-map
+            width="100%"
+            height="100vh"
+            [zoom]="zoom"
+            [center]="center"
+          >
+            <map-marker
+              *ngFor="let marker of markers"
+              [position]="marker.position"
+              [label]="marker.label"
+              [options]="marker"
+            >
+            </map-marker>
+          </google-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div
+  (click)="showFilterOptions = false"
+  class="filter-backdrop"
+  *ngIf="showFilterOptions"
+></div> -->

@@ -1,0 +1,345 @@
+<section class="main request_page" *ngIf="!showBanner">
+  <div class="container">
+    <div class="container-html container-html__w_634">
+      <form
+        [formGroup]="enquiryForm"
+        class="renter-questionnaire renter-questionnaire-js"
+        id="questionnaire_form"
+      >
+        <h1 class="renter-questionnaire--title px-2">
+          Tell us what you're looking for
+        </h1>
+        <p class="renter-questionnaire--text px-2">
+          This will help us find you the right space.
+        </p>
+
+        <div class="row mx-0">
+          <div class="col-lg-6 fullwidth form-group design_select p-2">
+            <label for="projectName"
+              >Type of project: <span class="text-danger">*</span></label
+            >
+            <mat-select
+              [ngClass]="{
+                'has-error':
+                  (c['projectName'].invalid && c['projectName'].touched) ||
+                  (c['projectName'].invalid && isSubmitted)
+              }"
+              formControlName="projectName"
+              class="form-control select_design"
+              id="projectName"
+              placeholder="Choose event type"
+            >
+              <mat-option value="Film/Photoshoot">Film/Photoshoot</mat-option>
+              <mat-option value="Event">Event</mat-option>
+              <mat-option value="Something Else">Something Else</mat-option>
+            </mat-select>
+
+            <small
+              class="has-error--text"
+              *ngIf="
+                (c['projectName'].hasError('required') &&
+                  c['projectName'].touched) ||
+                (c['projectName'].hasError('required') && isSubmitted)
+              "
+              >This field is required</small
+            >
+          </div>
+          <div class="col-lg-6 form-group fullwidth p-2">
+            <label for="crewAttendees"
+              >Number of cast & crew/attendees:
+              <span class="text-danger">*</span></label
+            >
+            <mat-select
+              [ngClass]="{
+                'has-error':
+                  (c['crewAttendees'].invalid && c['crewAttendees'].touched) ||
+                  (c['crewAttendees'].invalid && isSubmitted)
+              }"
+              formControlName="crewAttendees"
+              class="form-control"
+              id="crewAttendees"
+              placeholder="Choose no of people"
+            >
+              <mat-option
+                [value]="option.value"
+                *ngFor="let option of attendiesDropdown"
+                >{{ option.text }}</mat-option
+              >
+            </mat-select>
+            <small
+              class="has-error--text"
+              *ngIf="
+                (c['crewAttendees'].hasError('required') &&
+                  c['crewAttendees'].touched) ||
+                (c['crewAttendees'].hasError('required') && isSubmitted)
+              "
+              >This field is required</small
+            >
+          </div>
+          <div class="col-lg-6 form-group fullwidth p-2">
+            <label for="date">Date: <span class="text-danger">*</span></label>
+            <input
+              [ngClass]="{
+                'has-error':
+                  (c['projectDate'].invalid && c['projectDate'].touched) ||
+                  (c['projectDate'].invalid && isSubmitted)
+              }"
+              type="text"
+              formControlName="projectDate"
+              class="form-control"
+              id="date"
+              placeholder="Pick a date"
+              matInput
+              [min]="today"
+              [matDatepicker]="basicDatepicker"
+              class="form-control date-control"
+              (click)="basicDatepicker.open()"
+              (dateChange)="onDateChange($event)"
+            />
+            <small
+              class="has-error--text"
+              *ngIf="
+                (c['projectDate'].hasError('required') &&
+                  c['projectDate'].touched) ||
+                (c['projectDate'].hasError('required') && isSubmitted)
+              "
+              >This field is required</small
+            >
+            <mat-datepicker #basicDatepicker> </mat-datepicker>
+          </div>
+          <div class="col-lg-6 form-group fullwidth p-2">
+            <label for="projectLocation">Looking for a location in: </label>
+            <input
+              type="text"
+              formControlName="projectLocation"
+              class="form-control"
+              id="projectLocation"
+              placeholder="City or area"
+            />
+          </div>
+          <div class="col-12 form-group fullwidth p-2">
+            <label for="budget"
+              >Approximate budget per day:
+              <span class="text-danger">*</span></label
+            >
+            <div class="d-flex justify-content-between">
+              <p class="mb-1">
+                <span class="buget_text">from</span> د.إ{{
+                  c["minBudgetPerDay"].value
+                }}
+              </p>
+              <p class="mb-1">
+                <span class="buget_text">to</span> د.إ{{
+                  c["maxBudgetPerDay"].value === 20000
+                    ? c["maxBudgetPerDay"].value + "+"
+                    : c["maxBudgetPerDay"].value
+                }}
+              </p>
+            </div>
+            <mat-slider min="200" max="20000">
+              <input formControlName="minBudgetPerDay" matSliderStartThumb />
+              <input formControlName="maxBudgetPerDay" matSliderEndThumb />
+            </mat-slider>
+          </div>
+          <div class="col-12 form-group fullwidth p-2">
+            <label for="space"
+              >Type of space: <span class="text-danger">*</span></label
+            >
+            <textarea
+              [ngClass]="{
+                'has-error':
+                  (c['projectSpace'].invalid && c['projectSpace'].touched) ||
+                  (c['projectSpace'].invalid && isSubmitted)
+              }"
+              rows="6"
+              formControlName="projectSpace"
+              type="text"
+              class="form-control"
+              id="projectSpace"
+              placeholder="For example, warehouse, multi-purpose studio, family home, etc."
+            ></textarea>
+            <small
+              class="has-error--text"
+              *ngIf="
+                (c['projectSpace'].hasError('required') &&
+                  c['projectSpace'].touched) ||
+                (c['projectSpace'].hasError('required') && isSubmitted)
+              "
+              >This field is required</small
+            >
+          </div>
+        </div>
+        <h2 class="renter-questionnaire--title-additional px-2">
+          How can we contact you?
+        </h2>
+        <div class="row mx-0">
+          <div class="col-lg-6 form-group fullwidth p-2">
+            <label for="fullName"
+              >Full name <span class="text-danger">*</span></label
+            >
+            <input
+              [ngClass]="{
+                'has-error':
+                  (c['fullName'].invalid && c['fullName'].touched) ||
+                  (c['fullName'].invalid && isSubmitted)
+              }"
+              type="text"
+              formControlName="fullName"
+              placeholder="Enter Full Name"
+              class="form-control"
+              id="fullName"
+            />
+            <small
+              class="has-error--text"
+              *ngIf="
+                (c['fullName'].hasError('required') && c['fullName'].touched) ||
+                (c['fullName'].hasError('required') && isSubmitted)
+              "
+              >This field is required</small
+            >
+          </div>
+          <div class="col-lg-6 form-group fullwidth p-2">
+            <label for="company">Company</label>
+            <input
+              type="text"
+              formControlName="company"
+              placeholder="Enter Company"
+              class="form-control"
+              id="company"
+            />
+          </div>
+          <div class="col-lg-6 form-group fullwidth p-2">
+            <label for="email"
+              >Email address <span class="text-danger">*</span></label
+            >
+            <input
+              [ngClass]="{
+                'has-error':
+                  (c['email'].invalid && c['email'].touched) ||
+                  (c['email'].invalid && isSubmitted)
+              }"
+              type="text"
+              formControlName="email"
+              placeholder="Enter Email"
+              class="form-control"
+              id="email"
+            />
+            <small
+              class="has-error--text"
+              *ngIf="
+                (c['email'].hasError('required') && c['email'].touched) ||
+                (c['email'].hasError('required') && isSubmitted)
+              "
+              >This field is required</small
+            >
+            <small
+              class="has-error--text"
+              *ngIf="
+                (c['email'].hasError('pattern') && c['email'].touched) ||
+                (c['email'].hasError('pattern') && isSubmitted)
+              "
+              >Enter a valid email</small
+            >
+          </div>
+          <div class="col-lg-6 form-group fullwidth phn_felid p-2">
+            <label for="phone">Phone number</label>
+            <div class="enter-phone form-control d-flex pl-1 py-0">
+              <div class="country-image">
+                <img
+                  src="{{
+                    'http://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                      selectedCountry +
+                      '.svg'
+                  }}"
+                  width="24px"
+                  height="24px"
+                />
+
+                <mat-form-field class="positn_phn" appearance="fill">
+                  <input
+                    type="text"
+                    matInput
+                    maxlength="7"
+                    [formControl]="dialCodeControl"
+                    (blur)="changeCountry($event)"
+                    [matAutocomplete]="auto"
+                    (paste)="$event.preventDefault()"
+                  />
+                  <i class="fa fa-caret-down input-icon" aria-hidden="true"></i>
+
+                  <mat-autocomplete
+                    #auto="matAutocomplete"
+                    [displayWith]="displayFn"
+                    class="flag-dropdown"
+                  >
+                    <mat-option
+                      class="option_design"
+                      *ngFor="let item of filteredCountryCodes | async"
+                      [value]="item"
+                      (click)="onChangeCountry(item)"
+                    >
+                      <img
+                        src="{{
+                          'http://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                            item.code +
+                            '.svg'
+                        }}"
+                        width="20px"
+                        height="20px"
+                      />&nbsp; <span>{{ item.dialCode }}</span> &nbsp;
+                      <span>{{ item.code }}</span>
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-error class="codeError" *ngIf="!isDialCodeError">
+                    <small>Country code is required</small>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <input
+                formControlName="phoneNumber"
+                class="is-invalid phoneNo"
+                placeholder="Enter Phone Number"
+                id="exampleInputMobile"
+                (paste)="$event.preventDefault()"
+                (keypress)="commonService.numberOnly($event)"
+                maxlength="10"
+              />
+            </div>
+            <small class="has-error--text" *ngIf="isDialCodeError"
+              >Enter a valid country code</small
+            >
+          </div>
+          <div class="col-12 p-2 mt-2">
+            <button
+              class="btn-success btn-lg_size_big renter-questionnaire--submit"
+              id="submit"
+              fdprocessedid="gfinrs"
+              (click)="onSubmit()"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="main" *ngIf="showBanner">
+  <div class="container align-items-center">
+    <div class="success alert">
+      <div class="alert-body">
+        <div class="renter-questionnaire-thank-you--title">Thank you!</div>
+        <div class="renter-questionnaire-thank-you--text">
+          Request successfully sent. We will contact you as<br />
+          soon as possible.
+        </div>
+        <a
+          href="/"
+          class="btn-success btn-lg_size_40 renter-questionnaire-thank-you--btn"
+          >Go to main page</a
+        >
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,394 @@
+<app-list-space-header
+  [stepNumber]="1"
+  [stepName]="'The basics'"
+  (onSaveAndExit)="onSubmitForm()"
+></app-list-space-header>
+<div class="form-fields">
+  <div class="container nwe_field">
+    <form
+      *ngIf="residentialForm"
+      [formGroup]="residentialForm"
+      (ngSubmit)="onSubmitForm()"
+    >
+      <div class="text-center">
+        <h2 class="heading">Location details.</h2>
+      </div>
+      <div class="row">
+        <div class="col-md-6 pb-2 px-2" *ngIf="categoryType == 4">
+          <label>Year</label>
+          <input
+            formControlName="year"
+            type="text"
+            (keypress)="commonService.numberOnly($event)"
+            placeholder="Build Year"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-6 pb-2 px-2" *ngIf="categoryType == 4">
+          <label>Make</label>
+          <input
+            formControlName="make"
+            type="text"
+            placeholder="Make"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-6 pb-2 px-2" *ngIf="categoryType == 4">
+          <label>Model</label>
+          <input
+            formControlName="model"
+            type="model"
+            placeholder="Model"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 pb-2 px-2" *ngIf="categoryType == 1">
+          <div class="field-group">
+            <label>Number of bedrooms</label>
+            <div class="position-relative">
+              <input
+                formControlName="noOfBedRooms"
+                type="text"
+                (keypress)="commonService.numberOnly($event)"
+                (paste)="$event.preventDefault()"
+                min="1"
+                placeholder="n/a"
+                class="form-control"
+                noZeroInput
+              />
+
+              <app-input-spinner
+                (change)="onUpdateQuantity($event, 'noOfBedRooms')"
+              ></app-input-spinner>
+            </div>
+            <!-- <div class="increment-buttons d-flex align-items-center">
+              <mat-icon class="minus">minimize</mat-icon>
+              <mat-icon class="add">add</mat-icon>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-6 pb-4 px-2" *ngIf="categoryType == 1">
+          <div class="field-group">
+            <label>Number of bathrooms</label>
+            <div class="position-relative">
+              <input
+                formControlName="noOfBathRooms"
+                type="text"
+                (keypress)="commonService.numberOnly($event)"
+                placeholder="n/a"
+                class="form-control"
+                noZeroInput
+              />
+              <app-input-spinner
+                (change)="onUpdateQuantity($event, 'noOfBathRooms')"
+              ></app-input-spinner>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 pb-4 px-2">
+          <div class="row">
+            <div class="col-md-6 px-2" *ngIf="categoryType != 4">
+              <div class="field-group padding">
+                <label>Property size (sq ft)</label>
+                <div class="position-relative">
+                  <input
+                    formControlName="propertySize"
+                    type="text"
+                    (keypress)="commonService.numberOnly($event)"
+                    placeholder="sq"
+                    class="form-control"
+                    noZeroInput
+                  />
+                  <app-input-spinner
+                    (change)="onUpdateQuantity($event, 'propertySize')"
+                  ></app-input-spinner>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 px-2" *ngIf="categoryType == 1">
+              <div class="field-group">
+                <label>Lot size (sq ft)</label>
+                <div class="position-relative">
+                  <input
+                    formControlName="lotSize"
+                    type="text"
+                    (keypress)="commonService.numberOnly($event)"
+                    placeholder="n/a"
+                    class="form-control"
+                    noZeroInput
+                  />
+                  <app-input-spinner
+                    (change)="onUpdateQuantity($event, 'lotSize')"
+                  ></app-input-spinner>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-md-6 pb-4 px-2"
+          *ngIf="categoryType == 1 || categoryType == 3"
+        >
+          <div class="field-group">
+            <label>Main floor number (if applicable)</label>
+            <div class="position-relative">
+              <input
+                formControlName="mainFloorNumber"
+                type="text"
+                (keypress)="commonService.numberOnly($event)"
+                placeholder="n/a"
+                class="form-control"
+                noZeroInput
+              />
+              <app-input-spinner
+                (change)="onUpdateQuantity($event, 'mainFloorNumber')"
+              ></app-input-spinner>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="d-flex align-items-center set_flx" *ngIf="categoryType == 3 || categoryType == 4">
+          <div
+            class="set_width px-2"
+            
+          >
+            <label>Height</label>
+            <div class="icon">
+              <input
+                formControlName="heightFeet"
+                type="text"
+                (keypress)="commonService.numberOnly($event)"
+                placeholder="ft."
+                class="form-control"
+                noZeroInput
+              />
+              <!-- <mat-icon>minimize</mat-icon> -->
+            </div>
+          </div>
+          <div class="set_height">
+            <mat-icon>minimize</mat-icon>
+          </div>
+          <div
+            class="set_width px-2"
+            *ngIf="categoryType == 3 || categoryType == 4"
+          >
+            <label></label>
+            <input
+              formControlName="heightInches width_inches"
+              type="text"
+              (keypress)="commonService.numberOnly($event)"
+              placeholder="in."
+              class="form-control"
+              noZeroInput
+            />
+          </div>
+        </div>
+        <div class="d-flex align-items-center set_flx" *ngIf="categoryType == 3 || categoryType == 4">
+          <div
+            class="set_width px-2"
+          >
+            <label>Width</label>
+            <div class="icon">
+              <input
+                formControlName="widthFeet"
+                (keypress)="commonService.numberOnly($event)"
+                type="text"
+                placeholder="ft."
+                class="form-control"
+                noZeroInput
+              />
+              <!-- <mat-icon>minimize</mat-icon> -->
+            </div>
+          </div>
+          <div class="set_height">
+            <mat-icon>minimize</mat-icon>
+          </div>
+          <div
+            class="set_width px-2"
+            *ngIf="categoryType == 3 || categoryType == 4"
+          >
+            <label></label>
+            <input
+              formControlName="widthInches"
+              (keypress)="commonService.numberOnly($event)"
+              type="text"
+              placeholder="in."
+              class="form-control width_inches"
+              noZeroInput
+            />
+          </div> 
+        </div>
+        <div class="d-flex align-items-center set_flx" *ngIf="categoryType == 3 || categoryType == 4">
+          <div
+            class="set_width px-2"
+          >
+            <label>Length</label>
+            <div class="icon">
+              <input
+                formControlName="lengthFeet"
+                (keypress)="commonService.numberOnly($event)"
+                type="text"
+                placeholder="ft."
+                class="form-control"
+                noZeroInput
+              />
+            </div>
+          </div>
+          <div class="set_height">
+            <mat-icon>minimize</mat-icon>
+          </div>
+          <div
+            class="set_width px-2"
+            *ngIf="categoryType == 3 || categoryType == 4"
+          >
+            <label></label>
+            <input
+              formControlName="lengthInches"
+              (keypress)="commonService.numberOnly($event)"
+              type="text"
+              placeholder="in."
+              class="form-control width_inches"
+              noZeroInput
+            />
+          </div>
+        </div>
+      </div>
+      <div class="type" *ngIf="categoryType != 4">
+        <div class="text-center">
+          <h2 class="heading">Parking and Accessibility.</h2>
+        </div>
+        <div class="container parking">
+          <div class="row cars">
+            <div class="col-md-6 pb-4 px-0">
+              <div class="field-group last">
+                <label>Number of cars that can park on the property</label>
+                <div class="position-relative">
+                  <input
+                    formControlName="carParkingSpace"
+                    type="text"
+                    (keypress)="commonService.numberOnly($event)"
+                    placeholder="n/a"
+                    class="form-control"
+                    noZeroInput
+                  />
+                  <app-input-spinner
+                    (change)="onUpdateQuantity($event, 'carParkingSpace')"
+                  ></app-input-spinner>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pb-4 access">
+              <label>Access availability</label>
+              <div>
+                <div
+                  class="customcheckbox"
+                  *ngFor="
+                    let parking of accessAvailabilityParkingArray;
+                    let i = index
+                  "
+                >
+                  <div class="custom-control custom-checkbox pl-0">
+                    <mat-checkbox
+                      class="example-margin"
+                      [id]="i.toString()"
+                      [value]="parking.value"
+                      color="primary"
+                      [checked]="parking.checked"
+                      (click)="
+                        onCheckBoxChange($event, 'accessAvailabilityParking')
+                      "
+                      class="text-white"
+                    >
+                      {{ parking.name }}
+                    </mat-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pb-4 access">
+              <label>Truck / motorhome parking?</label>
+              <div class="">
+                <div
+                  class="customcheckbox"
+                  *ngFor="
+                    let parking of truckMotarHomeParkingArray;
+                    let i = index
+                  "
+                >
+                  <div class="custom-control custom-checkbox pl-0">
+                    <mat-checkbox
+                      class="example-margin"
+                      [id]="parking.name"
+                      [value]="parking.value"
+                      color="primary"
+                      class="text-white"
+                      [checked]="parking.checked"
+                      (click)="
+                        onCheckBoxChange($event, 'truckMotarHomeParking')
+                      "
+                    >
+                      {{ parking.name }}
+                    </mat-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 access">
+              <label>Available parking lot or parking structure nearby?</label>
+              <div class="buttons">
+                <mat-button-toggle-group
+                  color="primary"
+                  formControlName="parkingNearby"
+                >
+                  <mat-button-toggle class="toggle-no" [value]="false"
+                    >No</mat-button-toggle
+                  >
+                  <mat-button-toggle class="toggle-yes" [value]="true"
+                    >Yes</mat-button-toggle
+                  >
+                </mat-button-toggle-group>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="type" *ngIf="categoryType != 4">
+        <div class="text-center">
+          <h2 class="heading">What amenities does your location offer?</h2>
+        </div>
+        <div class="container">
+          <div class="text-center amenities">
+            <div
+              class="customcheckbox"
+              *ngFor="let ameniity of amenitiesArray; let i = index"
+            >
+              <div class="custom-control custom-checkbox pl-0">
+                <mat-checkbox
+                  class="example-margin"
+                  [id]="ameniity.name"
+                  [value]="ameniity.value"
+                  [checked]="ameniity.checked"
+                  color="primary"
+                  (click)="onCheckBoxChange($event, 'amenities')"
+                  class="text-white"
+                >
+                  {{ ameniity.name }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-list-space-buttons
+        [backBtnRoute]="backBtnRoute"
+        [progressValue]="98"
+        [nextBtnText]="'Finish'"
+      ></app-list-space-buttons>
+    </form>
+  </div>
+</div>

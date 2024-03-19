@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="dialog-header d-flex justify-content-between">
+    <h3 class="heading" mat-dialog-title>{{ heading }}</h3>
+    <div class="close-parent">
+      <mat-icon class="close" (click)="dialogRef.close(null)">close</mat-icon>
+    </div>
+  </div>
+
+  <form
+    *ngIf="editHostBannerForm"
+    [formGroup]="editHostBannerForm"
+    (ngSubmit)="onSubmitForm()"
+  >
+    <div mat-dialog-content>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+        <mat-error>
+          <small>Maximum 30 characters allowed for title</small></mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="16" formControlName="description"></textarea>
+        <mat-error>
+          <small
+            >Maximum 300 characters allowed for description</small
+          ></mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Link Text</mat-label>
+        <input matInput formControlName="linkText" />
+        <mat-error>
+          <small>Maximum 20 characters allowed for title</small></mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Link</mat-label>
+        <input matInput formControlName="link" />
+      </mat-form-field>
+      <div>
+        <button
+          type="button"
+          mat-raised-button
+          matPrefix
+          (click)="f_input.click()"
+        >
+          Select Image
+        </button>
+        <input
+          type="file"
+          hidden
+          (change)="onImageSelect($event)"
+          #f_input
+          accept="image/png, image/jpeg ,image/jpg"
+          [ngClass]="{
+            'has-error':
+              (c['imageUrl'].invalid && c['imageUrl'].touched) ||
+              (c['imageUrl'].invalid && isSubmitted)
+          }"
+        />
+        <div>
+          <small
+            class="has-error--text"
+            *ngIf="
+              (c['imageUrl'].hasError('required') && c['imageUrl'].touched) ||
+              (c['imageUrl'].hasError('required') && isSubmitted)
+            "
+            >Image is required</small
+          >
+        </div>
+        <div class="mt-2">
+          <img
+            *ngIf="hostBannerImgUrl"
+            [src]="hostBannerImgUrl"
+            width="100%"
+            height="100%"
+          />
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end">
+      <!-- <button
+        mat-stroked-button
+        (click)="dialogRef.close(null)"
+        type="button"
+        color="accent"
+      >
+        Cancel
+      </button> -->
+      <button
+        type="submit"
+        color="primary"
+        class="text-white"
+        mat-raised-button
+        cdkFocusInitial
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>

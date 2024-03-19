@@ -1,0 +1,172 @@
+<div class="booking">
+  <div class="container">
+    <!-- with table -->
+    <!-- <div class="row">
+            <div class="booking--heading">
+                <h1>Upcoming Bookings</h1>
+            </div>
+            <div class="col-12">
+                <table class="booking-table">
+                    <tr class="booking-table--header">
+                        <th></th>
+                        <th>Hotel Name</th>
+                        <th>Date</th>
+                        <th>Start and End Time</th>
+                        <th>Fees</th>
+                        <th></th>
+                    </tr>
+                    <tr class="booking-table--row">
+                        <td>
+                            <img
+                                src="assets/images/bookings/booking-1.png"
+                                alt="booking">
+                        </td>
+                        <td>Large DTLA Studio 2450 SF
+                            With Natural Lighting</td>
+                        <td>06-15-2023</td>
+                        <td>10:00 am to 03:00 am</td>
+                        <td>AED 200</td>
+                        <td>View Detail</td>
+                    </tr>
+                    <tr class="booking-table--row">
+                        <td>
+                            <img
+                                src="assets/images/bookings/booking-1.png"
+                                alt="booking">
+                        </td>
+                        <td>Large DTLA Studio 2450 SF
+                            With Natural Lighting</td>
+                        <td>06-15-2023</td>
+                        <td>10:00 am to 03:00 am</td>
+                        <td>AED 200</td>
+                        <td>View Detail</td>
+                    </tr>
+                    <tr class="booking-table--row">
+                        <td>
+                            <img
+                                src="assets/images/bookings/booking-1.png"
+                                alt="booking">
+                        </td>
+                        <td>Large DTLA Studio 2450 SF
+                            With Natural Lighting</td>
+                        <td>06-15-2023</td>
+                        <td>10:00 am to 03:00 am</td>
+                        <td>AED 200</td>
+                        <td>View Detail</td>
+                    </tr>
+                </table>
+            </div>
+        </div> -->
+
+    <!-- with col -->
+    <div class="row custom-tabs">
+      <div class="col-12">
+        <div class="booking-status d-flex justify-content-center">
+          <!-- case 'completed':
+          this.selectedIndex = 1;
+          break;
+        case 'upcoming':
+          this.selectedIndex = 0;
+          break;
+        case 'cancelled':
+          this.selectedIndex = 2;
+          break;
+        default:
+          this.selectedIndex = 3;
+          break; -->
+          <div
+            class="booking-status--btn"
+            role="button"
+            (click)="getRequestedBookingByStatus('upcoming', 0)"
+            [ngClass]="selectedIndex === 0 ? 'active' : ''"
+          >
+            Upcoming
+          </div>
+          <div
+            class="booking-status--btn"
+            role="button"
+            (click)="getRequestedBookingByStatus('requested', 1)"
+            [ngClass]="selectedIndex === 1 ? 'active' : ''"
+          >
+            Requested
+          </div>
+          <div
+            class="booking-status--btn"
+            role="button"
+            (click)="getRequestedBookingByStatus('completed', 2)"
+            [ngClass]="selectedIndex === 2 ? 'active' : ''"
+          >
+            Completed
+          </div>
+          <div
+            class="booking-status--btn"
+            role="button"
+            (click)="getRequestedBookingByStatus('cancelled', 3)"
+            [ngClass]="selectedIndex === 3 ? 'active' : ''"
+          >
+            Cancelled
+          </div>
+          <div
+            class="booking-status--btn"
+            role="button"
+            (click)="getRequestedBookingByStatus('rejected', 4)"
+            [ngClass]="selectedIndex === 4 ? 'active' : ''"
+          >
+            Rejected
+          </div>
+          <div
+            class="booking-status--btn"
+            role="button"
+            (click)="getRequestedBookingByStatus('all', 5)"
+            [ngClass]="selectedIndex === 5 ? 'active' : ''"
+          >
+            All
+          </div>
+        </div>
+        <div class="mt-4 m-auto">
+          <app-booking
+            [bookings]="bookings"
+            [currentBookingStatus]="currentBookingStatus"
+            [role]="role"
+          ></app-booking>
+        </div>
+
+        <mat-paginator
+          *ngIf="totalCount > 10"
+          [length]="totalCount"
+          [pageIndex]="pagination.pageNumber - 1"
+          [pageSize]="pagination.pageSize"
+          [pageSizeOptions]="[10, 20, 50, 100]"
+          showFirstLastButtons
+          (page)="onPageChange($event)"
+        ></mat-paginator>
+        <!-- <mat-tab-group
+          mat-stretch-tabs="false"
+          mat-align-tabs="start"
+          [(selectedIndex)]="selectedIndex"
+        >
+          <mat-tab label="Upcoming" tabindex="1">
+            <div class="mt-4">
+              <app-booking [bookings]="bookings"></app-booking>
+            </div>
+          </mat-tab>
+          <mat-tab label="Completed">
+            <div class="mt-4">
+              <app-booking [bookings]="bookings"></app-booking>
+            </div>
+          </mat-tab>
+          <mat-tab label="Cancelled">
+            <div class="mt-4">
+              <app-booking [bookings]="bookings"></app-booking>
+            </div>
+          </mat-tab>
+          <mat-tab label="All">
+            <div class="mt-4">
+              <app-booking [bookings]="bookings"></app-booking>
+            </div>
+          </mat-tab>
+        </mat-tab-group> -->
+      </div>
+    </div>
+  </div>
+</div>

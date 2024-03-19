@@ -1,0 +1,41 @@
+<div class="card payment-card">
+  <div class="row">
+    <div class="col-12">
+      <button
+        type="button"
+        (click)="addCard()"
+        class="save-button text-light mt-3 float-right"
+        mat-raised-button
+        color="primary"
+      >
+        Add new card
+      </button>
+      <h1 class="text-bold">Payment Methods</h1>
+
+      <div class="description mb-2">Manage your payment methods here.</div>
+      <div class="row">
+        <div class="col-lg-6 col-md-12 mb-3 mt-3" *ngFor="let card of cards">
+          <app-card-detail
+            [brand]="card.card.brand"
+            [id]="card.id"
+            [expMonth]="card.card.expMonth"
+            [expYear]="card.card.expYear"
+            [cardHolderName]="card.card.brand"
+            [cardNum]="card.card.last4"
+            [showDeleteBtn]="true"
+            (deleteCardEmitter)="onDeleteCard($event)"
+          ></app-card-detail>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row mt-4">
+    <div class="col-12">
+      <div class="text-bold mb-2">Coupons</div>
+      <div class="No-coupen">
+        <p class="mb-0">You don't have any coupons yet.</p>
+      </div>
+    </div>
+  </div> -->
+</div>

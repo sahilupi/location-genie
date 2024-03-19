@@ -1,0 +1,136 @@
+.banner {
+  background-image: url("../../../assets/images/dummy/real-estate-10.jpg");
+  align-items: center;
+  background-attachment: scroll;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  height: 450px;
+  position: relative;
+
+  &--inner {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    transform: translate(-20%, -15%);
+    width: 100%;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.4);
+
+    &__text-container {
+      font-weight: 600px;
+      color: #ffffff;
+      font-size: 21px;
+      line-height: 22px;
+    }
+
+    &__search-container {
+      input {
+        width: 100%;
+        background-color: transparent;
+        outline: none;
+        border: 1px solid #fff;
+        border-radius: 4px;
+        height: 50px;
+        padding-left: 40px;
+        color: #fff;
+      }
+    }
+  }
+}
+
+::-webkit-input-placeholder {
+  color: #fff;
+}
+.text-detail {
+  font-size: 16px;
+  margin-left: 10px;
+  color: #736f6f;
+}
+
+.box {
+  padding: 40px 0 20px;
+}
+
+.content {
+  display: flex;
+  background: #f9f9f9;
+  border-radius: 10px;
+  margin: 0 0 30px 0;
+  align-items: center;
+  border: 1px solid rgba(196, 196, 196, 0.53);
+  .image-left {
+    padding: 34px 30px;
+    border-right: 1px solid rgb(196 196 196 / 53%);
+  }
+  .second-side {
+    padding: 30px 20px;
+    img {
+      margin-right: 5px;
+    }
+  }
+  h6.questions {
+    font-size: 17px;
+    color: #000000;
+    font-weight: 500;
+    padding-left: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+}
+
+i.fas.fa-search {
+  color: #fff;
+  position: absolute;
+  left: 12px;
+  top: 18px;
+}
+
+.content{
+  .row.ml-2{
+    img{
+      width: 51px;
+    }
+  }
+}
+
+@media (max-width: 991px){
+  .content {
+    .image-left {
+      padding: 15px 20px;
+      border-right: 0;
+      img{
+        width: 22px !important;
+      }
+    }
+    .second-side {
+      padding: 15px 5px;
+      border-left: 1px solid rgb(196 196 196 / 53%);
+      h6.questions {
+        font-size: 13px;
+      }
+      p {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px){
+.col-6 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+}
+@media (max-width: 575px){
+  .text-detail {
+    word-wrap: break-word;
+    white-space: pre-line;
+    word-break: break-word;
+    width: 65%;
+  }
+  }

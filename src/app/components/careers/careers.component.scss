@@ -1,0 +1,197 @@
+.header {
+  height: 70px;
+  color: #ffffff;
+  margin-top: 80px;
+}
+
+.headerStyle {
+  background-color: #fff !important;
+}
+.hero {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.header .container-wrapper {
+  margin: 0 auto;
+}
+.landing .header .links {
+  float: right;
+  margin: 0px;
+}
+.header a.brand {
+  float: left;
+  height: 70px;
+  display: inline-block;
+  text-decoration: none;
+}
+.headerStyle a,
+.headerStyle a.brand {
+  color: #666;
+}
+
+.landing .header .portal-nav {
+  display: inline-block;
+  float: left;
+  height: 70px;
+  margin-left: 30px;
+}
+ol,
+ul {
+  list-style: none;
+}
+.landing .header .links .link {
+  display: inline-block;
+  list-style: none;
+  line-height: 70px;
+  margin-left: 20px;
+}
+
+.landing .header .links .link.misc a,
+.landing .header .portal-nav .nav-item a {
+  color: #666;
+  text-decoration: none;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  font-size: 16px;
+}
+.landing .header .links .link.company a {
+  padding: 8px 10px;
+  border: 2px solid #666;
+  border-radius: 4px;
+}
+.header a.brand {
+  float: left;
+  height: 70px;
+  display: inline-block;
+  text-decoration: none;
+  text-decoration: none;
+}
+
+.headerStyle a,
+.headerStyle a.brand {
+  color: #666;
+}
+
+.header a.brand img {
+  max-height: 40px;
+  max-width: 300px;
+  margin-top: 14px;
+}
+
+.landing .header .portal-nav .nav-item {
+  display: inline-block;
+  list-style: none;
+  line-height: 70px;
+  margin-right: 20px;
+}
+
+.hero .hero-background-image {
+  background-position: center;
+  background-repeat: repeat, no-repeat;
+  background-size: 100%, cover;
+  height: calc(100% + 10px);
+  left: -5px;
+  position: absolute;
+  top: -5px;
+  width: calc(100% + 10px);
+  z-index: 1;
+  transition: all 1s ease;
+}
+.hero .hero-background-color {
+  position: relative;
+  transition: all 3s ease;
+  z-index: 2;
+}
+
+.hero .hero-background-color .banner {
+  padding: 120px 0;
+}
+
+.hero .banner {
+  color: #ffffff;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.hero .banner .cta {
+  border: 2px solid #fff;
+}
+body.polygotLoaded .polygot-parent {
+  opacity: 1;
+}
+.button.large,
+.button.large span {
+  font-size: 17px;
+  font-weight: 300;
+}
+.button.large {
+  font-weight: 400;
+}
+
+.polygot-parent {
+  transition: 0.3s;
+}
+
+.button {
+  padding: 10px 20px;
+  display: inline-block;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-decoration: none;
+  border: none;
+  outline: 0;
+  border-radius: 4px;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+  background-color: #666666;
+  cursor: pointer !important;
+}
+.landing .container.perks {
+  padding: 60px 0 20px 0;
+  width: 100%;
+}
+.landing .container.perks .row .item {
+  width: 33%;
+  display: inline-block;
+  color: #2c3e4f;
+  line-height: 1.5;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: top;
+  margin-bottom: 20px;
+}
+.landing .container.perks .row .item i {
+  font-size: 24px;
+  border: none;
+  padding: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  line-height: 40px;
+}
+.landing .container {
+  margin: 0 auto;
+  padding: 40px 0;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+h1.polygot {
+  font-size: 35px;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+h2.polygot {
+  font-size: 15px;
+  font-weight: 400;
+}
